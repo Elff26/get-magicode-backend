@@ -20,8 +20,11 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(cdUsuario);
 
         if(!userExists) {
-            throw new Error("User already exists!");
+            throw new Error("User not exists!");
         }
+
+        user.cd_usuario = userExists.cd_usuario;
+        user.ds_senha = user.ds_senha;
 
         return this.userRepository.updateUser(user);
     }   

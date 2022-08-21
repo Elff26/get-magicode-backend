@@ -22,6 +22,7 @@ export default class UserRepository implements IUserRepository{
     }
 
     updateUser = async (user: UserModel) => {
+        console.log(user);
         return await this.userRepository.save(user);
     }
 }

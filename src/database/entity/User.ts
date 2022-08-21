@@ -21,7 +21,7 @@ export class User{
     @Column({type: "varchar", length: 100, nullable:false, select: false})
     ds_senha: string
 
-    @Column({type: "integer", unique:true, nullable:false})
+    @Column({type: "integer", nullable:false})
     nr_vidas: number
 
     @Column({type: "integer", nullable:false, default: 0})
