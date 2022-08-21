@@ -3,10 +3,10 @@ import UserController from './controller/UserController';
 
 const router = Router();
 
- const userController = new UserController();
+const userController = new UserController();
 
-router.post("/CreateUser", userController.createUser)
+router.get("/FindUserById/:cdUsuario", userController.findUserById);
+router.post("/CreateUser", userController.createUser);
+router.put("/UpdateUser/:cdUsuario", userController.updateUSer);
 
-router.get("/FindUserById/:cdUsuario", userController.findUserById)
-
-export default router 
+export default router;

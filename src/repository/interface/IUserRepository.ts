@@ -4,4 +4,5 @@ import UserModel from "../../model/UserModel";
 export default interface IUserRepository{
     createUser:(user:UserModel) => Promise<UserModel>;
     findUserById:(cdUsuario:number) => Promise<UserModel | null>;
+    updateUser:(user: UserModel) => Promise<UserModel | null>;
 }

@@ -9,13 +9,20 @@ export default class UserService{
     }
 
     createUser = (user:UserModel) => {
-        console.log(user)
         return this.userRepository.createUser(user);
     }
 
     findUserById = async (cdUsuario:number) => {
-        const user = await this.userRepository.findUserById(cdUsuario);
-        console.log(user)
         return await this.userRepository.findUserById(cdUsuario);
     }
+
+    updateUser = async (cdUsuario: number, user: UserModel) => {
+        const userExists = await this.userRepository.findUserById(cdUsuario);
+
+        if(!userExists) {
+            throw new Error("User already exists!");
+        }
+
+        return this.userRepository.updateUser(user);
+    }   
 }

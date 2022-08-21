@@ -27,5 +27,14 @@ export default class UserController{
         const user = await this.userService.findUserById(Number(req.params.cdUsuario));
         res.send(user)
     }
+
+    updateUSer = async (req: Request, res: Response) => {
+        try {
+            const user = await this.userService.updateUser(Number(req.params.cdUsuario), req.body.user);
+            res.status(200).send(user);
+        } catch(e:any) {
+            res.send(e.message);
+        }
+    }
     
 }
