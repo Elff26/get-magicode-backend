@@ -18,7 +18,7 @@ export class User{
     @Column({type: "varchar", length: 11, unique:true, nullable:false})
     nr_telefone: string
 
-    @Column({type: "varchar", length: 100, nullable:false})
+    @Column({type: "varchar", length: 100, nullable:false, select: false})
     ds_senha: string
 
     @Column({type: "integer", unique:true, nullable:false})

@@ -14,4 +14,19 @@ export default class UserRepository implements IUserRepository{
     createUser = async (user:UserModel) =>{
         return await this.userRepository.save(user);
     }
+
+    findUserById = async (cdUsuario:number) => {
+        return await this.userRepository.findOneBy({
+            cd_usuario: cdUsuario,
+            // select: {
+            //     cd_usuario: true,
+            //     nm_usuario: true,
+            //     dt_nascimento: true,
+            //     ds_email: true,
+            //     nr_telefone: true
+            // }
+        })
+    }
+
+
 }
