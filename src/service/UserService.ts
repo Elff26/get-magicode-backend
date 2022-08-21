@@ -4,8 +4,8 @@ import IUserRepository from "../repository/interface/IUserRepository";
 export default class UserService{
     private userRepository: IUserRepository;
 
-    constructor(){
-        this.userRepository = new IUserRepository();
+    constructor(userRepository: IUserRepository){
+        this.userRepository = userRepository;
     }
 
     createUser = (user:UserModel) => {

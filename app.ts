@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import express, { Request, Response, Router } from 'express';
 import { json } from 'body-parser';
-import routes from './src/routes'
+import routes from './src/Routes'
 
 const app = express();
 const port = 3000
