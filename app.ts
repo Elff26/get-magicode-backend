@@ -1,6 +1,6 @@
+import "reflect-metadata";
 import express, { Request, Response } from 'express';
 import { json } from 'body-parser';
-import "reflect-metadata";
 
 const app = express();
 const port = 3000

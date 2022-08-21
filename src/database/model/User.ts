@@ -24,7 +24,7 @@ export class User{
     @Column({type: "integer", unique:true, nullable:false})
     nr_vidas: number
 
-    @Column({type: "integer", nullable:false})
+    @Column({type: "integer", nullable:false, default: 0})
     nr_experiencia: number
 
     @CreateDateColumn()

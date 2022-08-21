@@ -2,18 +2,18 @@ import * as SQLite from 'sqlite3'
 import { DataSource } from 'typeorm'
 import { User } from './src/database/model/User'
 import "reflect-metadata"
+import { Technologie } from './src/database/model/Technologie'
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
    database: "./GetMagiCode.sqlite",
    synchronize: true,
    logging: true,
-   entities: [User],
-   subscribers: [],
-   migrations: [],
+   entities: [User, Technologie],
+   migrations: ['src/migrations/*{.ts,.js}']
 })
 AppDataSource.initialize()
     .then(() => {
-      console.log("Berhasil inilize ")
+      console.log("Data Source has been initialized!")
     })
     .catch((error) => console.log(error))
