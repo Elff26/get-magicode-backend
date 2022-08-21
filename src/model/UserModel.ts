@@ -1,5 +1,5 @@
 interface UserPropety{
-    cd_usuario?: number;
+    cd_usuario: number;
     nm_usuario: string
     dt_nascimento: string
     ds_email: string
@@ -27,7 +27,7 @@ export default class UserModel{
         this.cd_ranking = user.cd_ranking;
     }
 
-    cd_usuario?: number
+    cd_usuario: number
     nm_usuario: string
     dt_nascimento: string
     ds_email: string

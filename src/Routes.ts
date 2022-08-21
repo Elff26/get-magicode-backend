@@ -5,6 +5,8 @@ const router = Router();
 
  const userController = new UserController();
 
-router.post("/CreateUser", userController.postUser)
+router.post("/CreateUser", userController.createUser)
+
+router.get("/FindUserById/:cdUsuario", userController.findUserById)
 
 export default router 

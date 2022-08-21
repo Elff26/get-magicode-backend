@@ -12,4 +12,10 @@ export default class UserService{
         console.log(user)
         return this.userRepository.createUser(user);
     }
+
+    findUserById = async (cdUsuario:number) => {
+        const user = await this.userRepository.findUserById(cdUsuario);
+        console.log(user)
+        return await this.userRepository.findUserById(cdUsuario);
+    }
 }
