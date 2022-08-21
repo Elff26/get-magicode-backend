@@ -20,6 +20,4 @@ export default class UserRepository implements IUserRepository{
             cd_usuario: cdUsuario,
         })
     }
-
-
 }
