@@ -1,8 +1,8 @@
 import * as SQLite from 'sqlite3'
 import { DataSource } from 'typeorm'
-import { User } from './src/database/model/User'
+import { User } from './src/database/entity/User'
 import "reflect-metadata"
-import { Technologie } from './src/database/model/Technologie'
+import { Technologie } from './src/database/entity/Technologie'
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
