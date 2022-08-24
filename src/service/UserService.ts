@@ -1,3 +1,5 @@
+import { NextFunction } from "express";
+import HttpError from "../exceptions/HttpError";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 
@@ -16,12 +18,12 @@ export default class UserService{
         return await this.userRepository.findUserById(cdUsuario);
     }
 
-    updateUser = async (cdUsuario: number, user: UserModel) => {
+    updateUser = async (cdUsuario: number, user: UserModel, next: NextFunction) => {
         const userExists = await this.userRepository.findUserById(cdUsuario);
 
         if(!userExists) {
-            throw new Error("User not exists!");
-        }
+            return next(new HttpError('User not found!', 404))
+        } 
 
         user.cd_usuario = userExists.cd_usuario;
         user.ds_senha = user.ds_senha;

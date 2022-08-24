@@ -1,19 +1,7 @@
-interface UserPropety{
-    cd_usuario: number;
-    nm_usuario: string
-    dt_nascimento: string
-    ds_email: string
-    nr_telefone: string
-    ds_senha: string
-    nr_vidas: number
-    nr_experiencia: number
-    dt_criacao?: Date
-    cd_meta: number
-    cd_ranking: number
-}
+import UserProperties from "../interfaceType/IUserProperties";
 
 export default class UserModel{
-    constructor(user: UserPropety){
+    constructor(user: UserProperties){
         this.cd_usuario = user.cd_usuario;
         this.nm_usuario = user.nm_usuario;
         this.dt_nascimento = user.dt_nascimento;

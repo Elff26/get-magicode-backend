@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import HttpError from "../exceptions/HttpError";
+import IUserProperties from "../interfaceType/IUserProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import UserService from "../service/UserService";
@@ -12,28 +14,32 @@ export default class UserController{
         this.userService = new UserService(this.userRepository);
     }
 
-    getUser = (req: Request, res:Response) => {
-        res.send("Teste")
+    getUser = (request: Request, response: Response) => {
+        response.send("Teste")
     }
 
-    createUser = (req:Request, res:Response)=>{
-        const userService = new UserService(this.userRepository);
-
-        userService.createUser(req.body.user);
-        res.send("Usuário criado com sucesso!")
+    createUser = (request: Request, response: Response)=>{
+        this.userService.createUser(request.body.user);
+        response.send("Usuário criado com sucesso!");
     }
 
-    findUserById = async (req:Request, res:Response) => {
-        const user = await this.userService.findUserById(Number(req.params.cdUsuario));
-        res.send(user)
+    findUserById = async (request:Request, response: Response) => {
+        const result = await this.userService.findUserById(Number(request.params.cdUsuario));
+        response.send(result);
     }
 
-    updateUSer = async (req: Request, res: Response) => {
-        try {
-            const user = await this.userService.updateUser(Number(req.params.cdUsuario), req.body.user);
-            res.status(200).send(user);
-        } catch(e:any) {
-            res.send(e.message);
+    updateUSer = async (request: Request, response: Response, next: NextFunction) => {
+        const user: IUserProperties = request.body;
+        const cdUsuario = Number(request.params.cdUsuario);
+
+        if(isNaN(cdUsuario)) {
+            return next(new HttpError('ID must be a number!', 403));
+        }
+
+        const result = await this.userService.updateUser(cdUsuario, user, next);
+
+        if(result) {
+            response.status(200).send(user);
         }
     }
     
