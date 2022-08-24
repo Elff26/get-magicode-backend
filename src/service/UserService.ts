@@ -29,5 +29,9 @@ export default class UserService{
         user.ds_senha = user.ds_senha;
 
         return this.userRepository.updateUser(user);
-    }   
+    }
+    
+    deleteUser = async (cdUsuario: number) => {
+        return await this.userRepository.deleteUser(cdUsuario);
+    }
 }

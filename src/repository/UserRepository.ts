@@ -25,4 +25,10 @@ export default class UserRepository implements IUserRepository{
         console.log(user);
         return await this.userRepository.save(user);
     }
+
+    deleteUser = async (cdUsuario: number) => {
+        return await this.userRepository.delete({
+            cd_usuario: cdUsuario,
+        });
+    }
 }

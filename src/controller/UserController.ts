@@ -42,5 +42,10 @@ export default class UserController{
             response.status(200).send(user);
         }
     }
+
+    deleteUSer = async (request: Request, response: Response) => {
+        const result = await this.userService.deleteUser(Number(request.params.cdUsuario));
+        response.send("Usuário deletado com sucesso!");
+    }
     
 }
