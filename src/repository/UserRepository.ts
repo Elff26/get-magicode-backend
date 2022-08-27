@@ -41,4 +41,15 @@ export default class UserRepository implements IUserRepository{
             cd_usuario: cdUsuario,
         });
     }
+
+    loginUser = async (ds_email: string, ds_senha:string) => {
+        return await this.userRepository.createQueryBuilder('User')
+            .where({
+                ds_email
+            })
+            .andWhere({
+                ds_senha
+            })
+            .getOne();
+    }
 }

@@ -1,5 +1,8 @@
 import { NextFunction } from "express";
+import { IsNull } from "typeorm";
 import HttpError from "../exceptions/HttpError";
+import ILoginProperties from "../interfaceType/ILoginProperties";
+import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 
@@ -45,5 +48,10 @@ export default class UserService{
     
     deleteUser = async (cdUsuario: number) => {
         return await this.userRepository.deleteUser(cdUsuario);
+    }
+
+    loginUser = async (user: IUserProperties, next: NextFunction) => {
+        const userExists = await this.userRepository.loginUser(user.ds_email, user.ds_senha);
+        return userExists;
     }
 }

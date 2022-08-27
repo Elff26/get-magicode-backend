@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+import { RepositoryNotTreeError } from "typeorm";
 import HttpError from "../exceptions/HttpError";
+import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -64,5 +66,11 @@ export default class UserController{
 
         response.json({ message: "Usuário deletado com sucesso!" });
     }
-    
+ 
+    loginUser = async (request: Request, response: Response, next: NextFunction) => {
+        const user: IUserProperties = new UserModel(request.body);
+        const result = await this.userService.loginUser(user, next);
+        
+        response.status(200).json({user: result})
+    }
 }
