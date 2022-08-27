@@ -10,8 +10,14 @@ export default class UserService{
         this.userRepository = userRepository;
     }
 
-    createUser = (user:UserModel) => {
-        return this.userRepository.createUser(user);
+    createUser = async (user: UserModel, next: NextFunction) => {
+        const userExists = await this.userRepository.findUserByEmailOrPhone(user.ds_email, user.nr_telefone);
+
+        if(userExists) {
+            return next(new HttpError('This email/phone already exists!', 409))
+        }
+
+        return await this.userRepository.createUser(user);
     }
 
     findUserById = async (cdUsuario:number) => {

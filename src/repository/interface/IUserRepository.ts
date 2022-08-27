@@ -7,4 +7,5 @@ export default interface IUserRepository{
     findUserById:(cdUsuario:number) => Promise<UserModel | null>;
     updateUser:(user: UserModel) => Promise<UserModel | null>;
     deleteUser:(cdUsuario:number) => Promise<DeleteResult>;
+    findUserByEmailOrPhone:(ds_email: string, nr_telefone: string) => Promise<UserModel | null>;
 }

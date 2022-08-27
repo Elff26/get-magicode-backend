@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
 import IUserProperties from "../interfaceType/IUserProperties";
+import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import UserService from "../service/UserService";
@@ -14,13 +15,17 @@ export default class UserController{
         this.userService = new UserService(this.userRepository);
     }
 
-    getUser = (request: Request, response: Response) => {
-        response.send("Teste")
-    }
+    createUser = async (request: Request, response: Response, next: NextFunction) => {
+        const user: IUserProperties = new UserModel(request.body.user);
 
-    createUser = (request: Request, response: Response)=>{
-        this.userService.createUser(request.body.user);
-        response.send("Usuário criado com sucesso!");
+        if(!user.nm_usuario|| !user.dt_nascimento || !user.ds_email || !user.nr_telefone || !user.ds_senha || !user.nr_vidas || user.nr_experiencia == undefined 
+            || !user.cd_meta || !user.cd_ranking) {
+                return next(new HttpError("All fields are required!", 400));
+        }
+
+        const result = await this.userService.createUser(user, next);
+
+        response.status(201).send(result);
     }
 
     findUserById = async (request:Request, response: Response) => {
@@ -28,8 +33,8 @@ export default class UserController{
         response.send(result);
     }
 
-    updateUSer = async (request: Request, response: Response, next: NextFunction) => {
-        const user: IUserProperties = request.body;
+    updateUser = async (request: Request, response: Response, next: NextFunction) => {
+        const user: IUserProperties = request.body.user;
         const cdUsuario = Number(request.params.cdUsuario);
 
         if(isNaN(cdUsuario)) {
@@ -38,6 +43,7 @@ export default class UserController{
 
         const result = await this.userService.updateUser(cdUsuario, user, next);
 
+        console.log(result);
         if(result) {
             response.status(200).send(user);
         }
