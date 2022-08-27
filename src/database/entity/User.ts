@@ -6,33 +6,33 @@ export class User{
     @PrimaryGeneratedColumn()
     cd_usuario: number;
 
-    @Column({type: "varchar", length: 100, nullable:false})
+    @Column({type: "varchar", length: 100, nullable: false})
     nm_usuario: string
 
-    @Column({type: "date", nullable:false})
+    @Column({type: "date", nullable: false})
     dt_nascimento: string
 
-    @Column({type: "varchar", length: 100, unique:true, nullable:false})
+    @Column({type: "varchar", length: 100, unique: true, nullable: false})
     ds_email: string
 
-    @Column({type: "varchar", length: 11, unique:true, nullable:false})
+    @Column({type: "varchar", length: 11, unique: true, nullable: false})
     nr_telefone: string
 
-    @Column({type: "varchar", length: 100, nullable:false, select: false})
+    @Column({type: "varchar", length: 100, nullable: false, select: false})
     ds_senha: string
 
-    @Column({type: "integer", nullable:false})
+    @Column({type: "integer", nullable: false, default: 0})
     nr_vidas: number
 
-    @Column({type: "integer", nullable:false, default: 0})
+    @Column({type: "integer", nullable: false, default: 0})
     nr_experiencia: number
 
     @CreateDateColumn()
     dt_criacao: Date
 
-    @Column({type: "integer", nullable:false})
+    @Column({type: "integer", nullable: false, default: 0})
     cd_meta: number
 
-    @Column({type: "integer", nullable:false})
+    @Column({type: "integer", nullable: false, default: 0})
     cd_ranking: number
 }

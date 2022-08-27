@@ -5,7 +5,7 @@ function errorMiddleware(httpError: HttpError, request: Request, response: Respo
     const statusCode = httpError.statusCode || 500;
     const message = httpError.message || 'Ops! Something is wrong. Try again later!';
 
-    response.status(statusCode).send({
+    return response.status(statusCode).json({
         statusCode,
         message
     });

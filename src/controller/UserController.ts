@@ -18,14 +18,13 @@ export default class UserController{
     createUser = async (request: Request, response: Response, next: NextFunction) => {
         const user: IUserProperties = new UserModel(request.body.user);
 
-        if(!user.nm_usuario|| !user.dt_nascimento || !user.ds_email || !user.nr_telefone || !user.ds_senha || !user.nr_vidas || user.nr_experiencia == undefined 
-            || !user.cd_meta || !user.cd_ranking) {
+        if(!user.nm_usuario|| !user.dt_nascimento || !user.ds_email || !user.nr_telefone || !user.ds_senha) {
                 return next(new HttpError("All fields are required!", 400));
         }
 
         const result = await this.userService.createUser(user, next);
 
-        response.status(201).send(result);
+        response.status(201).send({ user: result });
     }
 
     findUserById = async (request:Request, response: Response, next: NextFunction) => {
@@ -36,7 +35,7 @@ export default class UserController{
         }
 
         const result = await this.userService.findUserById(Number(request.params.cdUsuario), next);
-        response.send(result);
+        response.status(200).json({ user: result });
     }
 
     updateUser = async (request: Request, response: Response, next: NextFunction) => {
@@ -49,9 +48,8 @@ export default class UserController{
 
         const result = await this.userService.updateUser(cdUsuario, user, next);
 
-        console.log(result);
         if(result) {
-            response.status(200).send(user);
+            response.status(200).json({ user: user });
         }
     }
 
@@ -61,9 +59,10 @@ export default class UserController{
         if(isNaN(cdUsuario)) {
             return next(new HttpError('ID must be a number!', 403));
         }
+
         const result = await this.userService.deleteUser(Number(request.params.cdUsuario));
 
-        response.send("Usuário deletado com sucesso!");
+        response.json({ message: "Usuário deletado com sucesso!" });
     }
     
 }
