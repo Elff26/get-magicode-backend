@@ -49,8 +49,14 @@ export default class UserController{
         }
     }
 
-    deleteUSer = async (request: Request, response: Response) => {
+    deleteUSer = async (request: Request, response: Response, next: NextFunction) => {
+        const cdUsuario = Number(request.params.cdUsuario);
+
+        if(isNaN(cdUsuario)) {
+            return next(new HttpError('ID must be a number!', 403));
+        }
         const result = await this.userService.deleteUser(Number(request.params.cdUsuario));
+
         response.send("Usuário deletado com sucesso!");
     }
     
