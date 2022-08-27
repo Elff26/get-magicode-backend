@@ -20,8 +20,14 @@ export default class UserService{
         return await this.userRepository.createUser(user);
     }
 
-    findUserById = async (cdUsuario:number) => {
-        return await this.userRepository.findUserById(cdUsuario);
+    findUserById = async (cdUsuario:number, next: NextFunction) => {
+        const userExists = await this.userRepository.findUserById(cdUsuario);
+        
+        if(!userExists) {
+            return next(new HttpError('User not found!', 404));
+        }
+
+        return userExists;
     }
 
     updateUser = async (cdUsuario: number, user: UserModel, next: NextFunction) => {

@@ -28,8 +28,14 @@ export default class UserController{
         response.status(201).send(result);
     }
 
-    findUserById = async (request:Request, response: Response) => {
-        const result = await this.userService.findUserById(Number(request.params.cdUsuario));
+    findUserById = async (request:Request, response: Response, next: NextFunction) => {
+        const cdUsuario = Number(request.params.cdUsuario);
+
+        if(isNaN(cdUsuario)) {
+            return next(new HttpError('ID must be a number', 403));
+        }
+
+        const result = await this.userService.findUserById(Number(request.params.cdUsuario), next);
         response.send(result);
     }
 
