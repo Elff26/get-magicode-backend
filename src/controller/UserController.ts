@@ -69,8 +69,15 @@ export default class UserController{
  
     loginUser = async (request: Request, response: Response, next: NextFunction) => {
         const user: IUserProperties = new UserModel(request.body);
+
+        if(!user.ds_email || !user.ds_senha) {
+            return next(new HttpError("Email or password is invalid!", 400));
+        }
+
         const result = await this.userService.loginUser(user, next);
         
-        response.status(200).json({user: result})
+        if(result) {
+            response.status(200).json({user: result})
+        }
     }
 }

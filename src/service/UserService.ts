@@ -52,6 +52,11 @@ export default class UserService{
 
     loginUser = async (user: IUserProperties, next: NextFunction) => {
         const userExists = await this.userRepository.loginUser(user.ds_email, user.ds_senha);
+        
+        if(!userExists) {
+            return next(new HttpError('User not found!', 404))
+        }
+
         return userExists;
     }
 }
