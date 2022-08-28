@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { json } from 'body-parser';
 import "reflect-metadata";
+import cors from "cors"
 
 import routes from './src/Routes'
 import errorMiddleware from "./src/middleware/ErrorMiddleware";
@@ -8,6 +9,7 @@ import errorMiddleware from "./src/middleware/ErrorMiddleware";
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(json());
 app.use(routes);
 app.use(errorMiddleware);
