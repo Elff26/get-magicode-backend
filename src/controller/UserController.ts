@@ -12,7 +12,7 @@ export default class UserController{
     private userRepository: IUserRepository
     private userService: UserService
 
-    constructor(){
+    constructor() {
         this.userRepository = new UserRepository();
         this.userService = new UserService(this.userRepository);
     }
@@ -20,7 +20,7 @@ export default class UserController{
     createUser = async (request: Request, response: Response, next: NextFunction) => {
         const user: IUserProperties = new UserModel(request.body.user);
 
-        if(!user.nm_usuario|| !user.dt_nascimento || !user.ds_email || !user.nr_telefone || !user.ds_senha) {
+        if(!user.name || !user.birthday || !user.email || !user.phone || !user.password) {
                 return next(new HttpError("All fields are required!", 400));
         }
 
@@ -30,25 +30,25 @@ export default class UserController{
     }
 
     findUserById = async (request:Request, response: Response, next: NextFunction) => {
-        const cdUsuario = Number(request.params.cdUsuario);
+        const userID = Number(request.params.userID);
 
-        if(isNaN(cdUsuario)) {
+        if(isNaN(userID)) {
             return next(new HttpError('ID must be a number', 403));
         }
 
-        const result = await this.userService.findUserById(Number(request.params.cdUsuario), next);
+        const result = await this.userService.findUserById(Number(request.params.userID), next);
         response.status(200).json({ user: result });
     }
 
     updateUser = async (request: Request, response: Response, next: NextFunction) => {
         const user: IUserProperties = request.body.user;
-        const cdUsuario = Number(request.params.cdUsuario);
+        const userID = Number(request.params.userID);
 
-        if(isNaN(cdUsuario)) {
+        if(isNaN(userID)) {
             return next(new HttpError('ID must be a number!', 403));
         }
 
-        const result = await this.userService.updateUser(cdUsuario, user, next);
+        const result = await this.userService.updateUser(userID, user, next);
 
         if(result) {
             response.status(200).json({ user: user });
@@ -56,28 +56,14 @@ export default class UserController{
     }
 
     deleteUSer = async (request: Request, response: Response, next: NextFunction) => {
-        const cdUsuario = Number(request.params.cdUsuario);
+        const userID = Number(request.params.userID);
 
-        if(isNaN(cdUsuario)) {
+        if(isNaN(userID)) {
             return next(new HttpError('ID must be a number!', 403));
         }
 
-        const result = await this.userService.deleteUser(Number(request.params.cdUsuario));
+        const result = await this.userService.deleteUser(Number(request.params.userID));
 
         response.json({ message: "Usuário deletado com sucesso!" });
-    }
- 
-    loginUser = async (request: Request, response: Response, next: NextFunction) => {
-        const user: IUserProperties = new UserModel(request.body);
-
-        if(!user.ds_email || !user.ds_senha) {
-            return next(new HttpError("Email or password is invalid!", 400));
-        }
-
-        const result = await this.userService.loginUser(user, next);
-        
-        if(result) {
-            response.status(200).json({user: result})
-        }
     }
 }

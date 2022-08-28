@@ -11,23 +11,23 @@ export default class UserRepository implements IUserRepository{
         this.userRepository = AppDataSource.manager.getRepository(User);
     }
 
-    createUser = async (user:UserModel) =>{
+    createUser = async (user: UserModel) =>{
         return await this.userRepository.save(user);
     }
 
-    findUserById = async (cdUsuario:number) => {
+    findUserById = async (userID: number) => {
         return await this.userRepository.findOneBy({
-            cd_usuario: cdUsuario,
+            userID: userID,
         })
     }
 
-    findUserByEmailOrPhone = async (ds_email: string, nr_telefone: string) => {
+    findUserByEmailOrPhone = async (email: string, phone: string) => {
         return await this.userRepository.createQueryBuilder('User')
             .where({
-                ds_email
+                email
             })
             .orWhere({
-                nr_telefone
+                phone
             })
             .getOne();
     }
@@ -36,19 +36,19 @@ export default class UserRepository implements IUserRepository{
         return await this.userRepository.save(user);
     }
 
-    deleteUser = async (cdUsuario: number) => {
+    deleteUser = async (userID: number) => {
         return await this.userRepository.delete({
-            cd_usuario: cdUsuario,
+            userID,
         });
     }
 
-    loginUser = async (ds_email: string, ds_senha:string) => {
+    findUserByEmailAndPassword = async (email: string, password: string) => {
         return await this.userRepository.createQueryBuilder('User')
             .where({
-                ds_email
+                email
             })
             .andWhere({
-                ds_senha
+                password
             })
             .getOne();
     }

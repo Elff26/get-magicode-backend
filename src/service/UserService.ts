@@ -1,7 +1,5 @@
 import { NextFunction } from "express";
-import { IsNull } from "typeorm";
 import HttpError from "../exceptions/HttpError";
-import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -14,7 +12,7 @@ export default class UserService{
     }
 
     createUser = async (user: UserModel, next: NextFunction) => {
-        const userExists = await this.userRepository.findUserByEmailOrPhone(user.ds_email, user.nr_telefone);
+        const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone);
 
         if(userExists) {
             return next(new HttpError('This email/phone already exists!', 409))
@@ -23,8 +21,8 @@ export default class UserService{
         return await this.userRepository.createUser(user);
     }
 
-    findUserById = async (cdUsuario:number, next: NextFunction) => {
-        const userExists = await this.userRepository.findUserById(cdUsuario);
+    findUserById = async (userID: number, next: NextFunction) => {
+        const userExists = await this.userRepository.findUserById(userID);
         
         if(!userExists) {
             return next(new HttpError('User not found!', 404));
@@ -33,30 +31,20 @@ export default class UserService{
         return userExists;
     }
 
-    updateUser = async (cdUsuario: number, user: UserModel, next: NextFunction) => {
-        const userExists = await this.userRepository.findUserById(cdUsuario);
+    updateUser = async (userID: number, user: UserModel, next: NextFunction) => {
+        const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
             return next(new HttpError('User not found!', 404))
         } 
 
-        user.cd_usuario = userExists.cd_usuario;
-        user.ds_senha = user.ds_senha;
+        user.userID = userExists.userID;
+        user.password = user.password;
 
         return this.userRepository.updateUser(user);
     }
     
-    deleteUser = async (cdUsuario: number) => {
-        return await this.userRepository.deleteUser(cdUsuario);
-    }
-
-    loginUser = async (user: IUserProperties, next: NextFunction) => {
-        const userExists = await this.userRepository.loginUser(user.ds_email, user.ds_senha);
-        
-        if(!userExists) {
-            return next(new HttpError('User not found!', 404))
-        }
-
-        return userExists;
+    deleteUser = async (userID: number) => {
+        return await this.userRepository.deleteUser(userID);
     }
 }

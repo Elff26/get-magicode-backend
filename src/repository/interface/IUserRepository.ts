@@ -3,11 +3,11 @@ import { User } from "../../database/entity/User";
 import UserModel from "../../model/UserModel";
 
 export default interface IUserRepository{
-    createUser:(user:UserModel) => Promise<UserModel>;
-    findUserById:(cdUsuario:number) => Promise<UserModel | null>;
+    createUser:(user: UserModel) => Promise<UserModel>;
+    findUserById:(userID: number) => Promise<UserModel | null>;
     updateUser:(user: UserModel) => Promise<UserModel | null>;
-    deleteUser:(cdUsuario:number) => Promise<DeleteResult>;
-    findUserByEmailOrPhone:(ds_email: string, nr_telefone: string) => Promise<UserModel | null>;
+    deleteUser:(userID: number) => Promise<DeleteResult>;
+    findUserByEmailOrPhone:(email: string, phone: string) => Promise<UserModel | null>;
 
-    loginUser:(ds_email:string, ds_senha: string ) => Promise<UserModel | null>;
+    findUserByEmailAndPassword:(email:string, password: string ) => Promise<UserModel | null>;
 }

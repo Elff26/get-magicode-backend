@@ -3,36 +3,36 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeor
 @Entity()
 export class User{
 
-    @PrimaryGeneratedColumn()
-    cd_usuario: number;
+    @PrimaryGeneratedColumn({ name: "cd_usuario" })
+    userID: number;
 
-    @Column({type: "varchar", length: 100, nullable: false})
-    nm_usuario: string
+    @Column({name: "nm_usuario", type: "varchar", length: 100, nullable: false})
+    name: string
 
-    @Column({type: "date", nullable: false})
-    dt_nascimento: string
+    @Column({name: "dt_nascimento", type: "date", nullable: false})
+    birthday: string
 
-    @Column({type: "varchar", length: 100, unique: true, nullable: false})
-    ds_email: string
+    @Column({name: "ds_email", type: "varchar", length: 100, unique: true, nullable: false})
+    email: string
 
-    @Column({type: "varchar", length: 11, unique: true, nullable: false})
-    nr_telefone: string
+    @Column({name: "nr_telefone", type: "varchar", length: 11, unique: true, nullable: false})
+    phone: string
 
-    @Column({type: "varchar", length: 100, nullable: false, select: false})
-    ds_senha: string
+    @Column({name: "ds_senha", type: "varchar", length: 100, nullable: false, select: false})
+    password: string
 
-    @Column({type: "integer", nullable: false, default: 0})
-    nr_vidas: number
+    @Column({name: "nr_vidas", type: "integer", nullable: false, default: 0})
+    numberOfLifes: number
 
-    @Column({type: "integer", nullable: false, default: 0})
-    nr_experiencia: number
+    @Column({name: "nr_experiencia", type: "integer", nullable: false, default: 0})
+    xp: number
 
-    @CreateDateColumn()
-    dt_criacao: Date
+    @CreateDateColumn({ name: "dt_criacao" })
+    createdAt: Date
 
-    @Column({type: "integer", nullable: false, default: 0})
-    cd_meta: number
+    @Column({name: "cd_meta", type: "integer", nullable: false, default: 0})
+    goal: number
 
-    @Column({type: "integer", nullable: false, default: 0})
-    cd_ranking: number
+    @Column({name: "cd_ranking", type: "integer", nullable: false, default: 0})
+    ranking: number
 }
