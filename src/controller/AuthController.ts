@@ -18,16 +18,18 @@ export default class UserController{
     }
  
     login = async (request: Request, response: Response, next: NextFunction) => {
-        const user: ILoginProperties = request.body;
+        try {
+            const user: ILoginProperties = request.body;
 
-        if(!user.email || !user.password) {
-            return next(new HttpError("Email or password is invalid!", 400));
-        }
+            if(!user.email || !user.password) {
+                throw new HttpError("Email or password is invalid!", 400);
+            }
 
-        const result = await this.authService.login(user, next);
-        
-        if(result) {
-            response.status(200).json({user: result})
+            const result = await this.authService.login(user);
+            
+            response.status(200).json({ user: result });
+        } catch(error: any) {
+            next(error);
         }
     }
 }

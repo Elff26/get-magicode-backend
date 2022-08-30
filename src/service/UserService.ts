@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import HttpError from "../exceptions/HttpError";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
@@ -11,31 +10,31 @@ export default class UserService{
         this.userRepository = userRepository;
     }
 
-    createUser = async (user: UserModel, next: NextFunction) => {
+    createUser = async (user: UserModel) => {
         const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone);
 
         if(userExists) {
-            return next(new HttpError('This email/phone already exists!', 409))
+            throw new HttpError('This email/phone already exists!', 409)
         }
 
         return await this.userRepository.createUser(user);
     }
 
-    findUserById = async (userID: number, next: NextFunction) => {
+    findUserById = async (userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
-        
+
         if(!userExists) {
-            return next(new HttpError('User not found!', 404));
+            throw new HttpError('User not found!', 404);
         }
 
         return userExists;
     }
 
-    updateUser = async (userID: number, user: UserModel, next: NextFunction) => {
+    updateUser = async (userID: number, user: UserModel) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            return next(new HttpError('User not found!', 404))
+            throw new HttpError('User not found!', 404);
         } 
 
         user.userID = userExists.userID;
@@ -45,6 +44,12 @@ export default class UserService{
     }
     
     deleteUser = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
         return await this.userRepository.deleteUser(userID);
     }
 }

@@ -10,11 +10,11 @@ export default class AuthService {
         this.userRepository = userRepository;
     }
 
-    login = async (user: ILoginProperties, next: NextFunction) => {
+    login = async (user: ILoginProperties) => {
         const userExists = await this.userRepository.findUserByEmailAndPassword(user.email, user.password);
-        
+
         if(!userExists) {
-            return next(new HttpError('Invalid email or password!', 400))
+            throw new HttpError('Invalid email or password!', 400);
         }
 
         return userExists;

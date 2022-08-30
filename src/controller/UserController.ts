@@ -18,52 +18,67 @@ export default class UserController{
     }
 
     createUser = async (request: Request, response: Response, next: NextFunction) => {
-        const user: IUserProperties = new UserModel(request.body.user);
+        try {
+            const user: IUserProperties = new UserModel(request.body.user);
 
-        if(!user.name || !user.birthday || !user.email || !user.phone || !user.password) {
-                return next(new HttpError("All fields are required!", 400));
+            if(!user.name || !user.birthday || !user.email || !user.phone || !user.password) {
+                throw new HttpError("All fields are required!", 400);
+            }
+    
+            const result = await this.userService.createUser(user);
+    
+            response.status(201).send({ user: result });
+        } catch(error: any) {
+            next(error)
         }
-
-        const result = await this.userService.createUser(user, next);
-
-        response.status(201).send({ user: result });
     }
 
     findUserById = async (request:Request, response: Response, next: NextFunction) => {
-        const userID = Number(request.params.userID);
+        try {
+            const userID = Number(request.params.userID);
 
-        if(isNaN(userID)) {
-            return next(new HttpError('ID must be a number', 403));
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+    
+            const result = await this.userService.findUserById(Number(request.params.userID));
+    
+            response.status(200).json({ user: result });
+        }  catch(error: any) {
+            next(error)
         }
-
-        const result = await this.userService.findUserById(Number(request.params.userID), next);
-        response.status(200).json({ user: result });
     }
 
     updateUser = async (request: Request, response: Response, next: NextFunction) => {
-        const user: IUserProperties = request.body.user;
-        const userID = Number(request.params.userID);
-
-        if(isNaN(userID)) {
-            return next(new HttpError('ID must be a number!', 403));
-        }
-
-        const result = await this.userService.updateUser(userID, user, next);
-
-        if(result) {
-            response.status(200).json({ user: user });
+        try {
+            const user: IUserProperties = request.body.user;
+            const userID = Number(request.params.userID);
+    
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number!', 403);
+            }
+    
+            const result = await this.userService.updateUser(userID, user);
+    
+            response.status(200).json({ user: user, result: result });
+        }  catch(error: any) {
+            next(error)
         }
     }
 
     deleteUSer = async (request: Request, response: Response, next: NextFunction) => {
-        const userID = Number(request.params.userID);
+        try {
+            const userID = Number(request.params.userID);
 
-        if(isNaN(userID)) {
-            return next(new HttpError('ID must be a number!', 403));
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number!', 403);
+            }
+    
+            const result = await this.userService.deleteUser(Number(request.params.userID));
+    
+            response.json({ message: "Usuário deletado com sucesso!" });
+        }  catch(error: any) {
+            next(error)
         }
-
-        const result = await this.userService.deleteUser(Number(request.params.userID));
-
-        response.json({ message: "Usuário deletado com sucesso!" });
     }
 }
