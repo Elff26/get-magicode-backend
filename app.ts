@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { json } from 'body-parser';
 import "reflect-metadata";
-import cors from "cors"
+import cors from "cors";
 
 import routes from './src/Routes'
 import errorMiddleware from "./src/middleware/ErrorMiddleware";
