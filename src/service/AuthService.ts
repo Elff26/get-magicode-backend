@@ -1,5 +1,6 @@
 import { NextFunction } from "express";
 import HttpError from "../exceptions/HttpError";
+import IChangePassProperties from "../interfaceType/IChangePassProperties";
 import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 
@@ -18,5 +19,17 @@ export default class AuthService {
         }
 
         return userExists;
+    }
+
+    changePassword = async (userID: number, password: string, newPassword: string) => {
+        const userExists = await this.userRepository.findUserByIdAndPassword(userID, password);
+
+        if(!userExists) {
+            throw new HttpError('Invalid password!', 400);
+        }
+
+        userExists.password = newPassword;
+
+        return this.userRepository.updateUser(userExists);
     }
 }

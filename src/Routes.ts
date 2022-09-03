@@ -14,5 +14,5 @@ router.put("/UpdateUser/:userID", userController.updateUser);
 router.delete("/DeleteUser/:userID", userController.deleteUSer);
 
 router.post("/Login", authControler.login);
-
+router.put("/ChangePassword/:userID", authControler.changePassword);
 export default router; 

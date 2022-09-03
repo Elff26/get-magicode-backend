@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
+import IChangePassProperties from "../interfaceType/IChangePassProperties";
 import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
@@ -31,5 +32,22 @@ export default class UserController{
         } catch(error: any) {
             next(error);
         }
+    }
+
+    changePassword = async (request: Request, response: Response, next: NextFunction) => {
+       try {
+            const user: IChangePassProperties = request.body;
+            const userID = Number(request.params.userID);
+    
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number!', 403);
+            }
+
+            const result = await this.authService.changePassword(userID, user.password, user.newPassword)
+            response.status(200).json({ user: result });
+            
+       } catch(error: any) {
+        next(error);
+       }
     }
 }

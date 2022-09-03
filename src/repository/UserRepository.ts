@@ -10,46 +10,58 @@ export default class UserRepository implements IUserRepository{
     constructor(){
         this.userRepository = AppDataSource.manager.getRepository(User);
     }
-
+    
     createUser = async (user: UserModel) =>{
         return await this.userRepository.save(user);
     }
-
+    
     findUserById = async (userID: number) => {
         return await this.userRepository.findOneBy({
             userID: userID,
         })
     }
-
+    
     findUserByEmailOrPhone = async (email: string, phone: string) => {
         return await this.userRepository.createQueryBuilder('User')
-            .where({
-                email
-            })
-            .orWhere({
-                phone
-            })
-            .getOne();
+        .where({
+            email
+        })
+        .orWhere({
+            phone
+        })
+        .getOne();
     }
-
+    
     updateUser = async (user: UserModel) => {
         return await this.userRepository.save(user);
     }
-
+    
     deleteUser = async (userID: number) => {
         return await this.userRepository.delete({
             userID,
         });
     }
-
+    
     findUserByEmailAndPassword = async (email: string, password: string) => {
         return await this.userRepository.createQueryBuilder('User')
-            .where({
-                email
-            })
-            .andWhere({
-                password
-            })
-            .getOne();
+        .where({
+            email
+        })
+        .andWhere({
+            password
+        })
+        .getOne();
     }
+
+    findUserByIdAndPassword = async (userID: number, password: string) => {
+        return await this.userRepository.createQueryBuilder('User')
+        .where({
+            userID
+        })
+        .andWhere({
+            password
+        })
+        .getOne();
+    }
+    
 }

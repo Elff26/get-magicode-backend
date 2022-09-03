@@ -10,4 +10,5 @@ export default interface IUserRepository{
     findUserByEmailOrPhone:(email: string, phone: string) => Promise<UserModel | null>;
 
     findUserByEmailAndPassword:(email:string, password: string ) => Promise<UserModel | null>;
+    findUserByIdAndPassword:(userID:number, password: string ) => Promise<UserModel | null>;
 }
