@@ -52,4 +52,12 @@ export default class UserRepository implements IUserRepository{
             })
             .getOne();
     }
+
+    insertCodeAndDatePasswordbyUser = async(code: number, date: string, email: string) =>{
+        return await this.userRepository.createQueryBuilder()
+                                        .update('User')
+                                        .set({codeChangePassword:code, expirationDate: date})
+                                        .where({email})
+                                        .execute();
+    }
 }

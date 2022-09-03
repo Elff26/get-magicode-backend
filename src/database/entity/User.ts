@@ -35,4 +35,10 @@ export class User{
 
     @Column({name: "cd_ranking", type: "integer", nullable: false, default: 0})
     ranking: number
+
+    @Column({name:"cod_alteracao_senha", type:"integer", nullable:false, default: 0 })
+    codeChangePassword: number
+
+    @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
+    expirationDate: string
 }

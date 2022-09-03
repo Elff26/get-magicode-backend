@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
+require('dotenv').config()
+import express from 'express';
 import { json } from 'body-parser';
 import "reflect-metadata";
 import cors from "cors";

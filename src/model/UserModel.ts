@@ -13,6 +13,8 @@ export default class UserModel{
         this.createdAt = user.createdAt;
         this.goal = user.goal;
         this.ranking = user.ranking;
+        this.codeChangePassword = user.codeChangePassword;
+        this.expirationDate = user.expirationDate;
     }
 
     userID: number
@@ -26,4 +28,6 @@ export default class UserModel{
     createdAt?: Date
     goal: number
     ranking: number
+    codeChangePassword: number
+    expirationDate: string
 }
