@@ -10,4 +10,6 @@ export default interface IUserProperties {
     createdAt?: Date
     goal: number
     ranking: number
+    codeChangePassword: number
+    expirationDate: string
 }

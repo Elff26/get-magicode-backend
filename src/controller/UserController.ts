@@ -81,4 +81,17 @@ export default class UserController{
             next(error)
         }
     }
+
+    insertCodeAndDatePasswordbyUser = async(request: Request, response: Response, next: NextFunction) =>{
+        try{
+            const email = request.body.email;
+
+            const result = await this.userService.insertCodeAndDatePasswordbyUser(email);
+    
+            response.status(200).json({ message: "Codigo e Data de Expiração gerados com sucesso!" });
+
+        }catch(error: any){
+            next(error)
+        }
+    }
 }

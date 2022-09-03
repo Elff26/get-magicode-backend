@@ -2,6 +2,8 @@ import HttpError from "../exceptions/HttpError";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
+import codeAndDateGenerator from "../utils/CodeAndDateGenerator";
+import SendEmail from "../utils/SendEmail";
 
 export default class UserService{
     private userRepository: IUserRepository;
@@ -51,5 +53,18 @@ export default class UserService{
         }
 
         return await this.userRepository.deleteUser(userID);
+    }
+
+    insertCodeAndDatePasswordbyUser = async (email: string) =>{
+        const userExists = await this.userRepository.findUserByEmailOrPhone(email, "");
+        const response = codeAndDateGenerator(1,9999);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+        const sendEmail = new SendEmail();
+        sendEmail.sendEmail(response.code,response.expirationDate.toString());
+
+        return await this.userRepository.insertCodeAndDatePasswordbyUser(response.code,response.expirationDate.toString(),email)
     }
 }
