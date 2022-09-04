@@ -1,3 +1,4 @@
+import GoalModel from "../model/GoalModel";
 import TechnologyModel from "../model/TechnologieModel";
 
 export default interface IUserProperties {
@@ -10,7 +11,7 @@ export default interface IUserProperties {
     numberOfLifes: number
     xp: number
     createdAt?: Date
-    goal: number
+    goal: GoalModel
     ranking: number
     codeChangePassword: string
     expirationDate: Date

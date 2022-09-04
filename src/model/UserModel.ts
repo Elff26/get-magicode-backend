@@ -1,4 +1,5 @@
 import UserProperties from "../interfaceType/IUserProperties";
+import GoalModel from "./GoalModel";
 import TechnologyModel from "./TechnologieModel";
 
 export default class UserModel{
@@ -28,7 +29,7 @@ export default class UserModel{
     numberOfLifes: number
     xp: number
     createdAt?: Date
-    goal: number
+    goal: GoalModel
     ranking: number
     codeChangePassword: string
     expirationDate: Date

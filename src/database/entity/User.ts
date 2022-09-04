@@ -33,8 +33,8 @@ export class User{
     createdAt: Date
 
     @ManyToOne(()=> Goal, (goal) => goal.goalID)
-    @Column({name: "cd_meta", type: "integer", nullable: false, default: 0})
-    goal: number
+    @Column({name: "cd_meta", type: "integer", nullable: true})
+    goal: Goal
 
     @Column({name: "cd_ranking", type: "integer", nullable: false, default: 0})
     ranking: number

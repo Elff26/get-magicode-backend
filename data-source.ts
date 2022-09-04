@@ -1,15 +1,15 @@
-import * as SQLite from 'sqlite3'
 import { DataSource } from 'typeorm'
 import { User } from './src/database/entity/User'
 import "reflect-metadata"
 import { Technology } from './src/database/entity/Technology'
+import { Goal } from './src/database/entity/Goal'
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
    database: "./GetMagiCode.sqlite",
    synchronize: true,
    logging: true,
-   entities: [User, Technology],
+   entities: [User, Technology, Goal],
    migrations: ['src/migrations/*{.ts,.js}']
 })
 AppDataSource.initialize()

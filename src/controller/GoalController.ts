@@ -20,7 +20,8 @@ export default class GoalController {
 
     createGoal = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const goal: IGoalProperties = request.body.goalID;
+            const goal: IGoalProperties = request.body.goal;
+            console.log(goal, "Controller")
             const result = await this.goalService.createGoal(goal);
             
             response.status(200).json({ user: result });
@@ -29,20 +30,20 @@ export default class GoalController {
         }
     }
 
-    associateUserToTechnology = async (request: Request, response: Response, next: NextFunction) => {
-        try {
-            const goal: IGoalProperties = request.body.goal;
-            const userID = Number(request.params.userID);
+    // associateUserToTechnology = async (request: Request, response: Response, next: NextFunction) => {
+    //     try {
+    //         const goal: IGoalProperties = request.body.goal;
+    //         const userID = Number(request.params.userID);
 
-            if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
-            }
+    //         if(isNaN(userID)) {
+    //             throw new HttpError('ID must be a number', 403);
+    //         }
 
-            const result = await this.goalService.associateUserToGoal(userID, goal);
+    //         const result = await this.goalService.associateUserToGoal(userID, goal);
             
-            response.status(200).json({ user: result });
-        } catch(error: any) {
-            next(error);
-        }
-    }
+    //         response.status(200).json({ user: result });
+    //     } catch(error: any) {
+    //         next(error);
+    //     }
+    // }
 }
