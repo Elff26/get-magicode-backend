@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
-import IChangePassProperties from "../interfaceType/IChangePassProperties";
-import ILoginProperties from "../interfaceType/ILoginProperties";
 import ITechnologyProperties from "../interfaceType/ITechnologyProperties";
-import IUserProperties from "../interfaceType/IUserProperties";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import TechnologyRepository from "../repository/TechnologieRepository";
 import UserRepository from "../repository/UserRepository";
-import AuthService from "../service/AuthService";
 import TechnologyService from "../service/TechnologieService";
 
 export default class TechnologyController{

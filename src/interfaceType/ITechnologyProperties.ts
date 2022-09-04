@@ -1,4 +1,3 @@
-
 import UserModel from "../model/UserModel";
 
 export default interface ITechnologyProperties {

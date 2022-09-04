@@ -1,14 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class Goal {
 
-    @PrimaryGeneratedColumn()
-    cd_meta: number;
+    @PrimaryGeneratedColumn({name: "cd_meta"})
+    goalID: number;
 
-    @Column({type: "varchar", length: 10, nullable:false})
-    nm_meta: string;
+    @Column({name:"nm_meta",type: "varchar", length: 10, nullable:false})
+    name: string;
 
-    @Column({type: "integer", nullable:false})
-    vl_meta: number;
+    @Column({name: "vl_meta", type: "integer", nullable:false})
+    value: number;
 }

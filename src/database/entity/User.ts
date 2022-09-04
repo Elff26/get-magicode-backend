@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { Goal } from "./Goal";
 import { Technology } from "./Technology";
 
 @Entity()
@@ -31,6 +32,7 @@ export class User{
     @CreateDateColumn({ name: "dt_criacao" })
     createdAt: Date
 
+    @ManyToOne(()=> Goal, (goal) => goal.goalID)
     @Column({name: "cd_meta", type: "integer", nullable: false, default: 0})
     goal: number
 
