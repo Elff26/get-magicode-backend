@@ -98,7 +98,7 @@ export default class UserController{
     verificationCode = async (request: Request, response: Response, next: NextFunction) => {
         try{
             const userID = Number(request.params.userID);
-            const code = Number(request.body.codeChangePassword);
+            const code = request.body.codeChangePassword;
             
             if(isNaN(userID)){
                 throw new HttpError('ID must be a number!', 403);

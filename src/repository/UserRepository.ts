@@ -10,6 +10,10 @@ export default class UserRepository implements IUserRepository{
     constructor(){
         this.userRepository = AppDataSource.manager.getRepository(User);
     }
+
+    save = async (user: UserModel) => {
+        return await this.userRepository.save(user);
+    }
     
     createUser = async (user: UserModel) =>{
         return await this.userRepository.save(user);
@@ -23,13 +27,13 @@ export default class UserRepository implements IUserRepository{
     
     findUserByEmailOrPhone = async (email: string, phone: string) => {
         return await this.userRepository.createQueryBuilder('User')
-        .where({
-            email
-        })
-        .orWhere({
-            phone
-        })
-        .getOne();
+            .where({
+                email
+            })
+            .orWhere({
+                phone
+            })
+            .getOne();
     }
     
     updateUser = async (user: UserModel) => {

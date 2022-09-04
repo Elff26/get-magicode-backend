@@ -85,6 +85,5 @@ export default class UserService{
         }
         
         return user;
-
     }
 }

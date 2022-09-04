@@ -1,3 +1,5 @@
+import TechnologyModel from "../model/TechnologieModel";
+
 export default interface IUserProperties {
     userID: number;
     name: string
@@ -12,4 +14,5 @@ export default interface IUserProperties {
     ranking: number
     codeChangePassword: string
     expirationDate: Date
+    technologies: TechnologyModel[]
 }

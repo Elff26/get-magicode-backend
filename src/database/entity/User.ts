@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Technology } from "./Technology";
 
 @Entity()
 export class User{
@@ -41,4 +42,8 @@ export class User{
 
     @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
     expirationDate: Date
+
+    @ManyToMany(() => Technology, (technology) => technology.users)
+    @JoinTable({ name: "T_USUARIO_TECNOLOGIA" })
+    technologies: Technology[]
 }

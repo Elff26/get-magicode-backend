@@ -1,4 +1,5 @@
 import UserProperties from "../interfaceType/IUserProperties";
+import TechnologyModel from "./TechnologieModel";
 
 export default class UserModel{
     constructor(user: UserProperties){
@@ -15,6 +16,7 @@ export default class UserModel{
         this.ranking = user.ranking;
         this.codeChangePassword = user.codeChangePassword;
         this.expirationDate = user.expirationDate;
+        this.technologies = user.technologies;
     }
 
     userID: number
@@ -30,4 +32,5 @@ export default class UserModel{
     ranking: number
     codeChangePassword: string
     expirationDate: Date
+    technologies: TechnologyModel[]
 }
