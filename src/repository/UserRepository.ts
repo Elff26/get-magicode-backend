@@ -65,7 +65,7 @@ export default class UserRepository implements IUserRepository{
     }
     
 
-    insertCodeAndDatePasswordbyUser = async(code: number, date: string, email: string) =>{
+    insertCodeAndDatePasswordbyUser = async(code: string, date: string, email: string) =>{
         return await this.userRepository.createQueryBuilder()
                                         .update('User')
                                         .set({codeChangePassword:code, expirationDate: date})

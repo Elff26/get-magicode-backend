@@ -70,7 +70,7 @@ export default class UserService{
         return userExists.userID;
     }
 
-    verificationCode = async (code: number, userID: number) =>{
+    verificationCode = async (code: string, userID: number) =>{
         const user = await this.userRepository.findUserById(userID);
         const dateCurrent = new Date()
 

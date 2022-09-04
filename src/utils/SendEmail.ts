@@ -6,7 +6,7 @@ export default class SendEmail{
     constructor(){
     }
 
-    sendEmail = (code:number, expirationDate: string) =>{
+    sendEmail = (code:string, expirationDate: string) =>{
         let mailOptions = {
             from: "portalband@band.com.br",
             to: "lukas27@ethereal.email",

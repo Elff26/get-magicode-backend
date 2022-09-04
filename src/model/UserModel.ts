@@ -28,6 +28,6 @@ export default class UserModel{
     createdAt?: Date
     goal: number
     ranking: number
-    codeChangePassword: number
+    codeChangePassword: string
     expirationDate: Date
 }

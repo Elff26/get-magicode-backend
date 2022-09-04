@@ -12,7 +12,7 @@ export default interface IUserRepository{
 
     findUserByIdAndPassword:(userID:number, password: string ) => Promise<UserModel | null>;
 
-    insertCodeAndDatePasswordbyUser:(code: number, date: string, email: string) => Promise<UpdateResult>;
+    insertCodeAndDatePasswordbyUser:(code: string, date: string, email: string) => Promise<UpdateResult>;
 
     verificationResetPassword:(userID: number, passwordReset: string) => Promise<UpdateResult>;
 

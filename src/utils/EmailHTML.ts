@@ -1,4 +1,4 @@
-const bodyMail = (code:number, expirationDate: string) =>{
+const bodyMail = (code:string, expirationDate: string) =>{
     return    `<html>
                     <head>
                         <style>
