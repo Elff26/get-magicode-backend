@@ -1,7 +1,5 @@
 import HttpError from "../exceptions/HttpError";
 import ITechnologyProperties from "../interfaceType/ITechnologyProperties";
-import IUserProperties from "../interfaceType/IUserProperties";
-import UserModel from "../model/UserModel";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 

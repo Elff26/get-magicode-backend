@@ -3,12 +3,14 @@ import { Router, Request, Response } from 'express';
 import UserController from './controller/UserController';
 import AuthController from './controller/AuthController';
 import TechnologyController from './controller/TechnologieController';
+import GoalController from './controller/GoalController';
 
 const router = Router();
 
 const userController = new UserController();
 const authControler = new AuthController();
 const technologyController = new TechnologyController();
+const goalController = new GoalController();
 
 router.get("/FindUserById/:userID", userController.findUserById);
 router.post("/CreateUser", userController.createUser);
@@ -23,5 +25,9 @@ router.put("/ChangePassword/:userID", authControler.changePassword);
 router.post("/CreateTechnology", technologyController.createTechnology);
 router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
 router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
+
+router.post("/CreateGoal", goalController.createGoal);
+router.post("/AssociateToGoal/:userID", goalController.associateUserToTechnology);
+
 
 export default router; 
