@@ -75,14 +75,12 @@ export default class UserService{
         const dateCurrent = new Date()
 
         if(!user || !user.expirationDate) {
-
             throw new HttpError('User not found!', 404);
         }
-        const expirationDate = new Date(user.expirationDate); 
-        console.log(expirationDate.getDate());
-        console.log(dateCurrent.getDate());
         
-        if(user.codeChangePassword != code || expirationDate.getDate() > dateCurrent.getDate()){
+        const expirationDate = new Date(user.expirationDate); 
+
+        if(user.codeChangePassword != code || expirationDate.getTime() > dateCurrent.getTime()){
             throw new HttpError('Code stay invalid!', 404);
         }
         
