@@ -8,7 +8,10 @@ export class Technology{
     technologyID: number;
 
     @Column({name: "nm_tecnologia", type: "varchar", length: 60, nullable: false})
-    name: string
+    name: string;
+
+    @Column({name: "ds_url_imagem", type: "varchar", length: 500, nullable: false})
+    imageUrl: string;
 
     @ManyToMany(() => User, (user) => user.technologies)
     @JoinTable({ name: "T_USUARIO_TECNOLOGIA" })

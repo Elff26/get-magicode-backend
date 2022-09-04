@@ -16,7 +16,6 @@ export default class TechnologyService{
     }
 
     listAllTechnologies = async () => {
-        console.log("A")
         return await this.technologyRepository.listAllTechnologies();
     }
 
