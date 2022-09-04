@@ -22,6 +22,16 @@ export default class TechnologyController{
         this.technologyService = new TechnologyService(this.userRepository, this.technologyRepository);
     }
 
+    listAllTechnologies = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const result = await this.technologyService.listAllTechnologies();
+            
+            response.status(200).json({ technologies: result });
+        } catch(error: any) {
+            next(error);
+        }
+    }
+
     createTechnology = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const technology: ITechnologyProperties = request.body.technology;

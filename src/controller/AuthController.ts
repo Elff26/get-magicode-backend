@@ -2,12 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
 import IChangePassProperties from "../interfaceType/IChangePassProperties";
 import ILoginProperties from "../interfaceType/ILoginProperties";
-import IUserProperties from "../interfaceType/IUserProperties";
-import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import AuthService from "../service/AuthService";
-import UserService from "../service/UserService";
 
 export default class UserController{
     private userRepository: IUserRepository
