@@ -15,8 +15,11 @@ export default class TechnologyService{
         this.technologyRepository = technologyRepository
     }
 
+    listAllTechnologies = async () => {
+        return await this.technologyRepository.listAllTechnologies();
+    }
+
     createTechnology = async (technology: ITechnologyProperties) => {
-        console.log(technology)
         return await this.technologyRepository.save(technology);
     }
 

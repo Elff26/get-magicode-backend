@@ -11,6 +11,12 @@ export default class TechnologyRepository implements ITechnologyRepository{
         this.technologyRepository = AppDataSource.manager.getRepository(Technology);
     }
 
+    listAllTechnologies = async () => {
+        return await this.technologyRepository.createQueryBuilder('Technology')
+                                                                .select("Technology")
+                                                                .getMany();
+    }
+
     save = async (technology: TechnologyModel) => {
         return await this.technologyRepository.save(technology);
     }

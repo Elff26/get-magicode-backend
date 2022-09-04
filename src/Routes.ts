@@ -22,5 +22,6 @@ router.put("/ChangePassword/:userID", authControler.changePassword);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
 router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
+router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
 
 export default router; 
