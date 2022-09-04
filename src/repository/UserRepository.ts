@@ -72,4 +72,12 @@ export default class UserRepository implements IUserRepository{
                                         .where({email})
                                         .execute();
     }
+
+    verificationResetPassword = async (userID: number, passwordReset: string) =>{
+        return await this.userRepository.createQueryBuilder()
+                                        .update('User')
+                                        .set({password:passwordReset})
+                                        .where({userID})
+                                        .execute();
+    }
 }

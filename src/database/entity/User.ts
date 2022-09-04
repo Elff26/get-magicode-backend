@@ -40,5 +40,5 @@ export class User{
     codeChangePassword: number
 
     @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
-    expirationDate: string
+    expirationDate: Date
 }

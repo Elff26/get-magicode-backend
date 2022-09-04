@@ -65,6 +65,28 @@ export default class UserService{
         const sendEmail = new SendEmail();
         sendEmail.sendEmail(response.code,response.expirationDate.toString());
 
-        return await this.userRepository.insertCodeAndDatePasswordbyUser(response.code,response.expirationDate.toString(),email)
+        await this.userRepository.insertCodeAndDatePasswordbyUser(response.code,response.expirationDate.toString(),email)
+
+        return userExists.userID;
+    }
+
+    verificationCode = async (code: number, userID: number) =>{
+        const user = await this.userRepository.findUserById(userID);
+        const dateCurrent = new Date()
+
+        if(!user || !user.expirationDate) {
+
+            throw new HttpError('User not found!', 404);
+        }
+        const expirationDate = new Date(user.expirationDate); 
+        console.log(expirationDate.getDate());
+        console.log(dateCurrent.getDate());
+        
+        if(user.codeChangePassword != code || expirationDate.getDate() > dateCurrent.getDate()){
+            throw new HttpError('Code stay invalid!', 404);
+        }
+        
+        return user;
+
     }
 }

@@ -86,10 +86,28 @@ export default class UserController{
         try{
             const email = request.body.email;
 
-            const result = await this.userService.insertCodeAndDatePasswordbyUser(email);
-    
-            response.status(200).json({ message: "Codigo e Data de Expiração gerados com sucesso!" });
+            const userID = await this.userService.insertCodeAndDatePasswordbyUser(email);
 
+            response.status(200).json({ message: "Codigo e Data de Expiração gerados com sucesso!", userID});
+
+        }catch(error: any){
+            next(error)
+        }
+    }
+
+    verificationCode = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const userID = Number(request.params.userID);
+            const code = Number(request.body.codeChangePassword);
+            
+            if(isNaN(userID)){
+                throw new HttpError('ID must be a number!', 403);
+            }
+
+            const result = await this.userService.verificationCode(code, userID)
+
+            response.status(200).json({ message: "Código verificado com sucesso"});
+            
         }catch(error: any){
             next(error)
         }

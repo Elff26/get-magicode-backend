@@ -14,4 +14,6 @@ export default interface IUserRepository{
 
     insertCodeAndDatePasswordbyUser:(code: number, date: string, email: string) => Promise<UpdateResult>;
 
+    verificationResetPassword:(userID: number, passwordReset: string) => Promise<UpdateResult>;
+
 }

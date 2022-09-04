@@ -12,7 +12,8 @@ router.get("/FindUserById/:userID", userController.findUserById);
 router.post("/CreateUser", userController.createUser);
 router.put("/UpdateUser/:userID", userController.updateUser);
 router.delete("/DeleteUser/:userID", userController.deleteUSer);
-router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser)
+router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser);
+router.post("/VerificationCode/:userID", userController.verificationCode);
 
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);

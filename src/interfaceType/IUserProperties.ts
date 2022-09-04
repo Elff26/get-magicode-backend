@@ -11,5 +11,5 @@ export default interface IUserProperties {
     goal: number
     ranking: number
     codeChangePassword: number
-    expirationDate: string
+    expirationDate: Date
 }

@@ -29,5 +29,5 @@ export default class UserModel{
     goal: number
     ranking: number
     codeChangePassword: number
-    expirationDate: string
+    expirationDate: Date
 }
