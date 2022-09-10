@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
 import { Goal } from "./Goal";
 import { Technology } from "./Technology";
 
@@ -32,8 +32,8 @@ export class User{
     @CreateDateColumn({ name: "dt_criacao" })
     createdAt: Date
 
-    @ManyToOne(()=> Goal, (goal) => goal.goalID)
-    @Column({name: "cd_meta", type: "integer", nullable: true})
+    @ManyToOne(() => Goal,{eager: true})
+    @JoinColumn({name: "cd_meta"})
     goal: Goal
 
     @Column({name: "cd_ranking", type: "integer", nullable: false, default: 0})
@@ -48,4 +48,7 @@ export class User{
     @ManyToMany(() => Technology, (technology) => technology.users)
     @JoinTable({ name: "T_USUARIO_TECNOLOGIA" })
     technologies: Technology[]
+
+    @Column({name:"nr_xp_dia", type:"integer", default: 0})
+    dailyXP: number
 }

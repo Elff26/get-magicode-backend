@@ -24,10 +24,7 @@ export default class GoalService{
             throw new HttpError('User not found!', 404);
         }
 
-        console.log("UserExists",userExists.goal)
-        console.log(goal.goalID)
-
-        userExists.goal = goal;
+        userExists.goal = goal
 
         return await this.userRepository.save(userExists);
     }

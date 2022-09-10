@@ -5,7 +5,7 @@ import UserModel from "../../model/UserModel";
 export default interface IUserRepository{
     save:(user: UserModel) => Promise<UserModel>;
     createUser:(user: UserModel) => Promise<UserModel>;
-    findUserById:(userID: number) => Promise<User | null>;
+    findUserById:(userID: number) => Promise<UserModel | null>;
     updateUser:(user: UserModel) => Promise<UserModel | null>;
     deleteUser:(userID: number) => Promise<DeleteResult>;
     findUserByEmailOrPhone:(email: string, phone: string) => Promise<User | null>;

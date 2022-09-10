@@ -29,5 +29,4 @@ router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
 router.post("/CreateGoal", goalController.createGoal);
 router.post("/AssociateToGoal/:userID", goalController.associateUserToTechnology);
 
-
 export default router; 
