@@ -27,7 +27,7 @@ router.post("/AssociateToTechnology/:userID", technologyController.associateUser
 router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
 
 router.post("/CreateGoal", goalController.createGoal);
-//router.post("/AssociateToGoal/:userID", goalController.associateUserToTechnology);
+router.post("/AssociateToGoal/:userID", goalController.associateUserToTechnology);
 
 
 export default router; 

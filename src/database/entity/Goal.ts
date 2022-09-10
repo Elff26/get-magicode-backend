@@ -11,5 +11,5 @@ export class Goal {
     name: string;
 
     @Column({name: "vl_meta", type: "integer", nullable:false})
-    value: number;
+    value?: number;
 }

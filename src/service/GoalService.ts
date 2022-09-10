@@ -17,15 +17,18 @@ export default class GoalService{
         return await this.goalRepository.save(goal);
     }
 
-    // associateUserToGoal = async (userID: number, goal: IGoalProperties) => {
-    //     const userExists = await this.userRepository.findUserById(userID);
+    associateUserToGoal = async (userID: number, goal: IGoalProperties) => {
+        const userExists = await this.userRepository.findUserById(userID);
 
-    //     if(!userExists) {
-    //         throw new HttpError('User not found!', 404);
-    //     }
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
 
-    //     userExists.goal = goal;
+        console.log("UserExists",userExists.goal)
+        console.log(goal.goalID)
 
-    //     return await this.userRepository.save(userExists);
-    // }
+        userExists.goal = goal;
+
+        return await this.userRepository.save(userExists);
+    }
 }

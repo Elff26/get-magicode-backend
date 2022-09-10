@@ -28,7 +28,6 @@ export default class TechnologyService{
             throw new HttpError('User not found!', 404);
         }
 
-        console.log(technologies);
         userExists.technologies = technologies;
 
         return await this.userRepository.save(userExists);
