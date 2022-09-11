@@ -1,6 +1,6 @@
 import UserProperties from "../interfaceType/IUserProperties";
 import GoalModel from "./GoalModel";
-import TechnologyModel from "./TechnologieModel";
+import UserTechnologyModel from "./UserTechnologyModel";
 
 export default class UserModel{
     constructor(user: UserProperties){
@@ -33,5 +33,5 @@ export default class UserModel{
     ranking: number
     codeChangePassword: string
     expirationDate: Date
-    technologies: TechnologyModel[]
+    technologies: UserTechnologyModel[]
 }

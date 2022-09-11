@@ -1,5 +1,5 @@
 import GoalModel from "../model/GoalModel";
-import TechnologyModel from "../model/TechnologieModel";
+import UserTechnologyModel from "../model/UserTechnologyModel";
 
 export default interface IUserProperties {
     userID: number;
@@ -15,5 +15,5 @@ export default interface IUserProperties {
     ranking: number
     codeChangePassword: string
     expirationDate: Date
-    technologies: TechnologyModel[]
+    technologies: UserTechnologyModel[]
 }

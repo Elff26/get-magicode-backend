@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany, JoinColumn } from "typeorm";
 import { User } from "./User";
+import { UserTechnology } from "./UserTechnology";
 
 @Entity()
 export class Technology{
@@ -13,7 +14,7 @@ export class Technology{
     @Column({name: "ds_url_imagem", type: "varchar", length: 500, nullable: false})
     imageUrl: string;
 
-    @ManyToMany(() => User, (user) => user.technologies)
-    @JoinTable({ name: "T_USUARIO_TECNOLOGIA" })
-    users: User[]
+    @OneToMany(() => UserTechnology, (userTechnology) => userTechnology.technology)
+    @JoinColumn({ name: 'tecnologia_usuario' })
+    users: UserTechnology[]
 }

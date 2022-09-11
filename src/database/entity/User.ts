@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Goal } from "./Goal";
 import { Technology } from "./Technology";
+import { UserTechnology } from "./UserTechnology";
 
 @Entity()
 export class User{
@@ -45,9 +46,14 @@ export class User{
     @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
     expirationDate: Date
 
-    @ManyToMany(() => Technology, (technology) => technology.users)
-    @JoinTable({ name: "T_USUARIO_TECNOLOGIA" })
-    technologies: Technology[]
+    @OneToMany(() => UserTechnology, (userTechnology) => userTechnology.user, {
+        cascade: true,
+        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        eager: true
+    })
+    @JoinColumn({name: "usuario_tecnologia"})
+    technologies: UserTechnology[]
 
     @Column({name:"nr_xp_dia", type:"integer", default: 0})
     dailyXP: number

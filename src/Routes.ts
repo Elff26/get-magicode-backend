@@ -25,8 +25,9 @@ router.put("/ChangePassword/:userID", authControler.changePassword);
 router.post("/CreateTechnology", technologyController.createTechnology);
 router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
 router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
+router.post('/ChangeLearningTrail', technologyController.changeLearningTrail);
 
 router.post("/CreateGoal", goalController.createGoal);
-router.post("/AssociateToGoal/:userID", goalController.associateUserToTechnology);
+router.post("/AssociateToGoal/:userID", goalController.associateUserToGoal);
 
 export default router; 

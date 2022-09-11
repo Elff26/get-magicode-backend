@@ -21,7 +21,7 @@ export default class GoalController {
     createGoal = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const goal: IGoalProperties = request.body.goal;
-            console.log(goal, "Controller")
+
             const result = await this.goalService.createGoal(goal);
             
             response.status(200).json({ user: result });
@@ -30,7 +30,7 @@ export default class GoalController {
         }
     }
 
-    associateUserToTechnology = async (request: Request, response: Response, next: NextFunction) => {
+    associateUserToGoal = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const goal: IGoalProperties = request.body.goal;
             const userID = Number(request.params.userID);

@@ -1,5 +1,6 @@
 import ITechnologyProperties from "../interfaceType/ITechnologyProperties";
 import UserModel from "./UserModel";
+import UserTechnologyModel from "./UserTechnologyModel";
 
 export default class TechnologyModel {
     constructor(tecnology: ITechnologyProperties) {
@@ -12,5 +13,5 @@ export default class TechnologyModel {
     technologyID: number;
     name: string;
     imageUrl: string;
-    users?: UserModel[];
+    users?: UserTechnologyModel[];
 }

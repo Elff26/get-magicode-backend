@@ -1,16 +1,20 @@
 import HttpError from "../exceptions/HttpError";
 import ITechnologyProperties from "../interfaceType/ITechnologyProperties";
+import IUserTechnologyProperties from "../interfaceType/IUserTechnologiesProperties";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import IUserTechnologyRepository from "../repository/interface/IUserTechnologyRepository";
 
 
 export default class TechnologyService{
     private userRepository: IUserRepository;
-    private technologyRepository: ITechnologyRepository
+    private technologyRepository: ITechnologyRepository;
+    private userTechnologyRepository: IUserTechnologyRepository;
 
-    constructor(userRepository: IUserRepository, technologyRepository: ITechnologyRepository){
+    constructor(userRepository: IUserRepository, technologyRepository: ITechnologyRepository, userTechnologyRepository: IUserTechnologyRepository){
         this.userRepository = userRepository;
-        this.technologyRepository = technologyRepository
+        this.technologyRepository = technologyRepository;
+        this.userTechnologyRepository = userTechnologyRepository;
     }
 
     listAllTechnologies = async () => {
@@ -21,16 +25,41 @@ export default class TechnologyService{
         return await this.technologyRepository.save(technology);
     }
 
-    associateUserToTechnology = async (userID: number, technologies: ITechnologyProperties[]) => {
+    associateUserToTechnology = async (userID: number, technologies: IUserTechnologyProperties[]) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
         }
 
+        userExists.technologies.forEach(async (tech) => {
+            await this.userTechnologyRepository.delete(tech.userTechnologyID);
+        });
+        
         userExists.technologies = technologies;
-
+        
         return await this.userRepository.save(userExists);
     }
     
+    changeLearningTrail = async (userTechnology: IUserTechnologyProperties) => {
+        const userExists = await this.userRepository.findUserById(userTechnology.user.userID);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        userExists.technologies = userExists.technologies.map(tech => {
+            if(tech.learning) {
+                tech.learning = false;
+            }
+
+            if(tech.user.userID === userTechnology.user.userID && tech.technology.technologyID === userTechnology.technology.technologyID) {
+                tech.learning = true;
+            }
+            
+            return tech;
+        });
+
+        return await this.userRepository.save(userExists);
+    }
 }
