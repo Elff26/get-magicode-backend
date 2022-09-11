@@ -7,5 +7,4 @@ export default class GoalModel{
     }
     goalID: number
     name: string
-
 }

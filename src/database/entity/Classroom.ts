@@ -1,26 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Technology } from "./Technology";
 
 @Entity()
 export class Classroom{
-
     @PrimaryGeneratedColumn()
-    cd_aula: number;
+    classroomID: number;
 
-    @Column({type: "varchar", length: 50, nullable: false})
-    nm_aula: string
+    @Column({name:"nm_aula",type: "varchar", length: 50, nullable: false})
+    name: string
 
-    @Column({type: "varchar", length: 400, nullable: false})
-    ds_conteudo: string
+    //TODO: Mudar type para jsonb em ambiente de PROD
+    @Column({name:"ds_conteudo",type: "varchar", nullable: false})
+    description: string
 
-    @CreateDateColumn()
-    dt_criacao: Date
+    @CreateDateColumn({name: "dt_criacao"})
+    creationDate: Date
 
-    @UpdateDateColumn()
-    dt_modificacao: Date
+    @UpdateDateColumn({name:"dt_modificacao"})
+    modificationDate: Date
 
-    @Column({type: "integer", nullable: false})
-    cd_tecnologia: number
+    @ManyToOne(()=> Technology, {eager: true})
+    @JoinColumn({name:"cd_tecnologia"})
+    technologyCode: Technology
 
-    @Column({type: "integer", nullable: false})
-    cd_categoria: number
+    @Column({name: "cd_categoria",type: "integer", nullable: false})
+    categoryCode: number
 }

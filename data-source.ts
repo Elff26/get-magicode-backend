@@ -4,13 +4,14 @@ import "reflect-metadata"
 import { Technology } from './src/database/entity/Technology'
 import { Goal } from './src/database/entity/Goal'
 import { UserTechnology } from './src/database/entity/UserTechnology'
+import { Classroom } from './src/database/entity/Classroom'
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
    database: "./GetMagiCode.sqlite",
    synchronize: true,
    logging: true,
-   entities: [User, Technology, Goal, UserTechnology],
+   entities: [User, Technology, Goal, UserTechnology, Classroom],
    migrations: ['src/migrations/*{.ts,.js}']
 })
 AppDataSource.initialize()

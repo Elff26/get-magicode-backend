@@ -39,7 +39,7 @@ export default class TechnologyController{
 
             const result = await this.technologyService.createTechnology(technology);
             
-            response.status(200).json({ user: result });
+            response.status(200).json({ technology: result });
         } catch(error: any) {
             next(error);
         }
