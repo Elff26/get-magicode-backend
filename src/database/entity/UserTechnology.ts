@@ -4,7 +4,7 @@ import { User } from "./User";
 
 @Entity({ name: 'user_technology' })
 export class UserTechnology {
-    @PrimaryGeneratedColumn('uuid', {
+    @PrimaryGeneratedColumn('increment', {
         name: "usuario_tecnologia_id"
     })
     @Index({ unique: true })
@@ -25,6 +25,6 @@ export class UserTechnology {
     @Column({ name: "st_completo", type:'integer', nullable: false, default: false })
     completed: boolean;
 
-    @Column({ name: "st_aprendendo", type:'integer', nullable: false, default: true })
+    @Column({ name: "st_aprendendo", type:'integer', nullable: false, default: false })
     learning: boolean;
 }

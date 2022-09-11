@@ -48,17 +48,18 @@ export default class TechnologyService{
             throw new HttpError('User not found!', 404);
         }
 
-        userExists.technologies = userExists.technologies.map(tech => {
-            if(tech.learning) {
+        let updatedTechs = userExists.technologies.map(tech => {
+            if(tech.userTechnologyID === userTechnology.userTechnologyID) {
+                tech.learning = true;
+            } else {
                 tech.learning = false;
             }
-
-            if(tech.user.userID === userTechnology.user.userID && tech.technology.technologyID === userTechnology.technology.technologyID) {
-                tech.learning = true;
-            }
-            
+    
             return tech;
         });
+
+        userExists.technologies = updatedTechs;
+
 
         return await this.userRepository.save(userExists);
     }

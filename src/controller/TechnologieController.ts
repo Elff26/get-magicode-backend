@@ -72,9 +72,9 @@ export default class TechnologyController{
 
     changeLearningTrail = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const userTecnologies: IUserTechnologyProperties = request.body.userTecnologies;
+            const userTecnology: IUserTechnologyProperties = request.body.userTecnology;
 
-            const result = await this.technologyService.changeLearningTrail(userTecnologies);
+            const result = await this.technologyService.changeLearningTrail(userTecnology);
             
             response.status(200).json({ user: result });
         } catch(error: any) {
