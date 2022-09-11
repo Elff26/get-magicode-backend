@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import ITechnologyRepository from "./interface/ITechnologieRepository";
 import { Technology } from "../database/entity/Technology";

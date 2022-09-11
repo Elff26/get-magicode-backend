@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { User } from "../database/entity/User";
 import UserModel from "../model/UserModel";
 import IUserRepository from "./interface/IUserRepository";
@@ -47,14 +47,10 @@ export default class UserRepository implements IUserRepository{
     }
     
     findUserByEmailAndPassword = async (email: string, password: string) => {
-        return await this.userRepository.createQueryBuilder('User')
-        .where({
-            email
-        })
-        .andWhere({
+        return await this.userRepository.findOneBy({
+            email,
             password
-        })
-        .getOne();
+        });
     }
 
     findUserByIdAndPassword = async (userID: number, password: string) => {

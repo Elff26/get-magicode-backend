@@ -35,10 +35,14 @@ export default class TechnologyService{
         userExists.technologies.forEach(async (tech) => {
             await this.userTechnologyRepository.delete(tech.userTechnologyID);
         });
+
+        technologies[0].learning = true;
         
         userExists.technologies = technologies;
         
-        return await this.userRepository.save(userExists);
+        await this.userRepository.save(userExists);
+
+        return this.userRepository.findUserById(userExists.userID);
     }
     
     changeLearningTrail = async (userTechnology: IUserTechnologyProperties) => {
@@ -59,7 +63,6 @@ export default class TechnologyService{
         });
 
         userExists.technologies = updatedTechs;
-
 
         return await this.userRepository.save(userExists);
     }
