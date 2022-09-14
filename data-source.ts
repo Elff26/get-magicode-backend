@@ -5,13 +5,14 @@ import { Technology } from './src/database/entity/Technology'
 import { Goal } from './src/database/entity/Goal'
 import { UserTechnology } from './src/database/entity/UserTechnology'
 import { Classroom } from './src/database/entity/Classroom'
+import { Exercise } from './src/database/entity/Exercise'
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
    database: "./GetMagiCode.sqlite",
    synchronize: true,
    logging: true,
-   entities: [User, Technology, Goal, UserTechnology, Classroom],
+   entities: [User, Technology, Goal, UserTechnology, Classroom, Exercise],
    migrations: ['src/migrations/*{.ts,.js}']
 })
 AppDataSource.initialize()

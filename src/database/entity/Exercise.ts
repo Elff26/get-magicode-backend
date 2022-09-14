@@ -1,29 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
+import { Challenge } from "./Challenge";
 
 @Entity()
 export class Exercise{
+    @PrimaryGeneratedColumn({name:"cd_exercicio"})
+    exerciseID: number;
 
-    @PrimaryGeneratedColumn()
-    cd_exercicio: number;
+    @Column({name:"nm_exericio", type: "varchar", length: 20, nullable: false})
+    name: string
 
-    @Column({type: "varchar", length: 20, nullable: false})
-    nm_exericio: string
+    @Column({name:"ds_exercicio",type: "varchar", length: 400, nullable: false})
+    description: string
 
-    @Column({type: "varchar", length: 400, nullable: false})
-    ds_exercicio: string
+    @Column({name: "ob_saida_esperada",type: "varchar", length: 100, nullable: false})
+    expectedExit: string
 
-    @Column({type: "varchar", length: 100, nullable: false})
-    ob_saida_esperada: string
+    @Column({name: "ds_dificuldade",type: "varchar", length: 10, nullable: false})
+    descriptionDifficult: string
 
-    @Column({type: "varchar", length: 10, nullable: false})
-    ds_dificuldade: string
+    @CreateDateColumn({name: "dt_criacao"})
+    creationDate: Date
 
-    @CreateDateColumn()
-    dt_criacao: Date
+    @UpdateDateColumn({name:"dt_modificacao"})
+    modificationDate: Date
 
-    @UpdateDateColumn()
-    dt_modificacao: Date
+    @ManyToOne(()=> Challenge, {eager: true})
+    @JoinColumn({name:"cd_desafio"})
+    challengeID: Challenge
 
-    @Column({type: "integer", nullable: false})
-    cd_aula: number
+    @Column({name: "tipo", type: "varchar" })
+    type: string
 }
