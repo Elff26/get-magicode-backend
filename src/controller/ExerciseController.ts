@@ -13,7 +13,7 @@ export default class ExerciseController{
         this.exerciseService = new ExerciseService( this.exerciseRepository);
     }
 
-    createClassroom = async (request: Request, response: Response, next: NextFunction) =>{
+    createExercise = async (request: Request, response: Response, next: NextFunction) =>{
         try{
             const exercise: IExerciseProperties = request.body.exercise;
             const result = await this.exerciseService.createExercise(exercise);

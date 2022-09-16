@@ -5,10 +5,10 @@ export default interface IExerciseProperties{
     exerciseID: number;
     name: string
     description: string
-    expectedExit: string
-    descriptionDifficult: string
+    expectedOutput: string
+    difficult: string
     creationDate: Date
     modificationDate: Date
-    challengeID: ChallengeModel
+    challenge: ChallengeModel
     type: string
 }

@@ -37,6 +37,6 @@ router.post("/AssociateToGoal/:userID", goalController.associateUserToGoal);
 router.post("/CreateClassroom", classroomController.createClassroom);
 router.get("/FindClassroomById/:classroomID", classroomController.findClassroomById);
 
-router.get("/CreateExercise", exerciseController.createClassroom);
+router.post("/CreateExercise", exerciseController.createExercise);
 
 export default router; 
