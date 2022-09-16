@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import ITechnologyRepository from "./interface/ITechnologieRepository";
 import { Technology } from "../database/entity/Technology";
@@ -19,5 +19,11 @@ export default class TechnologyRepository implements ITechnologyRepository{
 
     save = async (technology: TechnologyModel) => {
         return await this.technologyRepository.save(technology);
+    }
+
+    findByID = async (technologyID: number) => {
+        return await this.technologyRepository.findOneBy({
+            technologyID: technologyID
+        })
     }
 }

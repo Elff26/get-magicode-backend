@@ -36,6 +36,18 @@ export default class TechnologyService{
             await this.userTechnologyRepository.delete(tech.userTechnologyID);
         });
 
+        console.log(technologies)
+
+        technologies.forEach(async (tech) => {
+            let loadedTechnology = await this.technologyRepository.findByID(tech.technology.technologyID)
+
+            if(loadedTechnology) {
+                tech.technology = loadedTechnology;
+            } else {
+                throw new HttpError('Technology not found!', 404);
+            }
+        })
+
         technologies[0].learning = true;
         
         userExists.technologies = technologies;
@@ -45,7 +57,7 @@ export default class TechnologyService{
         return this.userRepository.findUserById(userExists.userID);
     }
     
-    changeLearningTrail = async (userTechnology: IUserTechnologyProperties) => {
+    changeTechnology = async (userTechnology: IUserTechnologyProperties) => {
         const userExists = await this.userRepository.findUserById(userTechnology.user.userID);
 
         if(!userExists) {

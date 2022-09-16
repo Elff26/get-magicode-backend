@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "ts-node-dev --respawn --transpile-only app.ts",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -d ./data-source.ts",
-    "migration:generate": "npm run typeorm:cli migration:generate",
+    "migration:generate": "npm run typeorm:cli migration:generate ./src/database/migrations/DBMigration",
     "migration:run": "npm run typeorm:cli migration:run",
     "migration:schema": "npx typeorm-ts-node-commonjs schema:sync -d ./data-source.ts"
   },

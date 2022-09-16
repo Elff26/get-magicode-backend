@@ -1,60 +1,81 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { 
+    Entity, 
+    Column, 
+    PrimaryGeneratedColumn, 
+    CreateDateColumn, 
+    ManyToOne, 
+    JoinColumn, 
+    OneToMany, 
+    OneToOne 
+} from "typeorm";
+
 import { Goal } from "./Goal";
-import { Technology } from "./Technology";
+import { Statistics } from "./Statistics";
+import { UserAchievement } from "./UserAchievement";
+import { UserClassroom } from "./UserClassroom";
 import { UserTechnology } from "./UserTechnology";
 
 @Entity()
-export class User{
-
-    @PrimaryGeneratedColumn({ name: "cd_usuario" })
+export class User {
+    @PrimaryGeneratedColumn({name: "cd_usuario"})
     userID: number;
 
     @Column({name: "nm_usuario", type: "varchar", length: 100, nullable: false})
-    name: string
+    name: string;
 
     @Column({name: "dt_nascimento", type: "date", nullable: false})
-    birthday: string
+    birthday: string;
 
     @Column({name: "ds_email", type: "varchar", length: 100, unique: true, nullable: false})
-    email: string
+    email: string;
+
+    @Column({name: "ds_img_usuario", type: "varchar", length: 500, nullable: true})
+    image: string;
 
     @Column({name: "nr_telefone", type: "varchar", length: 11, unique: true, nullable: false})
-    phone: string
+    phone: string;
 
     @Column({name: "ds_senha", type: "varchar", length: 100, nullable: false, select: false})
-    password: string
+    password: string;
 
     @Column({name: "nr_vidas", type: "integer", nullable: false, default: 0})
-    numberOfLifes: number
+    numberOfLifes: number;
 
-    @Column({name: "nr_experiencia", type: "integer", nullable: false, default: 0})
-    xp: number
+    @CreateDateColumn({name: "dt_criacao"})
+    createdAt: Date;
 
-    @CreateDateColumn({ name: "dt_criacao" })
-    createdAt: Date
+    @Column({name:"cod_alteracao_senha", type:"varchar", nullable:false, default: "", length: 4 })
+    codeChangePassword: string;
+
+    @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
+    expirationDate: Date;
 
     @ManyToOne(() => Goal,{eager: true})
     @JoinColumn({name: "cd_meta"})
-    goal: Goal
+    goal: Goal;
 
-    @Column({name: "cd_ranking", type: "integer", nullable: false, default: 0})
-    ranking: number
-
-    @Column({name:"cod_alteracao_senha", type:"varchar", nullable:false, default: "" })
-    codeChangePassword: string
-
-    @Column({name: "dt_expiracao_senha", type: "date", nullable: true})
-    expirationDate: Date
+    @OneToOne(() => Statistics,{eager: true})
+    @JoinColumn({name: "cd_estatistica"})
+    statistics: Statistics;
 
     @OneToMany(() => UserTechnology, (userTechnology) => userTechnology.user, {
         cascade: true,
-        onDelete: "CASCADE",
-        onUpdate: 'CASCADE',
         eager: true
     })
-    @JoinColumn({name: "usuario_tecnologia"})
-    technologies: UserTechnology[]
+    @JoinColumn({name: "cd_usuario"})
+    technologies: UserTechnology[];
 
-    @Column({name:"nr_xp_dia", type:"integer", default: 0})
-    dailyXP: number
+    @OneToMany(() => UserClassroom, (userClassroom) => userClassroom.user, {
+        cascade: true,
+        eager: true
+    })
+    @JoinColumn({name: "cd_usuario"})
+    classes: UserClassroom[];
+
+    @OneToMany(() => UserAchievement, (userAchievement) => userAchievement.user, {
+        cascade: true,
+        eager: true
+    })
+    @JoinColumn({name: "cd_usuario"})
+    achievements: UserAchievement[];
 }

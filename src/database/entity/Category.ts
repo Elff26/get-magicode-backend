@@ -1,14 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { 
+    Column, 
+    Entity, 
+    OneToMany, 
+    PrimaryGeneratedColumn 
+} from "typeorm";
+
+import { Challenge } from "./Challenge";
 
 @Entity()
 export class Category {
 
-    @PrimaryGeneratedColumn()
-    cd_categoria: number;
+    @PrimaryGeneratedColumn({name: "cd_categoria"})
+    categoryID: number;
 
-    @Column({type: "varchar", length:50, nullable: false})
-    nm_categoria: string;
+    @Column({name: "nm_categoria", type: "varchar", length:50, nullable: false})
+    name: string;
 
-    @Column({type: "varchar", length:100, nullable: false})
-    ds_categoria: string;
+    @Column({name: "ds_categoria", type: "varchar", length:100, nullable: false})
+    description: string;
+
+    @OneToMany(() => Challenge, (challange) => challange.category)
+    challanges: Challenge[];
 }

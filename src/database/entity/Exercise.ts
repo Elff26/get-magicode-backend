@@ -1,5 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
+import { 
+    Entity, 
+    Column, 
+    PrimaryGeneratedColumn, 
+    CreateDateColumn, 
+    UpdateDateColumn, 
+    JoinColumn, 
+    ManyToOne, 
+    OneToMany 
+} from "typeorm";
+
+import { Alternative } from "./Alternative";
 import { Challenge } from "./Challenge";
+import { Tip } from "./Tip";
 
 @Entity()
 export class Exercise{
@@ -7,27 +19,32 @@ export class Exercise{
     exerciseID: number;
 
     @Column({name:"nm_exericio", type: "varchar", length: 20, nullable: false})
-    name: string
+    name: string;
 
-    @Column({name:"ds_exercicio",type: "varchar", length: 400, nullable: false})
-    description: string
+    @Column({name:"ds_exercicio",type: "varchar", length: 1000, nullable: false})
+    description: string;
 
-    @Column({name: "ob_saida_esperada",type: "varchar", length: 100, nullable: false})
-    expectedExit: string
-
-    @Column({name: "ds_dificuldade",type: "varchar", length: 10, nullable: false})
-    descriptionDifficult: string
+    @Column({name: "ob_saida_esperada",type: "varchar", length: 200, nullable: false})
+    expectedOutput: string;
 
     @CreateDateColumn({name: "dt_criacao"})
-    creationDate: Date
+    creationDate: Date;
 
     @UpdateDateColumn({name:"dt_modificacao"})
-    modificationDate: Date
+    modificationDate: Date;
 
-    @ManyToOne(()=> Challenge, {eager: true})
+    @Column({name: "tipo", type: "varchar", length: 20 })
+    type: string;
+
+    @ManyToOne(()=> Challenge, (challange) => challange.exercises)
     @JoinColumn({name:"cd_desafio"})
-    challengeID: Challenge
+    challenge: Challenge;
 
-    @Column({name: "tipo", type: "varchar" })
-    type: string
+    @OneToMany(() => Tip, (tip) => tip.exercise, {eager: true})
+    @JoinColumn({ name: "cd_exercicio" })
+    tips: Tip[];
+
+    @OneToMany(() => Alternative, (Alternative) => Alternative.exercise, {eager: true})
+    @JoinColumn({ name: "cd_exercicio" })
+    alternatives: Alternative[];
 }

@@ -22,7 +22,7 @@ export default class UserRepository implements IUserRepository{
     findUserById = async (userID: number) => {
         return await this.userRepository.findOneBy({
             userID: userID
-        })
+        });
     }
     
     findUserByEmailOrPhone = async (email: string, phone: string) => {

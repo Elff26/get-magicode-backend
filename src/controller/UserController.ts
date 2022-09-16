@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { RepositoryNotTreeError } from "typeorm";
 import HttpError from "../exceptions/HttpError";
-import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";

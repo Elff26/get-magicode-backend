@@ -33,7 +33,9 @@ export default class UserService{
     }
 
     updateUser = async (userID: number, user: UserModel) => {
+        console.log(userID)
         const userExists = await this.userRepository.findUserById(userID);
+        console.log("ASD")
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);

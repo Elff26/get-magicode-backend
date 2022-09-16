@@ -1,19 +1,24 @@
+import { Statistics } from "../database/entity/Statistics";
+import { UserAchievement } from "../database/entity/UserAchievement";
+import { UserClassroom } from "../database/entity/UserClassroom";
 import GoalModel from "../model/GoalModel";
 import UserTechnologyModel from "../model/UserTechnologyModel";
 
 export default interface IUserProperties {
     userID: number;
-    name: string
-    birthday: string
-    email: string
-    phone: string
-    password: string
+    name: string;
+    birthday: string;
+    email: string;
+    image?: string;
+    phone: string;
+    password: string;
     numberOfLifes: number
-    xp: number
-    createdAt?: Date
-    goal: GoalModel
-    ranking: number
-    codeChangePassword: string
-    expirationDate: Date
-    technologies: UserTechnologyModel[]
+    createdAt?: Date;
+    codeChangePassword: string;
+    expirationDate: Date;
+    goal: GoalModel;
+    statistics: Statistics;
+    technologies: UserTechnologyModel[];
+    classes: UserClassroom[];
+    achievements: UserAchievement[];
 }

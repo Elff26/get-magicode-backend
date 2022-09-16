@@ -17,20 +17,19 @@ const goalController = new GoalController();
 const classroomController = new ClassroomController();
 const exerciseController = new ExerciseController();
 
-router.get("/FindUserById/:userID", userController.findUserById);
 router.post("/CreateUser", userController.createUser);
+router.get("/FindUserById/:userID", userController.findUserById);
 router.put("/UpdateUser/:userID", userController.updateUser);
 router.delete("/DeleteUser/:userID", userController.deleteUSer);
+router.post("/Login", authControler.login);
 router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser);
 router.post("/VerificationCode/:userID", userController.verificationCode);
-
-router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
-router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
 router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
-router.post('/ChangeLearningTrail', technologyController.changeLearningTrail);
+router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
+router.post('/ChangeTechnology', technologyController.changeTechnology);
 
 router.post("/CreateGoal", goalController.createGoal);
 router.post("/AssociateToGoal/:userID", goalController.associateUserToGoal);

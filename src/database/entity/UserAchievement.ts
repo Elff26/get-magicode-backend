@@ -6,29 +6,26 @@ import {
     PrimaryGeneratedColumn 
 } from "typeorm";
 
-import { Technology } from "./Technology";
+import { Achievement } from "./Achievement";
 import { User } from "./User";
 
-@Entity({ name: 'user_technology' })
-export class UserTechnology {
+@Entity({ name: 'user_achievement' })
+export class UserAchievement {
     @PrimaryGeneratedColumn('increment', {
-        name: "usuario_tecnologia_id"
+        name: "usuario_conquista_id"
     })
-    userTechnologyID: string;
+    userAchievementID: number;
 
     @ManyToOne(() => User, (user) => user.technologies)
     @JoinColumn({name: 'cd_usuario'})
     user: User;
 
-    @ManyToOne(() => Technology, (technology) => technology.users, {
+    @ManyToOne(() => Achievement, (achievement) => achievement.users, {
         eager: true
     })
-    @JoinColumn({name: 'cd_tecnologia'})
-    technology: Technology;
+    @JoinColumn({name: 'cd_conquista'})
+    achievement: Achievement;
 
     @Column({name: "st_completo", type: 'boolean', nullable: false, default: false})
     completed: boolean;
-
-    @Column({name: "st_aprendendo", type: 'boolean', nullable: false, default: false})
-    learning: boolean;
 }

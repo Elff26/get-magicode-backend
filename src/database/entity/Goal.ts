@@ -1,9 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { 
+    Entity, 
+    Column, 
+    PrimaryGeneratedColumn,
+    OneToMany,
+    JoinColumn
+} from "typeorm";
+
 import { User } from "./User";
 
 @Entity()
 export class Goal {
-
     @PrimaryGeneratedColumn({name: "cd_meta"})
     goalID: number;
 
@@ -11,5 +17,9 @@ export class Goal {
     name: string;
 
     @Column({name: "vl_meta", type: "integer", nullable:false})
-    value?: number;
+    value: number;
+
+    @OneToMany(() => User, (user) => user.userID)
+    @JoinColumn({name: "cd_meta"})
+    users: User[];
 }

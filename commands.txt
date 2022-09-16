@@ -1,2 +1,6 @@
-npm run migration:generate ./src/migrations/NomeDaMigration  --criar migration
+npm run migration:generate -- Criar migration novo
 npm run migration:run --executa migration para criar no banco
+
+
+-- ANTIGO
+npm run migration:generate ./src/migrations/NomeDaMigration  --criar migration

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { 
+    Column, 
+    Entity, 
+    OneToMany, 
+    PrimaryGeneratedColumn 
+} from "typeorm";
+
+import { Challenge } from "./Challenge";
 
 @Entity()
 export class Difficulty{
@@ -6,8 +13,11 @@ export class Difficulty{
     difficultyID: number;
 
     @Column({name:"ds_dificuldade", type: "varchar", length: 20, nullable: false})
-    description: string
+    description: string;
 
     @Column({name:"vl_xp", type: "integer", nullable: false})
-    valueXP: string
+    valueXP: string;
+
+    @OneToMany(() => Challenge, (challange) => challange.difficulty)
+    challanges: Challenge[];
 }

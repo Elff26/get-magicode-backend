@@ -1,28 +1,39 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Technology } from "./Technology";
+import { 
+    Entity, 
+    Column, 
+    PrimaryGeneratedColumn, 
+    CreateDateColumn, 
+    UpdateDateColumn, 
+    JoinColumn, 
+    OneToMany 
+} from "typeorm";
+
+import { Challenge } from "./Challenge";
+import { UserClassroom } from "./UserClassroom";
 
 @Entity()
 export class Classroom{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({ name: "cd_aula" })
     classroomID: number;
 
     @Column({name:"nm_aula",type: "varchar", length: 50, nullable: false})
-    name: string
+    name: string;
 
     //TODO: Mudar type para jsonb em ambiente de PROD
     @Column({name:"ds_conteudo",type: "varchar", nullable: false})
-    description: string
+    description: string;
 
     @CreateDateColumn({name: "dt_criacao"})
-    creationDate: Date
+    creationDate: Date;
 
     @UpdateDateColumn({name:"dt_modificacao"})
-    modificationDate: Date
+    modificationDate: Date;
 
-    @ManyToOne(()=> Technology, {eager: true})
-    @JoinColumn({name:"cd_tecnologia"})
-    technologyCode: Technology
+    @OneToMany(() => UserClassroom, (userClassroom) => userClassroom.classroom)
+    @JoinColumn({name: "usuario_aula"})
+    users: UserClassroom[];
 
-    @Column({name: "cd_categoria",type: "integer", nullable: false})
-    categoryCode: number
+    @OneToMany(()=> Challenge, (challange) => challange.classes)
+    @JoinColumn({name: "cd_aula"})
+    challange: Challenge[];
 }
