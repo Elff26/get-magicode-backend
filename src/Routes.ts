@@ -4,9 +4,9 @@ import UserController from './controller/UserController';
 import AuthController from './controller/AuthController';
 import TechnologyController from './controller/TechnologieController';
 import GoalController from './controller/GoalController';
-import ClasseController from './controller/ClassroomController';
 import ClassroomController from './controller/ClassroomController';
 import ExerciseController from './controller/ExerciseController';
+import DifficultyController from './controller/DifficultyController';
 import ChallengeController from './controller/ChallengeController';
 import AlternativeController from './controller/AlternativeController';
 
@@ -18,6 +18,7 @@ const technologyController = new TechnologyController();
 const goalController = new GoalController();
 const classroomController = new ClassroomController();
 const exerciseController = new ExerciseController();
+const difficultyController = new DifficultyController();
 const challengeController = new ChallengeController();
 const alternativeController = new AlternativeController();
 
@@ -44,6 +45,9 @@ router.get("/FindClassroomById/:classroomID", classroomController.findClassroomB
 
 router.post("/CreateExercise", exerciseController.createExercise);
 router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
+
+router.post("/CreateDifficulty", difficultyController.createDifficulty);
+router.get("/FindDifficultyId/:difficultyID", difficultyController.findDifficultyById);
 
 router.post("/CreateChallenge", challengeController.createChallenge);
 router.get("/FindChallengeById/:challengeID", challengeController.findChallengeByID);
