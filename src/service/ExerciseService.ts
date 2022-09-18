@@ -14,8 +14,6 @@ export default class ExerciseService{
     }
 
     findExerciseById = async (exerciseID: number) => {
-
-        console.log(exerciseID)
         const exerciseExists = await this.exerciseRepository.findExerciseById(exerciseID);
 
         if(!exerciseExists) {
