@@ -48,5 +48,8 @@ export class Challenge {
     classes: Classroom[];
 
     @OneToMany(() => Exercise, (exercise) => exercise.challenge, {eager: true})
-    exercises: Classroom[];
+    exercises: Exercise[];
+
+    @Column({name:"ds_img_desafio",length: 500, nullable: true})
+    image: string;
 }

@@ -7,6 +7,7 @@ import GoalController from './controller/GoalController';
 import ClasseController from './controller/ClassroomController';
 import ClassroomController from './controller/ClassroomController';
 import ExerciseController from './controller/ExerciseController';
+import ChallengeController from './controller/ChallengeController';
 
 const router = Router();
 
@@ -16,6 +17,7 @@ const technologyController = new TechnologyController();
 const goalController = new GoalController();
 const classroomController = new ClassroomController();
 const exerciseController = new ExerciseController();
+const challengeController = new ChallengeController();
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
@@ -40,5 +42,8 @@ router.get("/FindClassroomById/:classroomID", classroomController.findClassroomB
 
 router.post("/CreateExercise", exerciseController.createExercise);
 router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
+
+router.post("/CreateChallenge", challengeController.createChallenge);
+router.get("/FindChallengeById/:challengeID", challengeController.findChallengeByID);
 
 export default router; 
