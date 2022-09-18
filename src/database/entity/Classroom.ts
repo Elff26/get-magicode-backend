@@ -5,7 +5,8 @@ import {
     CreateDateColumn, 
     UpdateDateColumn, 
     JoinColumn, 
-    OneToMany 
+    OneToMany, 
+    ManyToOne
 } from "typeorm";
 
 import { Challenge } from "./Challenge";
@@ -33,7 +34,7 @@ export class Classroom{
     @JoinColumn({name: "usuario_aula"})
     users: UserClassroom[];
 
-    @OneToMany(()=> Challenge, (challange) => challange.classes)
-    @JoinColumn({name: "cd_aula"})
-    challange: Challenge[];
+    @ManyToOne(()=> Challenge, (challange) => challange.classes)
+    @JoinColumn({name:"cd_aula"})
+    challenge: Challenge;
 }

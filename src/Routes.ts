@@ -47,6 +47,7 @@ router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
 
 router.post("/CreateChallenge", challengeController.createChallenge);
 router.get("/FindChallengeById/:challengeID", challengeController.findChallengeByID);
+router.get("/FindChallangeByTechnology/:technologyID", challengeController.findChallengeByTechnology);
 
 router.post("/CreateAlternative", alternativeController.createAlternative);
 router.get("/FindAlternativeById/:alternativeID", alternativeController.findAlternativeByID);

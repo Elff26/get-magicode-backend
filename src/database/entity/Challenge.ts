@@ -44,7 +44,7 @@ export class Challenge {
     @JoinColumn({name: "cd_dificuldade"})
     difficulty: Difficulty;
 
-    @OneToMany(() => Classroom, (clasroom) => clasroom.challange, {eager: true})
+    @OneToMany(() => Classroom, (classroom) => classroom.challenge, {eager: true})
     classes: Classroom[];
 
     @OneToMany(() => Exercise, (exercise) => exercise.challenge, {eager: true})

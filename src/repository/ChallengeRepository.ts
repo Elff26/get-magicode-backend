@@ -6,6 +6,7 @@ import IChallengeRepository from "./interface/IChallengeRepository";
 
 export default class ChallengeRepository implements IChallengeRepository {
     private challengeRepository: Repository<Challenge>;
+    
     constructor(){
         this.challengeRepository = AppDataSource.manager.getRepository(Challenge);
     }
@@ -17,4 +18,11 @@ export default class ChallengeRepository implements IChallengeRepository {
     findChallengeByID = async (challengeID: number) => {
         return await this.challengeRepository.findOneBy({challengeID: challengeID});
     }
+
+    findChallangeByTechnology = async (technologyID: number) => {
+        return this.challengeRepository.createQueryBuilder('Challange')
+                                            .leftJoinAndSelect('Challange.technology', 't')
+                                            .where('t.cd_tecnologia = :technologyID', {technologyID})
+                                            .getMany();
+    } 
 }
