@@ -2,6 +2,7 @@ import {
     Column, 
     Entity, 
     JoinColumn, 
+    ManyToOne, 
     OneToMany, 
     PrimaryGeneratedColumn 
 } from "typeorm";
@@ -16,7 +17,7 @@ export class Tip {
     @Column({name: "ds_dica", type: "varchar", length:100, nullable: false})
     tipDescrioption: string;
 
-    @OneToMany(() => Exercise, (exercise) => exercise.tips)
+    @ManyToOne(() => Exercise, (exercise) => exercise.tips)
     @JoinColumn({ name: "cd_exercicio" })
     exercise: Exercise;
 }

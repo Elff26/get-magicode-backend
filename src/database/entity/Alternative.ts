@@ -2,6 +2,7 @@ import {
     Column, 
     Entity, 
     JoinColumn, 
+    ManyToOne, 
     OneToMany, 
     PrimaryGeneratedColumn 
 } from "typeorm";
@@ -19,7 +20,7 @@ export class Alternative {
     @Column({name: "st_correta", type: "boolean", nullable: false, default: false})
     isCorrect: boolean;
 
-    @OneToMany(() => Exercise, (exercise) => exercise.alternatives)
+    @ManyToOne(() => Exercise, (exercise) => exercise.alternatives)
     @JoinColumn({ name: "cd_exercicio" })
     exercise: Exercise;
 }
