@@ -13,7 +13,6 @@ export default class GoalService{
     }
 
     createGoal = async (goal: IGoalProperties) => {
-        console.log(goal)
         return await this.goalRepository.save(goal);
     }
 
