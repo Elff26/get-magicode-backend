@@ -13,4 +13,10 @@ export default class GoalRepository implements IGoalRepository{
     save = async (goal: GoalModel) => {
         return await this.goalRepository.save(goal);
     }
+
+    listAllGoals = async () => {
+        return await this.goalRepository.createQueryBuilder('Goal')
+                                        .select("Goal")
+                                        .getMany();
+    }
 }

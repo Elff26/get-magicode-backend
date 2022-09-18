@@ -46,4 +46,14 @@ export default class GoalController {
             next(error);
         }
     }
+
+    listAllGoals = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const result = await this.goalService.listAllGoals();
+            
+            response.status(200).json({ goals: result });
+        } catch(error: any) {
+            next(error);
+        }
+    }
 }

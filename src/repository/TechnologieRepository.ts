@@ -13,8 +13,8 @@ export default class TechnologyRepository implements ITechnologyRepository{
 
     listAllTechnologies = async () => {
         return await this.technologyRepository.createQueryBuilder('Technology')
-                                                                .select("Technology")
-                                                                .getMany();
+                                              .select("Technology")
+                                              .getMany();
     }
 
     save = async (technology: TechnologyModel) => {

@@ -33,10 +33,12 @@ router.post('/ChangeTechnology', technologyController.changeTechnology);
 
 router.post("/CreateGoal", goalController.createGoal);
 router.post("/AssociateToGoal/:userID", goalController.associateUserToGoal);
+router.get("/ListAllGoals", goalController.listAllGoals);
 
 router.post("/CreateClassroom", classroomController.createClassroom);
 router.get("/FindClassroomById/:classroomID", classroomController.findClassroomById);
 
 router.post("/CreateExercise", exerciseController.createExercise);
+router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
 
 export default router; 

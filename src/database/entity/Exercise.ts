@@ -18,7 +18,7 @@ export class Exercise{
     @PrimaryGeneratedColumn({name:"cd_exercicio"})
     exerciseID: number;
 
-    @Column({name:"nm_exericio", type: "varchar", length: 20, nullable: false})
+    @Column({name:"nm_exercicio", type: "varchar", length: 20, nullable: false})
     name: string;
 
     @Column({name:"ds_exercicio",type: "varchar", length: 1000, nullable: false})

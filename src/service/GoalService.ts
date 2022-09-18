@@ -28,4 +28,9 @@ export default class GoalService{
 
         return await this.userRepository.save(userExists);
     }
+
+    listAllGoals = async () => {
+        return await this.goalRepository.listAllGoals();
+    }
+
 }

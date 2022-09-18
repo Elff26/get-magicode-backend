@@ -14,4 +14,10 @@ export default class ExerciseRepository implements IExerciseRepository{
     save = async (exercise: ExerciseModel) => {
         return await this.exerciseRepository.save(exercise);
     }
+
+    findExerciseById = async (exerciseID: number) => {
+        return await this.exerciseRepository.findOneBy({
+            exerciseID: exerciseID
+        })
+    }
 }
