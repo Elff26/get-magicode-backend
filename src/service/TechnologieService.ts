@@ -36,11 +36,9 @@ export default class TechnologyService{
             await this.userTechnologyRepository.delete(tech.userTechnologyID);
         });
 
-        console.log(technologies)
-
         technologies.forEach(async (tech) => {
-            let loadedTechnology = await this.technologyRepository.findByID(tech.technology.technologyID)
-
+            let loadedTechnology = await this.technologyRepository.findByID(tech.technology.technologyID);
+            
             if(loadedTechnology) {
                 tech.technology = loadedTechnology;
             } else {

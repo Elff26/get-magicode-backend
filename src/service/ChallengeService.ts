@@ -20,26 +20,25 @@ export default class ChallengeService {
         const challengeExists = await this.challengeRepository.findChallengeByID(challengeID);
 
         if (!challengeExists) {
-            throw new HttpError('Challenge Not Found !', 404);
+            throw new HttpError('Challenge Not Found!', 404);
         }
 
         return challengeExists;
     }
 
-    findChallangeByTechnology = async (technologyID: number) => {
+    findChallengeByTechnology = async (technologyID: number) => {
         const technologyExists = await this.technologyRepository.findByID(technologyID);
 
         if(!technologyExists) {
-            throw new HttpError('Technology Not Found !', 404);
+            throw new HttpError('Technology Not Found!', 404);
         }
 
-        console.log(technologyExists)
-        const challanges = await this.challengeRepository.findChallangeByTechnology(technologyExists.technologyID);
+        const challenges = await this.challengeRepository.findChallengeByTechnology(technologyExists.technologyID);
 
-        if(!challanges) {
-            throw new HttpError('This technology has no challenges', 404);
+        if(!challenges) {
+            throw new HttpError('This technology has no challenges!', 404);
         }
 
-        return challanges;
+        return challenges;
     }
 }

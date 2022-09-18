@@ -19,9 +19,9 @@ export default class ChallengeRepository implements IChallengeRepository {
         return await this.challengeRepository.findOneBy({challengeID: challengeID});
     }
 
-    findChallangeByTechnology = async (technologyID: number) => {
-        return this.challengeRepository.createQueryBuilder('Challange')
-                                            .leftJoinAndSelect('Challange.technology', 't')
+    findChallengeByTechnology = async (technologyID: number) => {
+        return this.challengeRepository.createQueryBuilder('challenge')
+                                            .leftJoinAndSelect('challenge.technology', 't')
                                             .where('t.cd_tecnologia = :technologyID', {technologyID})
                                             .getMany();
     } 

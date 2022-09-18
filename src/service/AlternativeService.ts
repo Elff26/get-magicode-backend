@@ -36,7 +36,6 @@ export default class AlternativeService {
 
         const alternatives = await this.alternativeRepository.findAlternativeByExercise(exerciseExists.exerciseID);
 
-        console.log(alternatives)
         return alternatives;
     }
 }

@@ -1,4 +1,5 @@
 node_modules
 *.sqlite
 src/database/migrations
+src/migrations
 .env

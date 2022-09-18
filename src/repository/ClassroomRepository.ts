@@ -28,4 +28,11 @@ export default class ClassroomRepository implements IClassroomRepository{
             classroomID: classroomID
         })
     }
+
+    findClassroomByChallenge = async (challengeID: number) => {
+        return await this.classroomRepository.createQueryBuilder('classroom')  
+                                                .leftJoinAndSelect('classroom.challenge', 'challenge')
+                                                .where('classroom.cd_desafio = :challengeID', { challengeID })
+                                                .getMany();
+    }
 }

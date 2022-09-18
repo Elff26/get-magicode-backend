@@ -72,8 +72,6 @@ export default class TechnologyController{
 
     changeTechnology = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            
-        console.log("ASD")
             const userTechnology: IUserTechnologyProperties = request.body.userTechnology;
 
             const result = await this.technologyService.changeTechnology(userTechnology);

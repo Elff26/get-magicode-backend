@@ -51,7 +51,7 @@ export default class ChallengeController {
                 throw new HttpError('ID must be a number !', 403);
             }
 
-            const result = await this.challengeService.findChallangeByTechnology(technologyID);
+            const result = await this.challengeService.findChallengeByTechnology(technologyID);
 
             response.status(200).json({challenges: result});
         }catch(error: any){

@@ -35,6 +35,6 @@ export class Classroom{
     users: UserClassroom[];
 
     @ManyToOne(()=> Challenge, (challange) => challange.classes)
-    @JoinColumn({name:"cd_aula"})
+    @JoinColumn({name:"cd_desafio"})
     challenge: Challenge;
 }
