@@ -14,9 +14,9 @@ import { Statistics } from './src/database/entity/Statistics';
 import { Technology } from './src/database/entity/Technology';
 import { User } from './src/database/entity/User';
 import { Tip } from './src/database/entity/Tip';
-import { UserClassroom } from './src/database/entity/UserClassroom';
 import { UserTechnology } from './src/database/entity/UserTechnology';
 import { UserAchievement } from './src/database/entity/UserAchievement';
+import { UserChallenge } from './src/database/entity/UserChallenge';
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
@@ -36,7 +36,7 @@ export const AppDataSource = new DataSource({
     Technology,
     Tip,
     User,
-    UserClassroom,
+    UserChallenge,
     UserTechnology,
     UserAchievement
   ],

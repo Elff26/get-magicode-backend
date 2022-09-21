@@ -10,7 +10,6 @@ import {
 } from "typeorm";
 
 import { Challenge } from "./Challenge";
-import { UserClassroom } from "./UserClassroom";
 
 @Entity()
 export class Classroom{
@@ -29,10 +28,6 @@ export class Classroom{
 
     @UpdateDateColumn({name:"dt_modificacao"})
     modificationDate: Date;
-
-    @OneToMany(() => UserClassroom, (userClassroom) => userClassroom.classroom)
-    @JoinColumn({name: "usuario_aula"})
-    users: UserClassroom[];
 
     @ManyToOne(()=> Challenge, (challange) => challange.classes)
     @JoinColumn({name:"cd_desafio"})

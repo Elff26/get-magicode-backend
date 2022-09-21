@@ -14,6 +14,7 @@ import { Classroom } from "./Classroom";
 import { Difficulty } from "./Difficulty";
 import { Exercise } from "./Exercise";
 import { Technology } from "./Technology";
+import { UserChallenge } from "./UserChallenge";
 
 @Entity()
 export class Challenge {
@@ -46,6 +47,10 @@ export class Challenge {
 
     @OneToMany(() => Classroom, (classroom) => classroom.challenge, {eager: true})
     classes: Classroom[];
+    
+    @OneToMany(() => UserChallenge, (userChallange) => userChallange.challenge, {eager: true})
+    @JoinColumn({name: "cd_desafio"})
+    users: UserChallenge[];
 
     @OneToMany(() => Exercise, (exercise) => exercise.challenge, {eager: true})
     exercises: Exercise[];

@@ -33,6 +33,5 @@ export default class UserModel{
     goal: GoalModel
     statistics: any; // MUDAR DEPOIS
     technologies: UserTechnologyModel[];
-    classes: any; // MUDAR DEPOIS
     achievements: any; // MUDAR DEPOIS
 }

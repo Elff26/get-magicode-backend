@@ -1,17 +1,13 @@
-interface CategoryProperty{
-    cd_categoria: number;
-    nm_categoria: string;   
-    ds_categoria: string;
-}
+import ICategoryProperty from "../interfaceType/ICategoryProperty";
 
 export default class CategoryModel{
-    constructor(category: CategoryProperty) {
-        this.cd_categoria = category.cd_categoria
-        this.nm_categoria = category.nm_categoria
-        this.ds_categoria = category.ds_categoria
+    constructor(category: ICategoryProperty) {
+        this.categoryID = category.categoryID
+        this.name = category.name
+        this.description = category.description
     }
 
-    cd_categoria: number;
-    nm_categoria: string;
-    ds_categoria: string;
+    categoryID: number;
+    name: string;
+    description: string;
 }

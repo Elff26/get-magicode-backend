@@ -6,25 +6,23 @@ import {
     PrimaryGeneratedColumn 
 } from "typeorm";
 
-import { Classroom } from "./Classroom";
+import { Challenge } from "./Challenge";
 import { User } from "./User";
 
-@Entity({ name: 'user_classroom' })
-export class UserClassroom {
+@Entity({ name: 'user_challenge' })
+export class UserChallenge {
     @PrimaryGeneratedColumn('increment', {
-        name: "usuario_aula_id"
+        name: "usuario_desafio_id"
     })
-    userClassroomID: string;
+    userChallengeID: number;
 
     @ManyToOne(() => User, (user) => user.technologies)
     @JoinColumn({name: 'cd_usuario'})
     user: User;
 
-    @ManyToOne(() => Classroom, (classroom) => classroom.users, {
-        eager: true
-    })
-    @JoinColumn({name: 'cd_aula'})
-    classroom: Classroom;
+    @ManyToOne(() => Challenge, (challange) => challange.users)
+    @JoinColumn({name: 'cd_desafio'})
+    challenge: Challenge;
 
     @Column({name: "st_completo", type: 'boolean', nullable: false, default: false})
     completed: boolean;

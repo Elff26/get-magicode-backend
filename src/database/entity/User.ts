@@ -12,7 +12,7 @@ import {
 import { Goal } from "./Goal";
 import { Statistics } from "./Statistics";
 import { UserAchievement } from "./UserAchievement";
-import { UserClassroom } from "./UserClassroom";
+import { UserChallenge } from "./UserChallenge";
 import { UserTechnology } from "./UserTechnology";
 
 @Entity()
@@ -65,12 +65,12 @@ export class User {
     @JoinColumn({name: "cd_usuario"})
     technologies: UserTechnology[];
 
-    @OneToMany(() => UserClassroom, (userClassroom) => userClassroom.user, {
+    @OneToMany(() => UserChallenge, (userChallenge) => userChallenge.user, {
         cascade: true,
         eager: true
     })
     @JoinColumn({name: "cd_usuario"})
-    classes: UserClassroom[];
+    challenges: UserChallenge[];
 
     @OneToMany(() => UserAchievement, (userAchievement) => userAchievement.user, {
         cascade: true,

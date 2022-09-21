@@ -22,7 +22,8 @@ export default class ChallengeRepository implements IChallengeRepository {
     findChallengeByTechnology = async (technologyID: number) => {
         return this.challengeRepository.createQueryBuilder('challenge')
                                             .leftJoinAndSelect('challenge.technology', 't')
+                                            .leftJoinAndSelect('challenge.classes', 'c')
                                             .where('t.cd_tecnologia = :technologyID', {technologyID})
                                             .getMany();
-    } 
+    }
 }

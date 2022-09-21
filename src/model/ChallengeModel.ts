@@ -6,7 +6,7 @@ import { Technology } from "../database/entity/Technology";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 
 export default class ChallengeModel{
-    constructor(challenge: IChallengeProperties){
+    constructor(challenge: IChallengeProperties) {
         this.challengeID = challenge.challengeID;
         this.name = challenge.name;
         this.typeChallenge = challenge.typeChallenge;

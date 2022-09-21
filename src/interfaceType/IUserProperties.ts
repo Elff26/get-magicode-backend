@@ -1,6 +1,5 @@
 import { Statistics } from "../database/entity/Statistics";
 import { UserAchievement } from "../database/entity/UserAchievement";
-import { UserClassroom } from "../database/entity/UserClassroom";
 import GoalModel from "../model/GoalModel";
 import UserTechnologyModel from "../model/UserTechnologyModel";
 
@@ -19,6 +18,5 @@ export default interface IUserProperties {
     goal: GoalModel;
     statistics: Statistics;
     technologies: UserTechnologyModel[];
-    classes: UserClassroom[];
     achievements: UserAchievement[];
 }

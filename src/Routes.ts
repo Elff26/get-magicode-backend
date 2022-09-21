@@ -53,6 +53,9 @@ router.get("/FindDifficultyId/:difficultyID", difficultyController.findDifficult
 router.post("/CreateChallenge", challengeController.createChallenge);
 router.get("/FindChallengeById/:challengeID", challengeController.findChallengeByID);
 router.get("/FindChallengeByTechnology/:technologyID", challengeController.findChallengeByTechnology);
+router.get("/FindUserChallengeByTechnology/:userID/:technologyID", challengeController.findUserChallengeByTechnology);
+router.post("/InitChallenge/:userID/:challengeID", challengeController.initChallenge);
+router.put("/FinishChallenge/:userID/:challengeID", challengeController.finishChllenge);
 
 router.post("/CreateAlternative", alternativeController.createAlternative);
 router.get("/FindAlternativeById/:alternativeID", alternativeController.findAlternativeByID);

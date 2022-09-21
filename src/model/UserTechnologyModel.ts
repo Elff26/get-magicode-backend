@@ -1,4 +1,3 @@
-import IUserTechnologyProperties from "../interfaceType/IUserTechnologiesProperties";
 import TechnologyModel from "./TechnologieModel";
 import UserModel from "./UserModel";
 
