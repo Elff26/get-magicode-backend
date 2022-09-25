@@ -1,5 +1,4 @@
 import HttpError from "../exceptions/HttpError";
-import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import codeAndDateGenerator from "../utils/CodeAndDateGenerator";
@@ -85,5 +84,38 @@ export default class UserService{
         }
         
         return user;
+    }
+
+    decreaseNumberOfLifes = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        const currentDate = new Date()
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        if(userExists.numberOfLifes < 1){
+            throw new HttpError('User has no lives', 202)
+        }
+
+        userExists.numberOfLifes -= 1;
+        userExists.lastUpdateNumberOfLifes =  currentDate;
+
+        return await this.userRepository.updateUser(userExists)
+    }
+
+    addUserLife = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        if(userExists.numberOfLifes > 5){
+            throw new HttpError('User owns all lives', 202)
+        }
+
+        userExists.numberOfLifes += 1;
+        return await this.userRepository.updateUser(userExists)
     }
 }

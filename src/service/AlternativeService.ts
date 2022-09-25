@@ -1,6 +1,5 @@
 import HttpError from "../exceptions/HttpError";
 import IAlternativeProperties from "../interfaceType/IAlternativeProperties";
-import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import IAlternativeRepository from "../repository/interface/IAlternativeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 
@@ -37,5 +36,15 @@ export default class AlternativeService {
         const alternatives = await this.alternativeRepository.findAlternativeByExercise(exerciseExists.exerciseID);
 
         return alternatives;
+    }
+
+    alternativeIsCorrect = async (alternativeID: number) => {
+        const alternativeExists = await this.alternativeRepository.findAlternativeByID(alternativeID);
+
+        if(!alternativeExists) {
+            throw new HttpError('Alternative not found!', 404);
+        }
+
+        return alternativeExists.isCorrect;
     }
 }

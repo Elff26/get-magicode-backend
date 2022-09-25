@@ -110,4 +110,36 @@ export default class UserController{
             next(error)
         }
     }
+
+    decreaseNumberOfLifes = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID)
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+    
+            const result = await this.userService.decreaseNumberOfLifes(userID);
+    
+            response.status(200).json({ numberOfLifes: result?.numberOfLifes, lastUpdateNumberOfLifes: result?.lastUpdateNumberOfLifes });
+        }  catch(error: any) {
+            next(error)
+        }
+    }
+
+    addUserLife = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID)
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+    
+            const result = await this.userService.addUserLife(userID);
+    
+            response.status(200).json({ numberOfLifes: result?.numberOfLifes });
+        }  catch(error: any) {
+            next(error)
+        }
+    }
 }

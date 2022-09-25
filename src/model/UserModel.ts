@@ -12,6 +12,7 @@ export default class UserModel{
         this.phone = user.phone;
         this.password = user.password;
         this.numberOfLifes = user.numberOfLifes;
+        this.lastUpdateNumberOfLifes = user.lastUpdateNumberOfLifes;
         this.createdAt = user.createdAt;
         this.codeChangePassword = user.codeChangePassword;
         this.expirationDate = user.expirationDate;
@@ -27,6 +28,7 @@ export default class UserModel{
     phone: string
     password: string
     numberOfLifes: number
+    lastUpdateNumberOfLifes: Date;
     createdAt?: Date
     codeChangePassword: string
     expirationDate: Date
