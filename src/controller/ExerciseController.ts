@@ -4,14 +4,26 @@ import ExerciseService from "../service/ExerciseService";
 import { NextFunction, Request, Response } from "express";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import HttpError from "../exceptions/HttpError";
+import StatisticsRepository from "../repository/StatisticsRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
+import IUserRepository from "../repository/interface/IUserRepository";
+import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import ChallengeRepository from "../repository/ChallengeRepository";
+import UserRepository from "../repository/UserRepository";
 
 export default class ExerciseController{
-    private exerciseRepository: IExerciseRepository
-    private exerciseService: ExerciseService
+    private exerciseRepository: IExerciseRepository;
+    private statisticsRepository: IStatisticsRepository;
+    private challangeRepository: IChallengeRepository;
+    private userRepository: IUserRepository;
+    private exerciseService: ExerciseService;
 
     constructor(){
         this.exerciseRepository = new ExerciseRepository();
-        this.exerciseService = new ExerciseService( this.exerciseRepository);
+        this.statisticsRepository = new StatisticsRepository();
+        this.challangeRepository = new ChallengeRepository();
+        this.userRepository = new UserRepository();
+        this.exerciseService = new ExerciseService(this.exerciseRepository, this.statisticsRepository, this.userRepository, this.challangeRepository);
     }
 
     createExercise = async (request: Request, response: Response, next: NextFunction) =>{
@@ -37,6 +49,42 @@ export default class ExerciseController{
     
             response.status(200).json({ exercise: result });
         }  catch(error: any) {
+            next(error)
+        }
+    }
+
+    sendExerciseCode = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID);
+            const challengeID = Number(request.params.challengeID);
+            const exerciseID = Number(request.params.exerciseID);
+            const userCode = request.body.userCode;
+            const language = request.body.language;
+
+            if(isNaN(userID)) {
+                throw new HttpError('User ID must be a number', 403);
+            }
+
+            if(isNaN(challengeID)) {
+                throw new HttpError('Challenge ID must be a number', 403);
+            }
+
+            if(isNaN(exerciseID)) {
+                throw new HttpError('Exercise ID must be a number', 403);
+            }
+
+            if(!userCode) {
+                throw new HttpError('Code is required', 403);
+            }
+
+            if(!language) {
+                throw new HttpError('Language is required', 403);
+            }
+
+            const result = await this.exerciseService.sendExerciseCode(userID, challengeID, exerciseID, userCode, language);
+
+            response.status(200).json({ result: result });
+        } catch(error: any) {
             next(error)
         }
     }

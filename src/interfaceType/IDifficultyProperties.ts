@@ -1,5 +1,5 @@
 export default interface IDifficultyProperties{
     difficultyID: number;
-    description: string
-    valueXP: string
+    description: string;
+    valueXP: number;
 }

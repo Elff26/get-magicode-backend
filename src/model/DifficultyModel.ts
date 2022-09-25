@@ -8,5 +8,5 @@ export default class DifficultyModel{
     }
     difficultyID: number;
     description: string
-    valueXP: string
+    valueXP: number;
 }
