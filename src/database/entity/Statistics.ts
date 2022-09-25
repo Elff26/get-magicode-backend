@@ -13,6 +13,9 @@ export class Statistics {
     @PrimaryGeneratedColumn({name: "cd_estatistica"})
     statisticID: number;
 
+    @Column({name: "nr_xp_atual", type: "integer", default: 0})
+    currentXp: number;
+
     @Column({name: "nr_xp_total", type: "integer", default: 0})
     totalXp: number;
 
@@ -33,5 +36,12 @@ export class Statistics {
 
     @OneToOne(() => User)
     @JoinColumn({name: "cd_usuario"})
-    userID: User;
+    user: User;
+
+    addExperienceToUser = (xpGain: number) => {
+        this.currentXp += xpGain;
+        this.totalXp += xpGain;
+        this.dayXp += xpGain;
+        this.mounthXp += xpGain;
+    }
 }

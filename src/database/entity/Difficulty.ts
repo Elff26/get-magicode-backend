@@ -16,7 +16,7 @@ export class Difficulty{
     description: string;
 
     @Column({name:"vl_xp", type: "integer", nullable: false})
-    valueXP: string;
+    valueXP: number;
 
     @OneToMany(() => Challenge, (challange) => challange.difficulty)
     challanges: Challenge[];
