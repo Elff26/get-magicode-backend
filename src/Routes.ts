@@ -28,9 +28,12 @@ router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
 router.put("/UpdateUser/:userID", userController.updateUser);
 router.delete("/DeleteUser/:userID", userController.deleteUSer);
-router.post("/Login", authControler.login);
 router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser);
 router.post("/VerificationCode/:userID", userController.verificationCode);
+router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLifes);
+router.put("/addUserLife/:userID", userController.addUserLife);
+
+router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
@@ -63,6 +66,7 @@ router.put("/FinishChallenge/:userID/:challengeID", challengeController.finishCh
 router.post("/CreateAlternative", alternativeController.createAlternative);
 router.get("/FindAlternativeById/:alternativeID", alternativeController.findAlternativeByID);
 router.get("/FindAlternativeByExercise/:exerciseID", alternativeController.findAlternativeByExercise);
+router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alternativeIsCorrect);
 
 router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
 

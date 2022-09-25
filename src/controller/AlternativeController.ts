@@ -60,8 +60,22 @@ export default class AlternativeController {
             const result = await this.alternativeService.findAlternativeByExercise(exerciseID);
 
             response.status(200).json({alternative: result});
-
         } catch(error: any){
+            next(error);
+        }
+    }
+
+    alternativeIsCorrect = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const alternativeID = Number(request.params.alternativeID);
+
+            if (isNaN(alternativeID)){
+                throw new HttpError('AlternativeID must be a number !', 403);
+            }
+            const result = await this.alternativeService.alternativeIsCorrect(alternativeID);
+
+            response.status(200).json({alternativeIsCorrect: result});
+        }catch(error: any){
             next(error);
         }
     }

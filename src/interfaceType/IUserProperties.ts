@@ -12,6 +12,7 @@ export default interface IUserProperties {
     phone: string;
     password: string;
     numberOfLifes: number
+    lastUpdateNumberOfLifes: Date;
     createdAt?: Date;
     codeChangePassword: string;
     expirationDate: Date;
