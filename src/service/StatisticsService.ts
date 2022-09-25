@@ -39,7 +39,6 @@ export default class StatisticsService {
         }
 
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
-        console.log(statisticsExists)
 
         if(!statisticsExists) {
             statisticsExists = new StatisticsModel();
