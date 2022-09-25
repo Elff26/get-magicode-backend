@@ -31,7 +31,7 @@ router.delete("/DeleteUser/:userID", userController.deleteUSer);
 router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser);
 router.post("/VerificationCode/:userID", userController.verificationCode);
 router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLifes);
-router.put("/addUserLife/:userID", userController.addUserLife);
+router.put("/AddUserLife/:userID", userController.addUserLife);
 router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
 
 router.post("/Login", authControler.login);
