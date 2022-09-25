@@ -118,4 +118,14 @@ export default class UserService{
         userExists.numberOfLifes += 1;
         return await this.userRepository.updateUser(userExists)
     }
+
+    getNumberOfLifes = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        return userExists.numberOfLifes;
+    }
 }

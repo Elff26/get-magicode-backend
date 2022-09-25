@@ -142,4 +142,20 @@ export default class UserController{
             next(error)
         }
     }
+
+    getNumberOfLifes = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID)
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+    
+            const result = await this.userService.getNumberOfLifes(userID);
+    
+            response.status(200).json({ numberOfLifes: result });
+        }  catch(error: any) {
+            next(error)
+        }
+    }
 }

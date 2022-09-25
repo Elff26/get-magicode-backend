@@ -30,6 +30,7 @@ router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUs
 router.post("/VerificationCode/:userID", userController.verificationCode);
 router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLifes);
 router.put("/addUserLife/:userID", userController.addUserLife);
+router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
 
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
