@@ -12,6 +12,8 @@ export default class ExerciseRepository implements IExerciseRepository{
     }
 
     save = async (exercise: ExerciseModel) => {
+        exercise.description = JSON.stringify(exercise.description);
+
         return await this.exerciseRepository.save(exercise);
     }
 

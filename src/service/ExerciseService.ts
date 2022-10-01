@@ -6,6 +6,7 @@ import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import LanguageCodeDictionary from "../utils/LanguageCodeDictionary";
 
 export default class ExerciseService{
     private exerciseRepository: IExerciseRepository;
@@ -55,11 +56,12 @@ export default class ExerciseService{
 
         let response = await axios.post(`https://api.jdoodle.com/v1/execute`, {
             script : userCode,
-            language: language,
+            language: LanguageCodeDictionary[language],
             versionIndex: "0",
             clientId: process.env.CLIENTE_ID,
             clientSecret: process.env.CLIENT_SECRET
         });
+        
         let responseData: IJdoodleResponseCodeProperties = response.data;
 
         if(!responseData) {
