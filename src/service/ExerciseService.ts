@@ -1,7 +1,9 @@
 import axios from "axios";
+import { IsNull } from "typeorm";
 import HttpError from "../exceptions/HttpError";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
+import StatisticsModel from "../model/StatisticsModel";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
@@ -38,7 +40,7 @@ export default class ExerciseService{
     sendExerciseCode = async (userID: number, challengeID: number, exerciseID: number, userCode: string, language: string) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 
@@ -76,7 +78,10 @@ export default class ExerciseService{
             let userStatistics = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
            
             if(!userStatistics) {
-                throw new HttpError('An error has occurred, please try again later.', 500);
+                const statistics = new StatisticsModel();
+                statistics.user = userExists;
+    
+                userStatistics = await this.statisticsRepository.saveOrUpdate(statistics);
             }
 
             userStatistics.addExperienceToUser(challengeExists.difficulty.valueXP);

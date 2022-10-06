@@ -1,6 +1,4 @@
-import { NextFunction } from "express";
 import HttpError from "../exceptions/HttpError";
-import IChangePassProperties from "../interfaceType/IChangePassProperties";
 import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 

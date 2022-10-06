@@ -34,7 +34,7 @@ export default class StatisticsService {
     addExperienceToUser = async (userID: number, xpGain: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 

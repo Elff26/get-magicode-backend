@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
+import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -154,6 +155,27 @@ export default class UserController{
             const result = await this.userService.getNumberOfLifes(userID);
     
             response.status(200).json({ numberOfLifes: result });
+        }  catch(error: any) {
+            next(error)
+        }
+    }
+
+    addMoreUserInfo = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID)
+            const userData: IUserMoreDataInterface = request.body.userData;
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+            
+            if(!userData.phone && !userData.birthday) {
+                throw new HttpError('Phone number and birthday are required', 400);
+            }
+
+            const result = await this.userService.addMoreUserInfo(userID, userData);
+    
+            response.status(200).json({ user: result });
         }  catch(error: any) {
             next(error)
         }

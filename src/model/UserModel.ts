@@ -19,21 +19,25 @@ export default class UserModel{
         this.goal = user.goal;
         this.technologies = user.technologies;
         this.statistics = user.statistics;
+        this.externalID = user.externalID;
+        this.externalToken = user.externalToken;
     }
 
-    userID: number
+    userID?: number
     name: string
-    birthday: string
+    birthday?: string
     email: string
-    phone: string
+    phone?: string
     password: string
     numberOfLifes: number
-    lastUpdateNumberOfLifes: Date;
+    lastUpdateNumberOfLifes?: Date;
     createdAt?: Date
-    codeChangePassword: string
-    expirationDate: Date
-    goal: GoalModel
-    statistics: any; // MUDAR DEPOIS
-    technologies: UserTechnologyModel[];
-    achievements: any; // MUDAR DEPOIS
+    codeChangePassword?: string
+    expirationDate?: Date
+    goal?: GoalModel
+    statistics?: any; // MUDAR DEPOIS
+    technologies?: UserTechnologyModel[];
+    achievements?: any; // MUDAR DEPOIS
+    externalID?: string;
+    externalToken?: string;
 }
