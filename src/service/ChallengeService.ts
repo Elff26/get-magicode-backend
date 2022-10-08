@@ -58,7 +58,7 @@ export default class ChallengeService {
     findUserChallengeByTechnology = async (userID: number, technologyID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 
@@ -80,7 +80,7 @@ export default class ChallengeService {
     initChallenge = async (challengeID: number, userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 
@@ -114,7 +114,7 @@ export default class ChallengeService {
     finishChallenge = async (challengeID: number, userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 

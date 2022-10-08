@@ -10,6 +10,8 @@ import DifficultyController from './controller/DifficultyController';
 import ChallengeController from './controller/ChallengeController';
 import AlternativeController from './controller/AlternativeController';
 import StatisticsController from './controller/StatisticsController';
+import GoogleController from './controller/GoogleController';
+import FacebookController from './controller/FacebookController';
 
 const router = Router();
 
@@ -23,6 +25,8 @@ const difficultyController = new DifficultyController();
 const challengeController = new ChallengeController();
 const alternativeController = new AlternativeController();
 const statisticsController = new StatisticsController();
+const googleController = new GoogleController();
+const facebookController = new FacebookController();
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
@@ -33,9 +37,16 @@ router.post("/VerificationCode/:userID", userController.verificationCode);
 router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLifes);
 router.put("/AddUserLife/:userID", userController.addUserLife);
 router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
+router.put("/AddMoreUserInfo/:userID", userController.addMoreUserInfo);
 
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
+
+router.post("/SiginWithGoogle", googleController.siginWithGoogle);
+router.get('/CheckGoogleToken', googleController.checkGoogleToken);
+
+router.post("/SiginWithFacebook", facebookController.siginWithFacebook);
+router.get('/CheckFacebookToken', facebookController.checkFacebookToken);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
 router.get("/ListAllTechnologies", technologyController.listAllTechnologies);

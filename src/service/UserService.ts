@@ -1,4 +1,8 @@
+import axios from "axios";
 import HttpError from "../exceptions/HttpError";
+import IFacebookUserProperties from "../interfaceType/IFacebookUserProperties";
+import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
+import IUserProperties from "../interfaceType/IUserProperties";
 import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import codeAndDateGenerator from "../utils/CodeAndDateGenerator";
@@ -12,7 +16,7 @@ export default class UserService{
     }
 
     createUser = async (user: UserModel) => {
-        const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone);
+        const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone?user.phone:"");
 
         if(userExists) {
             throw new HttpError('This email/phone already exists!', 409)
@@ -127,5 +131,25 @@ export default class UserService{
         }
 
         return userExists.numberOfLifes;
+    }
+
+    addMoreUserInfo = async (userID: number, userData: IUserMoreDataInterface) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+        
+        if(!userExists.phone) {
+            userExists.phone = userData.phone;
+        }
+
+        if(!userExists.birthday) {
+            userExists.birthday = userData.birthday;
+        }
+
+        let updatedUser = this.userRepository.save(userExists);
+        
+        return updatedUser;
     }
 }

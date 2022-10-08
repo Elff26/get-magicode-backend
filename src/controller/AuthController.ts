@@ -7,8 +7,8 @@ import UserRepository from "../repository/UserRepository";
 import AuthService from "../service/AuthService";
 
 export default class UserController{
-    private userRepository: IUserRepository
-    private authService: AuthService
+    private userRepository: IUserRepository;
+    private authService: AuthService;
 
     constructor() {
         this.userRepository = new UserRepository();

@@ -4,20 +4,22 @@ import GoalModel from "../model/GoalModel";
 import UserTechnologyModel from "../model/UserTechnologyModel";
 
 export default interface IUserProperties {
-    userID: number;
+    userID?: number;
     name: string;
-    birthday: string;
+    birthday?: string;
     email: string;
     image?: string;
-    phone: string;
+    phone?: string;
     password: string;
     numberOfLifes: number
-    lastUpdateNumberOfLifes: Date;
+    lastUpdateNumberOfLifes?: Date;
     createdAt?: Date;
-    codeChangePassword: string;
-    expirationDate: Date;
-    goal: GoalModel;
-    statistics: Statistics;
-    technologies: UserTechnologyModel[];
-    achievements: UserAchievement[];
+    codeChangePassword?: string;
+    expirationDate?: Date;
+    goal?: GoalModel;
+    statistics?: Statistics;
+    technologies?: UserTechnologyModel[];
+    achievements?: UserAchievement[];
+    externalID?: string;
+    externalToken?: string;
 }

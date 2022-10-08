@@ -28,13 +28,15 @@ export default class TechnologyService{
     associateUserToTechnology = async (userID: number, technologies: IUserTechnologyProperties[]) => {
         const userExists = await this.userRepository.findUserById(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 
-        userExists.technologies.forEach(async (tech) => {
-            await this.userTechnologyRepository.delete(tech.userTechnologyID);
-        });
+        if(userExists.technologies) {
+            userExists.technologies.forEach(async (tech) => {
+                await this.userTechnologyRepository.delete(tech.userTechnologyID);
+            });            
+        }
 
         technologies.forEach(async (tech) => {
             let loadedTechnology = await this.technologyRepository.findByID(tech.technology.technologyID);
@@ -56,10 +58,18 @@ export default class TechnologyService{
     }
     
     changeTechnology = async (userTechnology: IUserTechnologyProperties) => {
+        if(!userTechnology.user.userID) {
+            throw new HttpError('User not found!', 404);
+        }
+
         const userExists = await this.userRepository.findUserById(userTechnology.user.userID);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
+        }
+
+        if(!userExists.technologies) {
+            throw new HttpError("User hasn't technologies!", 404);
         }
 
         let updatedTechs = userExists.technologies.map(tech => {

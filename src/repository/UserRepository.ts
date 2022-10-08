@@ -35,6 +35,14 @@ export default class UserRepository implements IUserRepository{
             })
             .getOne();
     }
+
+    findUserByExternalID = async (externalID: string) => {
+        return await this.userRepository.createQueryBuilder('User')
+            .where({
+                externalID
+            })
+            .getOne();
+    }
     
     updateUser = async (user: UserModel) => {
         return await this.userRepository.save(user);
