@@ -55,4 +55,20 @@ export default class StatisticsService {
 
         return result;
     }
+
+    getMounthXpByUser = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const result = await this.statisticsRepository.getMounthXpByUser(userID);
+
+        return result;
+    }
+
+    getHigherXP = async () => {
+        return await this.statisticsRepository.getHigherXP();
+    }
 }

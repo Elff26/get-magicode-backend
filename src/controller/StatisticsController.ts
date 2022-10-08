@@ -38,4 +38,30 @@ export default class StatisticsController {
             next(error);
         }
     }
+
+                                                  
+    getMounthXpByUser = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const userID = Number(request.params.userID);
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.statisticsService.getMounthXpByUser(userID);
+            
+            response.status(200).json({ mounthXp: result });
+        }catch(error: any){
+            next(error);
+        }
+    }
+
+    getHigherXP = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const result = await this.statisticsService.getHigherXP();
+            response.status(200).json({ higherXp: result });
+        }catch(error: any){
+            next(error);
+        }
+    }
 }

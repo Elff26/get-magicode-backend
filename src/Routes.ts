@@ -70,5 +70,7 @@ router.get("/FindAlternativeByExercise/:exerciseID", alternativeController.findA
 router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alternativeIsCorrect);
 
 router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
+router.get('/GetMounthXpByUser/:userID', statisticsController.getMounthXpByUser);
+router.get('/GetHigherXp', statisticsController.getHigherXP);
 
 export default router; 

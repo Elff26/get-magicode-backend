@@ -24,4 +24,19 @@ export default class StatisticsRepository implements IStatisticsRepository {
             }
         })
     };
+
+    getMounthXpByUser = async (userID: number) => {
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                              .select("nr_xp_mes")
+                                              .where({user: userID})
+                                              .getOne();
+    }
+
+    getHigherXP = async () => {
+        return await this.statisticsRepository.find({
+            order:{
+                totalXp: "ASC"
+            }
+        })
+    }    
 }
