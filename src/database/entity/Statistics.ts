@@ -39,7 +39,15 @@ export class Statistics {
     user: User;
 
     addExperienceToUser = (xpGain: number) => {
-        this.currentXp += xpGain;
+        const total = this.currentXp + xpGain;
+        const rest = total - 150;
+
+        if(total >= 150){
+            this.currentXp = rest;
+        }else{
+            this.currentXp += xpGain;
+        }
+        
         this.totalXp += xpGain;
         this.dayXp += xpGain;
         this.mounthXp += xpGain;

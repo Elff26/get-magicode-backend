@@ -83,7 +83,7 @@ router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alterna
 router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
 router.get('/GetMounthXpByUser/:userID', statisticsController.getMounthXpByUser);
 router.get('/GetHigherXp', statisticsController.getHigherXP);
-router.get('/Counter/:userID', statisticsController.counter);
+router.post('/Counter/:userID', statisticsController.counter);
 router.get('/GetClassroomCompletedByUser/:userID', statisticsController.getClassroomCompletedByUser);
 
 export default router; 

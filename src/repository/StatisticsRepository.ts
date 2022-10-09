@@ -17,40 +17,40 @@ export default class StatisticsRepository implements IStatisticsRepository {
 
     findStatisticsByUser = async (userID: number) => {
         return await this.statisticsRepository.findOne({
-            where: {
-                user: {
+            where:{
+                user:{
                     userID: userID
                 }
             }
-        })
+        });
     };
 
     getMounthXpByUser = async (userID: number) => {
         return await this.statisticsRepository.createQueryBuilder('Statistics')
-                                              .select("nr_xp_mes")
+                                              .select("Statistics.mounthXp")
                                               .where({user: userID})
                                               .getOne();
     }
 
     getHigherXP = async () => {
-        return await this.statisticsRepository.find({
-            order:{
-                totalXp: "ASC"
-            }
-        })
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                              .leftJoinAndSelect('Statistics.user', 'u')
+                                              .select(['Statistics.totalXp', 'u'])
+                                              .orderBy('Statistics.totalXp', 'DESC')
+                                              .getMany();
     }
 
     getCurrentXp = async (userID:number) => {
         return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .select(['Statistics.currentXp'])
-                                              .where({userID})
+                                              .where("Statistics.user = :userID",{userID})
                                               .getRawOne();
     }
 
     getClassroomCompletedByUser = async (userID: number) => {
         return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .select(['Statistics.completedClasses'])
-                                              .where({userID})
+                                              .where("Statistics.user = :userID",{userID})
                                               .getRawOne();
     }
 }

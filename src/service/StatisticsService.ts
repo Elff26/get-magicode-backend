@@ -5,7 +5,6 @@ import StatisticsModel from "../model/StatisticsModel";
 import UserModel from "../model/UserModel";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
-import Constants from "../utils/Constants";
 
 export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
@@ -34,29 +33,27 @@ export default class StatisticsService {
 
     addExperienceToUser = async (userID: number, xpGained: number) => {
         const userExists = await this.userRepository.findUserById(userID);
-        const statistics = await this.statisticsRepository.findStatisticsByUser(userID);
-        const quantityCurrentXp = await this.statisticsRepository.getCurrentXp(userID);
 
-        if(!userExists) {
+        if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
 
-        if(!statistics) {
-            throw new HttpError('Statistics not found!', 404);
+        let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+
+        if(!statisticsExists) {
+            statisticsExists = new StatisticsModel();
+            statisticsExists.user = userExists;
+            statisticsExists.currentXp = 0;
+            statisticsExists.totalXp = 0;
+            statisticsExists.dayXp = 0;
+            statisticsExists.mounthXp = 0;
         }
 
-        const sumXp = quantityCurrentXp + xpGained;
-        const rest = sumXp - Constants.MAX_TOTAL_XP;
-        statistics.dayXp += xpGained;
-        statistics.mounthXp += xpGained;
-        statistics.totalXp += xpGained;
-        statistics.currentXp += xpGained;
+        statisticsExists.addExperienceToUser(xpGained);
 
-        if(statistics.currentXp >= Constants.MAX_TOTAL_XP){
-            statistics.currentXp = rest;
-        }
+        const result = await this.statisticsRepository.saveOrUpdate(statisticsExists);
 
-        return sumXp;
+        return result;
     }
 
     getMounthXpByUser = async (userID: number) => {
@@ -68,14 +65,12 @@ export default class StatisticsService {
 
         const result = await this.statisticsRepository.getMounthXpByUser(userID);
 
-        return result;
+        return result?.mounthXp;
     }
 
     getHigherXP = async () => {
         return await this.statisticsRepository.getHigherXP();
     }
-
-
 
     counter = async (userID: number, type:string) => {
         const userExists = await this.userRepository.findUserById(userID);
@@ -112,7 +107,7 @@ export default class StatisticsService {
 
         const result = await this.statisticsRepository.getClassroomCompletedByUser(userID);
 
-        return result;
+        return result.Statistics_nr_aulas_completas;
     }
 }
 
