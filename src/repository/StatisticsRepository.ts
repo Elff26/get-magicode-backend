@@ -38,5 +38,19 @@ export default class StatisticsRepository implements IStatisticsRepository {
                 totalXp: "ASC"
             }
         })
-    }    
+    }
+
+    getCurrentXp = async (userID:number) => {
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                              .select(['Statistics.currentXp'])
+                                              .where({userID})
+                                              .getRawOne();
+    }
+
+    getClassroomCompletedByUser = async (userID: number) => {
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                              .select(['Statistics.completedClasses'])
+                                              .where({userID})
+                                              .getRawOne();
+    }
 }
