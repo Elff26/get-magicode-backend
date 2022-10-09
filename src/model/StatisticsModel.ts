@@ -1,5 +1,7 @@
+import { Level } from "../database/entity/Level";
 import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
 import UserModel from "../model/UserModel";
+import LevelModel from "./LevelModel";
 
 export default class StatisticsModel {
     constructor(statistics?: IStatisticsProperties){
@@ -13,6 +15,7 @@ export default class StatisticsModel {
             this.numberOfHits = statistics.numberOfHits;
             this.numberOfMistakes = statistics.numberOfMistakes;
             this.user = statistics.user;
+            this.level = statistics.level;
         } 
     }
 
@@ -40,4 +43,5 @@ export default class StatisticsModel {
     numberOfHits: number;
     numberOfMistakes: number;
     user: UserModel;
+    level: LevelModel;
 }

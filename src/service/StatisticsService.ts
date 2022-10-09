@@ -1,17 +1,17 @@
-import { IsNull } from "typeorm";
 import HttpError from "../exceptions/HttpError";
-import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
 import StatisticsModel from "../model/StatisticsModel";
-import UserModel from "../model/UserModel";
+import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 
 export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
+    private levelRepository: ILevelRepository;
     private userRepository: IUserRepository;
 
-    constructor(statisticsRepository: IStatisticsRepository, userRepository: IUserRepository){
+    constructor(statisticsRepository: IStatisticsRepository, userRepository: IUserRepository, levelRepository: ILevelRepository){
         this.statisticsRepository = statisticsRepository;
+        this.levelRepository = levelRepository;
         this.userRepository = userRepository;
     }
 
@@ -41,8 +41,15 @@ export default class StatisticsService {
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
 
         if(!statisticsExists) {
+            const level = await this.levelRepository.findFirstLevel();
+
+            if(!level) {
+                throw new HttpError('There is no level!', 404);
+            }
+
             statisticsExists = new StatisticsModel();
             statisticsExists.user = userExists;
+            statisticsExists.level = level;
             statisticsExists.currentXp = 0;
             statisticsExists.totalXp = 0;
             statisticsExists.dayXp = 0;

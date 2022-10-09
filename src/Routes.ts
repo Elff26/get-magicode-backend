@@ -12,6 +12,7 @@ import AlternativeController from './controller/AlternativeController';
 import StatisticsController from './controller/StatisticsController';
 import GoogleController from './controller/GoogleController';
 import FacebookController from './controller/FacebookController';
+import LevelController from './controller/LevelController';
 
 const router = Router();
 
@@ -27,6 +28,7 @@ const alternativeController = new AlternativeController();
 const statisticsController = new StatisticsController();
 const googleController = new GoogleController();
 const facebookController = new FacebookController();
+const levelController = new LevelController();
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
@@ -85,5 +87,9 @@ router.get('/GetMounthXpByUser/:userID', statisticsController.getMounthXpByUser)
 router.get('/GetHigherXp', statisticsController.getHigherXP);
 router.post('/Counter/:userID', statisticsController.counter);
 router.get('/GetClassroomCompletedByUser/:userID', statisticsController.getClassroomCompletedByUser);
+
+router.post('/CreateLevel', levelController.createLevel);
+router.get('/ListAllLevels', levelController.listAllLevels);
+router.get('/FindLevelById/:levelID', levelController.findLevelById);
 
 export default router; 

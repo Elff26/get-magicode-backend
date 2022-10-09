@@ -2,9 +2,11 @@ import {
     Column, 
     Entity, 
     JoinColumn, 
+    ManyToOne, 
     OneToOne, 
     PrimaryGeneratedColumn 
 } from "typeorm";
+import { Level } from "./Level";
 
 import { User } from "./User";
 
@@ -37,6 +39,10 @@ export class Statistics {
     @OneToOne(() => User)
     @JoinColumn({name: "cd_usuario"})
     user: User;
+
+    @ManyToOne(() => Level, {eager: true})
+    @JoinColumn({name: "cd_nivel"})
+    level: Level;
 
     addExperienceToUser = (xpGain: number) => {
         const total = this.currentXp + xpGain;
