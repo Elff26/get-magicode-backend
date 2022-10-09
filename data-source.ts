@@ -17,6 +17,7 @@ import { Tip } from './src/database/entity/Tip';
 import { UserTechnology } from './src/database/entity/UserTechnology';
 import { UserAchievement } from './src/database/entity/UserAchievement';
 import { UserChallenge } from './src/database/entity/UserChallenge';
+import { Level } from './src/database/entity/Level';
 
 export const AppDataSource = new DataSource({
    type: "sqlite",
@@ -32,6 +33,7 @@ export const AppDataSource = new DataSource({
     Difficulty,
     Exercise,
     Goal,
+    Level,
     Statistics,
     Technology,
     Tip,

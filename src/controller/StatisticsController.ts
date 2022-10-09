@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
-import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
+import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import UserRepository from "../repository/UserRepository";
 import StatisticsService from "../service/StatisticsService";
@@ -11,11 +12,14 @@ export default class StatisticsController {
     private statisticsService: StatisticsService;
     private statisticsRepository: IStatisticsRepository;
     private userRepository: IUserRepository;
+    private levelRepository: ILevelRepository;
 
     constructor() {
         this.statisticsRepository = new StatisticsRepository;
         this.userRepository = new UserRepository;
-        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository);
+        this.levelRepository = new LevelRepository;
+
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
     }
 
     addExperienceToUser = async (request: Request, response: Response, next: NextFunction) => {
