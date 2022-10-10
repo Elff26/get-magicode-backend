@@ -4,7 +4,8 @@ import {
     JoinColumn, 
     ManyToOne, 
     OneToOne, 
-    PrimaryGeneratedColumn 
+    PrimaryGeneratedColumn, 
+    UpdateDateColumn
 } from "typeorm";
 import { Level } from "./Level";
 
@@ -35,6 +36,12 @@ export class Statistics {
 
     @Column({name: "nr_error", type: "integer", default: 0})
     numberOfMistakes: number;
+
+    @Column({name: "meta_completa", type: "boolean", nullable: false, default: false})
+    completedGoal: boolean;
+
+    @UpdateDateColumn({name : "dt_meta_completa"})
+    dateCompletedGoal: Date;
 
     @OneToOne(() => User)
     @JoinColumn({name: "cd_usuario"})

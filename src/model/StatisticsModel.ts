@@ -14,6 +14,8 @@ export default class StatisticsModel {
             this.completedClasses = statistics.completedClasses;
             this.numberOfHits = statistics.numberOfHits;
             this.numberOfMistakes = statistics.numberOfMistakes;
+            this.dateCompletedGoal = statistics.dateCompletedGoal;
+            this.completedGoal = statistics.completedGoal;
             this.user = statistics.user;
             this.level = statistics.level;
         } 
@@ -42,6 +44,8 @@ export default class StatisticsModel {
     completedClasses: number;
     numberOfHits: number;
     numberOfMistakes: number;
+    dateCompletedGoal: Date;
+    completedGoal: boolean;
     user: UserModel;
     level: LevelModel;
 }

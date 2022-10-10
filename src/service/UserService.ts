@@ -152,4 +152,16 @@ export default class UserService{
         
         return updatedUser;
     }
+
+    getGoalByUser = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const result = await this.userRepository.getGoalByUser(userID);
+
+        return result;
+    }
 }

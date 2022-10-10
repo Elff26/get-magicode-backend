@@ -40,6 +40,7 @@ router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLife
 router.put("/AddUserLife/:userID", userController.addUserLife);
 router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
 router.put("/AddMoreUserInfo/:userID", userController.addMoreUserInfo);
+router.get("/GetGoalByUser/:userID", userController.getGoalByUser);
 
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
@@ -87,6 +88,7 @@ router.get('/GetMounthXpByUser/:userID', statisticsController.getMounthXpByUser)
 router.get('/GetHigherXp', statisticsController.getHigherXP);
 router.post('/Counter/:userID', statisticsController.counter);
 router.get('/GetClassroomCompletedByUser/:userID', statisticsController.getClassroomCompletedByUser);
+router.put('/CompletedGoal/:userID', statisticsController.completedGoal);
 
 router.post('/CreateLevel', levelController.createLevel);
 router.get('/ListAllLevels', levelController.listAllLevels);

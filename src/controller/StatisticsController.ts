@@ -103,4 +103,20 @@ export default class StatisticsController {
             next(error);
         }
     }
+
+    completedGoal = async (request: Request, response: Response, next: NextFunction) => {
+        try{            
+            const userID = Number(request.params.userID);
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.statisticsService.completedGoal(userID);
+
+            response.status(200).json({ response: result });
+        }catch(error: any){
+            next(error);
+        }
+    }
 }

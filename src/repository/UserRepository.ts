@@ -88,4 +88,12 @@ export default class UserRepository implements IUserRepository{
                                         .where({userID})
                                         .execute();
     }
+
+    getGoalByUser = async (userID: number) => {
+        return await this.userRepository.createQueryBuilder('User')
+                                              .leftJoinAndSelect('User.goal', 'g')
+                                              .select(['User.goal','g.value'])
+                                              .where({userID})
+                                              .getRawOne();
+    }
 }
