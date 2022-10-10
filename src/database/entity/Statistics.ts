@@ -43,7 +43,7 @@ export class Statistics {
     @UpdateDateColumn({name : "dt_meta_completa"})
     dateCompletedGoal: Date;
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, (user) => user.statistics)
     user: User;
 
     @ManyToOne(() => Level, {eager: true})

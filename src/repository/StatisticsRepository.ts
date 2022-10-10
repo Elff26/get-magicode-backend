@@ -33,6 +33,7 @@ export default class StatisticsRepository implements IStatisticsRepository {
     }
 
     getHigherXP = async (type: string) => {
+
         if(type === 'general'){
             return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .leftJoinAndSelect('Statistics.user', 'u')
