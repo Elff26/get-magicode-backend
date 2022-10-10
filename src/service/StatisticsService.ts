@@ -38,9 +38,8 @@ export default class StatisticsService {
             throw new HttpError('User not found!', 404);
         }
 
-        console.log("A");
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
-        console.log("B")
+        
         if(!statisticsExists) {
             const level = await this.levelRepository.findFirstLevel();
 
