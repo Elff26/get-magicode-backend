@@ -24,9 +24,9 @@ export default class StatisticsService {
 
         const statistics = new StatisticsModel();
 
-        statistics.user = userExists;
+        userExists.statistics = statistics;
 
-        const result = this.statisticsRepository.saveOrUpdate(statistics);
+        const result = this.userRepository.save(userExists);
 
         return result;
     }
@@ -48,7 +48,6 @@ export default class StatisticsService {
             }
 
             statisticsExists = new StatisticsModel();
-            statisticsExists.user = userExists;
             statisticsExists.level = level;
             statisticsExists.currentXp = 0;
             statisticsExists.totalXp = 0;
@@ -58,7 +57,10 @@ export default class StatisticsService {
 
         statisticsExists.addExperienceToUser(xpGained);
 
-        const result = await this.statisticsRepository.saveOrUpdate(statisticsExists);
+        const savedStatistics = await this.statisticsRepository.saveOrUpdate(statisticsExists);
+        userExists.statistics = savedStatistics;
+
+        const result = await this.userRepository.save(userExists);
 
         return result;
     }

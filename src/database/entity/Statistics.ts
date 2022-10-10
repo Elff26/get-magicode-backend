@@ -36,8 +36,7 @@ export class Statistics {
     @Column({name: "nr_error", type: "integer", default: 0})
     numberOfMistakes: number;
 
-    @OneToOne(() => User)
-    @JoinColumn({name: "cd_usuario"})
+    @OneToOne(() => User, (user) => user.statistics)
     user: User;
 
     @ManyToOne(() => Level, {eager: true})
