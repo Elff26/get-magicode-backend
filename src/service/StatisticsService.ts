@@ -75,8 +75,8 @@ export default class StatisticsService {
         return result?.mounthXp;
     }
 
-    getHigherXP = async () => {
-        return await this.statisticsRepository.getHigherXP();
+    getHigherXP = async (type: string) => {
+        return await this.statisticsRepository.getHigherXP(type);
     }
 
     counter = async (userID: number, type:string) => {

@@ -62,7 +62,9 @@ export default class StatisticsController {
 
     getHigherXP = async (request: Request, response: Response, next: NextFunction) => {
         try{
-            const result = await this.statisticsService.getHigherXP();
+            const type = request.params.type
+
+            const result = await this.statisticsService.getHigherXP(type);
             response.status(200).json({ higherXp: result });
         }catch(error: any){
             next(error);

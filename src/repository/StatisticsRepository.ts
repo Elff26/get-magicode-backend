@@ -32,12 +32,22 @@ export default class StatisticsRepository implements IStatisticsRepository {
                                               .getOne();
     }
 
-    getHigherXP = async () => {
-        return await this.statisticsRepository.createQueryBuilder('Statistics')
+    getHigherXP = async (type: string) => {
+
+        if(type === 'general'){
+            return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .leftJoinAndSelect('Statistics.user', 'u')
                                               .select(['Statistics.totalXp', 'u'])
                                               .orderBy('Statistics.totalXp', 'DESC')
                                               .getMany();
+        }
+
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                              .leftJoinAndSelect('Statistics.user', 'u')
+                                              .select(['Statistics.mounthXp', 'u'])
+                                              .orderBy('Statistics.mounthXp', 'DESC')
+                                              .getMany();
+        
     }
 
     getCurrentXp = async (userID:number) => {
