@@ -3,7 +3,6 @@ import StatisticsModel from "../model/StatisticsModel";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
-import removeTime from "../utils/RemoveTime";
 
 export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
@@ -25,9 +24,9 @@ export default class StatisticsService {
 
         const statistics = new StatisticsModel();
 
-        statistics.user = userExists;
+        userExists.statistics = statistics;
 
-        const result = this.statisticsRepository.saveOrUpdate(statistics);
+        const result = this.userRepository.save(userExists);
 
         return result;
     }
@@ -49,31 +48,33 @@ export default class StatisticsService {
             }
 
             statisticsExists = new StatisticsModel();
-            statisticsExists.user = userExists;
             statisticsExists.level = level;
             statisticsExists.currentXp = 0;
             statisticsExists.totalXp = 0;
             statisticsExists.dayXp = 0;
-            statisticsExists.mounthXp = 0;
+            statisticsExists.monthXp = 0;
         }
 
         statisticsExists.addExperienceToUser(xpGained);
 
-        const result = await this.statisticsRepository.saveOrUpdate(statisticsExists);
+        const savedStatistics = await this.statisticsRepository.saveOrUpdate(statisticsExists);
+        userExists.statistics = savedStatistics;
+
+        const result = await this.userRepository.save(userExists);
 
         return result;
     }
 
-    getMounthXpByUser = async (userID: number) => {
+    getMonthXpByUser = async (userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
         }
 
-        const result = await this.statisticsRepository.getMounthXpByUser(userID);
+        const result = await this.statisticsRepository.getMonthXpByUser(userID);
 
-        return result?.mounthXp;
+        return result?.monthXp;
     }
 
     getHigherXP = async (type: string) => {

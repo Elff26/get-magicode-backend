@@ -64,7 +64,7 @@ export class User {
     @JoinColumn({name: "cd_meta"})
     goal?: Goal;
 
-    @OneToOne(() => Statistics,{eager: true})
+    @OneToOne(() => Statistics, (statistics) => statistics.user, {eager: true})
     @JoinColumn({name: "cd_estatistica"})
     statistics?: Statistics;
 

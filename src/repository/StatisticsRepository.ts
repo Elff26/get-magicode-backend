@@ -25,15 +25,14 @@ export default class StatisticsRepository implements IStatisticsRepository {
         });
     };
 
-    getMounthXpByUser = async (userID: number) => {
+    getMonthXpByUser = async (userID: number) => {
         return await this.statisticsRepository.createQueryBuilder('Statistics')
-                                              .select("Statistics.mounthXp")
+                                              .select("Statistics.monthXp")
                                               .where({user: userID})
                                               .getOne();
     }
 
     getHigherXP = async (type: string) => {
-
         if(type === 'general'){
             return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .leftJoinAndSelect('Statistics.user', 'u')
@@ -44,8 +43,8 @@ export default class StatisticsRepository implements IStatisticsRepository {
 
         return await this.statisticsRepository.createQueryBuilder('Statistics')
                                               .leftJoinAndSelect('Statistics.user', 'u')
-                                              .select(['Statistics.mounthXp', 'u'])
-                                              .orderBy('Statistics.mounthXp', 'DESC')
+                                              .select(['Statistics.monthXp', 'u'])
+                                              .orderBy('Statistics.monthXp', 'DESC')
                                               .getMany();
         
     }

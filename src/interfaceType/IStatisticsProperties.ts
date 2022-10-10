@@ -5,7 +5,7 @@ export default interface IStatisticsProperties {
     statisticID: number;
     currentXp: number;
     totalXp: number;
-    mounthXp: number;
+    monthXp: number;
     dayXp: number;
     completedClasses: number;
     numberOfHits: number;

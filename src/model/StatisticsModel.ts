@@ -9,7 +9,7 @@ export default class StatisticsModel {
             this.statisticID = statistics.statisticID;
             this.currentXp = statistics.currentXp;
             this.totalXp = statistics.totalXp;
-            this.mounthXp = statistics.mounthXp;
+            this.monthXp = statistics.monthXp;
             this.dayXp = statistics.dayXp;
             this.completedClasses = statistics.completedClasses;
             this.numberOfHits = statistics.numberOfHits;
@@ -33,13 +33,13 @@ export default class StatisticsModel {
         
         this.totalXp += xpGain;
         this.dayXp += xpGain;
-        this.mounthXp += xpGain;
+        this.monthXp += xpGain;
     }
 
     statisticID: number;
     currentXp: number;
     totalXp: number;
-    mounthXp: number;
+    monthXp: number;
     dayXp: number;
     completedClasses: number;
     numberOfHits: number;
