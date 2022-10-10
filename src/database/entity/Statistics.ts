@@ -22,7 +22,7 @@ export class Statistics {
     totalXp: number;
 
     @Column({name: "nr_xp_mes", type: "integer", default: 0})
-    mounthXp: number;
+    monthXp: number;
 
     @Column({name: "nr_xp_dia", type: "integer", default: 0})
     dayXp: number;
@@ -56,6 +56,6 @@ export class Statistics {
         
         this.totalXp += xpGain;
         this.dayXp += xpGain;
-        this.mounthXp += xpGain;
+        this.monthXp += xpGain;
     }
 }

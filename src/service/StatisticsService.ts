@@ -53,7 +53,7 @@ export default class StatisticsService {
             statisticsExists.currentXp = 0;
             statisticsExists.totalXp = 0;
             statisticsExists.dayXp = 0;
-            statisticsExists.mounthXp = 0;
+            statisticsExists.monthXp = 0;
         }
 
         statisticsExists.addExperienceToUser(xpGained);
@@ -63,16 +63,16 @@ export default class StatisticsService {
         return result;
     }
 
-    getMounthXpByUser = async (userID: number) => {
+    getMonthXpByUser = async (userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
         }
 
-        const result = await this.statisticsRepository.getMounthXpByUser(userID);
+        const result = await this.statisticsRepository.getMonthXpByUser(userID);
 
-        return result?.mounthXp;
+        return result?.monthXp;
     }
 
     getHigherXP = async (type: string) => {

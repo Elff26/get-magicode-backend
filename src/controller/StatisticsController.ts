@@ -44,7 +44,7 @@ export default class StatisticsController {
     }
 
                                                   
-    getMounthXpByUser = async (request: Request, response: Response, next: NextFunction) => {
+    getMonthXpByUser = async (request: Request, response: Response, next: NextFunction) => {
         try{
             const userID = Number(request.params.userID);
 
@@ -52,9 +52,9 @@ export default class StatisticsController {
                 throw new HttpError('ID must be a number', 403);
             }
 
-            const result = await this.statisticsService.getMounthXpByUser(userID);
+            const result = await this.statisticsService.getMonthXpByUser(userID);
             
-            response.status(200).json({ mounthXp: result });
+            response.status(200).json({ monthXp: result });
         }catch(error: any){
             next(error);
         }
