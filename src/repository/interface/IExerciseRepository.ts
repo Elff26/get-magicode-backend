@@ -1,7 +1,6 @@
-import { Exercise } from "../../database/entity/Exercise";
-import ExerciseModel from "../../model/ExerciseModel";
+import { Exercise } from "../../database/model/Exercise";
 
 export default interface IExerciseRepository{
-    save:(exercise: ExerciseModel) => Promise<ExerciseModel>;
-    findExerciseById:(exerciseID: number) => Promise<ExerciseModel | null>
+    save:(exercise: Exercise) => Promise<Exercise>;
+    findExerciseById:(exerciseID: number) => Promise<Exercise | null>
 }

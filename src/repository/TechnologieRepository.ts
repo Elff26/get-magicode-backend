@@ -1,8 +1,7 @@
 import { In, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import ITechnologyRepository from "./interface/ITechnologieRepository";
-import { Technology } from "../database/entity/Technology";
-import TechnologyModel from "../model/TechnologieModel";
+import { Technology } from "../database/model/Technology";
 
 export default class TechnologyRepository implements ITechnologyRepository{
     private technologyRepository: Repository<Technology>;
@@ -17,7 +16,7 @@ export default class TechnologyRepository implements ITechnologyRepository{
                                               .getMany();
     }
 
-    save = async (technology: TechnologyModel) => {
+    save = async (technology: Technology) => {
         return await this.technologyRepository.save(technology);
     }
 

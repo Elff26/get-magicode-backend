@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Difficulty } from "../database/entity/Difficulty";
-import DifficultyModel from "../model/DifficultyModel";
+import { Difficulty } from "../database/model/Difficulty";
 import IDifficultRepository from "./interface/IDifficultyRepository";
 
 
@@ -12,7 +11,7 @@ export default class DifficultyRepository implements IDifficultRepository{
         this.difficultyRepository = AppDataSource.manager.getRepository(Difficulty);
     }
 
-    save = async (difficulty: DifficultyModel) => {
+    save = async (difficulty: Difficulty) => {
         return await this.difficultyRepository.save(difficulty);
     }
 

@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Classroom } from "../database/entity/Classroom";
-import ClassroomModel from "../model/ClassroomModel";
+import { Classroom } from "../database/model/Classroom";
 import IClassroomRepository from "./interface/IClassroomRepository";
 
 export default class ClassroomRepository implements IClassroomRepository{
@@ -10,7 +9,7 @@ export default class ClassroomRepository implements IClassroomRepository{
         this.classroomRepository = AppDataSource.manager.getRepository(Classroom);
     }
 
-    save = async (classroom: ClassroomModel) => {
+    save = async (classroom: Classroom) => {
         classroom.description = JSON.stringify(classroom.description);
 
         return await this.classroomRepository.save(classroom);

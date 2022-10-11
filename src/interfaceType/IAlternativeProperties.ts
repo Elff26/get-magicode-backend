@@ -1,4 +1,4 @@
-import { Exercise } from "../database/entity/Exercise";
+import { Exercise } from "../database/model/Exercise";
 
 export default interface IAlternativeProperties {
     alternativeID: number;

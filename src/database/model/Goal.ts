@@ -5,11 +5,19 @@ import {
     OneToMany,
     JoinColumn
 } from "typeorm";
+import IGoalProperties from "../../interfaceType/IGoalProperties";
 
 import { User } from "./User";
 
 @Entity()
 export class Goal {
+    constructor(goal?: IGoalProperties){
+        if(goal) {
+            this.goalID = goal.goalID;
+            this.name = goal.name;
+        }
+    }
+
     @PrimaryGeneratedColumn({name: "cd_meta"})
     goalID: number;
 

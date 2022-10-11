@@ -1,5 +1,5 @@
+import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
-import StatisticsModel from "../model/StatisticsModel";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -22,7 +22,7 @@ export default class StatisticsService {
             throw new HttpError('User not found!', 404);
         }
 
-        const statistics = new StatisticsModel();
+        const statistics = new Statistics();
         const level = await this.levelRepository.findFirstLevel();
 
         if(level) {
@@ -55,7 +55,7 @@ export default class StatisticsService {
                 throw new HttpError('There is no level!', 404);
             }
 
-            statisticsExists = new StatisticsModel();
+            statisticsExists = new Statistics();
             statisticsExists.level = level;
             statisticsExists.currentXp = 0;
             statisticsExists.totalXp = 0;

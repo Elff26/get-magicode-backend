@@ -1,8 +1,7 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import IUserChallengeRepository from "./interface/IUserChallengeRepository";
-import { UserChallenge } from "../database/entity/UserChallenge";
-import UserChallengeModel from "../model/UserChallengeModel";
+import { UserChallenge } from "../database/model/UserChallenge";
 
 export default class UserChallengeRepository implements IUserChallengeRepository {
     private userChallengeRepository: Repository<UserChallenge>;
@@ -11,7 +10,7 @@ export default class UserChallengeRepository implements IUserChallengeRepository
         this.userChallengeRepository = AppDataSource.manager.getRepository(UserChallenge);
     }
 
-    saveOrUpdate = (userChallenge: UserChallengeModel) => {
+    saveOrUpdate = (userChallenge: UserChallenge) => {
         return this.userChallengeRepository.save(userChallenge);
     };
 

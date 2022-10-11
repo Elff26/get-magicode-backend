@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Statistics } from "../database/entity/Statistics";
-import StatisticsModel from "../model/StatisticsModel";
+import { Statistics } from "../database/model/Statistics";
 import IStatisticsRepository from "./interface/IStatisticsRepository";
 
 export default class StatisticsRepository implements IStatisticsRepository {
@@ -11,7 +10,7 @@ export default class StatisticsRepository implements IStatisticsRepository {
         this.statisticsRepository = AppDataSource.manager.getRepository(Statistics);
     }
 
-    saveOrUpdate = async (statistics: StatisticsModel) => {
+    saveOrUpdate = async (statistics: Statistics) => {
         return await this.statisticsRepository.save(statistics);
     };
 

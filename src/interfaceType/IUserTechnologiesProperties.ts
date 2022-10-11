@@ -1,11 +1,10 @@
-import { Technology } from "../database/entity/Technology";
-import TechnologyModel from "../model/TechnologieModel";
-import UserModel from "../model/UserModel";
+import { Technology } from "../database/model/Technology";
+import { User } from "../database/model/User";
 
 export default interface IUserTechnologyProperties {
     userTechnologyID: string;
-    user: UserModel;
-    technology: TechnologyModel;
+    user: User;
+    technology: Technology;
     learning?: boolean; 
     completed?: boolean;
 }

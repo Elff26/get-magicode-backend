@@ -1,6 +1,6 @@
-import { Alternative } from "../database/entity/Alternative";
-import { Tip } from "../database/entity/Tip";
-import ChallengeModel from "../model/ChallengeModel";
+import { Alternative } from "../database/model/Alternative";
+import { Challenge } from "../database/model/Challenge";
+import { Tip } from "../database/model/Tip";
 
 export default interface IExerciseProperties{
     exerciseID: number;
@@ -9,7 +9,7 @@ export default interface IExerciseProperties{
     expectedOutput: string
     creationDate: Date
     modificationDate: Date
-    challenge: ChallengeModel
+    challenge: Challenge
     type: string
     tips: Tip[];
     alternatives: Alternative[];

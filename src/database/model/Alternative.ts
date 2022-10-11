@@ -5,11 +5,21 @@ import {
     ManyToOne, 
     PrimaryGeneratedColumn 
 } from "typeorm";
+import IAlternativeProperties from "../../interfaceType/IAlternativeProperties";
 
 import { Exercise } from "./Exercise";
 
 @Entity()
 export class Alternative {
+    constructor(alternative?: IAlternativeProperties) {
+        if(alternative) {
+            this.alternativeID = alternative.alternativeID;
+            this.description = alternative.description;
+            this.isCorrect = alternative.isCorrect;
+            this.exercise = alternative.exercise;
+        }
+    }
+
     @PrimaryGeneratedColumn({name: "cd_alternativa"})
     alternativeID: number;
 

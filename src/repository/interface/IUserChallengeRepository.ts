@@ -1,7 +1,7 @@
-import UserChallengeModel from "../../model/UserChallengeModel";
+import { UserChallenge } from "../../database/model/UserChallenge";
 
 export default interface IUserChallengeRepository {
-    saveOrUpdate: (UserChallenge: UserChallengeModel) => Promise<UserChallengeModel>;
-    findByUserChallengeByUserAndChallenge:(userID: number, challengeID: number) => Promise<UserChallengeModel | null>;
-    findUserChallengeByTechnology: (userID: number, challengeID: number) => Promise<UserChallengeModel[]>;
+    saveOrUpdate: (UserChallenge: UserChallenge) => Promise<UserChallenge>;
+    findByUserChallengeByUserAndChallenge:(userID: number, challengeID: number) => Promise<UserChallenge | null>;
+    findUserChallengeByTechnology: (userID: number, challengeID: number) => Promise<UserChallenge[]>;
 }

@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Challenge } from "../database/entity/Challenge";
-import ChallengeModel from "../model/ChallengeModel";
+import { Challenge } from "../database/model/Challenge";
 import IChallengeRepository from "./interface/IChallengeRepository";
 
 export default class ChallengeRepository implements IChallengeRepository {
@@ -10,13 +9,15 @@ export default class ChallengeRepository implements IChallengeRepository {
     constructor(){
         this.challengeRepository = AppDataSource.manager.getRepository(Challenge);
     }
-    findChallengByID: (challengeID: number) => Promise<ChallengeModel | null>;
-    save = async (challenge: ChallengeModel) => {
-        return await this.challengeRepository.save(challenge); 
-    }
 
     findChallengeByID = async (challengeID: number) => {
-        return await this.challengeRepository.findOneBy({challengeID: challengeID});
+        return await this.challengeRepository.findOneBy({
+            challengeID: challengeID
+        });
+    }
+
+    save = async (challenge: Challenge) => {
+        return await this.challengeRepository.save(challenge); 
     }
 
     findChallengeByTechnology = async (technologyID: number) => {

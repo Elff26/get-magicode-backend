@@ -11,6 +11,16 @@ import { User } from "./User";
 
 @Entity({ name: 'user_technology' })
 export class UserTechnology {
+    constructor(technology?: Technology, user?: User, learning?: boolean, completed?: boolean, userTechnologyID?: string) {
+        if(technology && user && learning && completed && userTechnologyID) {
+            this.userTechnologyID = userTechnologyID
+            this.technology = technology;
+            this.user = user;
+            this.learning = learning;
+            this.completed = completed;
+        }
+    }
+
     @PrimaryGeneratedColumn('increment', {
         name: "usuario_tecnologia_id"
     })

@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Exercise } from "../database/entity/Exercise";
-import ExerciseModel from "../model/ExerciseModel";
+import { Exercise } from "../database/model/Exercise";
 import IExerciseRepository from "./interface/IExerciseRepository";
 
 export default class ExerciseRepository implements IExerciseRepository{
@@ -11,7 +10,7 @@ export default class ExerciseRepository implements IExerciseRepository{
         this.exerciseRepository = AppDataSource.manager.getRepository(Exercise);
     }
 
-    save = async (exercise: ExerciseModel) => {
+    save = async (exercise: Exercise) => {
         exercise.description = JSON.stringify(exercise.description);
 
         return await this.exerciseRepository.save(exercise);

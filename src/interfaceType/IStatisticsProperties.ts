@@ -1,5 +1,5 @@
-import { Level } from "../database/entity/Level";
-import UserModel from "../model/UserModel";
+import { Level } from "../database/model/Level";
+import { User } from "../database/model/User";
 
 export default interface IStatisticsProperties {
     statisticID: number;
@@ -11,7 +11,7 @@ export default interface IStatisticsProperties {
     numberOfHits: number;
     numberOfMistakes: number;
     completedGoal: boolean;
-    user: UserModel;
+    user: User;
     level: Level;
 
     addExperienceToUser: () => void;

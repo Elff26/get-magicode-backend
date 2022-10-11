@@ -9,6 +9,7 @@ import {
     OneToOne, 
     UpdateDateColumn
 } from "typeorm";
+import IUserProperties from "../../interfaceType/IUserProperties";
 
 import { Goal } from "./Goal";
 import { Statistics } from "./Statistics";
@@ -18,8 +19,29 @@ import { UserTechnology } from "./UserTechnology";
 
 @Entity()
 export class User {
+    constructor(user?: IUserProperties){
+        if(user) {
+            this.userID = user.userID;
+            this.name = user.name;
+            this.birthday = user.birthday;
+            this.email = user.email;
+            this.phone = user.phone;
+            this.password = user.password;
+            this.numberOfLifes = user.numberOfLifes;
+            this.lastUpdateNumberOfLifes = user.lastUpdateNumberOfLifes;
+            this.createdAt = user.createdAt;
+            this.codeChangePassword = user.codeChangePassword;
+            this.expirationDate = user.expirationDate;
+            this.goal = user.goal;
+            this.technologies = user.technologies;
+            this.statistics = user.statistics;
+            this.externalID = user.externalID;
+            this.externalToken = user.externalToken;
+        }
+    }
+
     @PrimaryGeneratedColumn({name: "cd_usuario"})
-    userID: number;
+    userID?: number;
 
     @Column({name: "nm_usuario", type: "varchar", length: 100, nullable: false})
     name: string;
@@ -43,10 +65,10 @@ export class User {
     numberOfLifes: number;
 
     @UpdateDateColumn({name: "ultima_att_nr_vidas", })
-    lastUpdateNumberOfLifes: Date;
+    lastUpdateNumberOfLifes?: Date;
 
     @CreateDateColumn({name: "dt_criacao"})
-    createdAt: Date;
+    createdAt?: Date;
 
     @Column({name:"cod_alteracao_senha", type:"varchar", nullable:false, default: "", length: 4 })
     codeChangePassword?: string;

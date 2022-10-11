@@ -1,6 +1,5 @@
 import { Repository } from "typeorm";
-import { User } from "../database/entity/User";
-import UserModel from "../model/UserModel";
+import { User } from "../database/model/User";
 import IUserRepository from "./interface/IUserRepository";
 import { AppDataSource } from "../../data-source";
 
@@ -11,11 +10,11 @@ export default class UserRepository implements IUserRepository{
         this.userRepository = AppDataSource.manager.getRepository(User);
     }
 
-    save = async (user: UserModel) => {
+    save = async (user: User) => {
         return await this.userRepository.save(user);
     }
     
-    createUser = async (user: UserModel) =>{
+    createUser = async (user: User) =>{
         return await this.userRepository.save(user);
     }
     
@@ -44,7 +43,7 @@ export default class UserRepository implements IUserRepository{
             .getOne();
     }
     
-    updateUser = async (user: UserModel) => {
+    updateUser = async (user: User) => {
         return await this.userRepository.save(user);
     }
     

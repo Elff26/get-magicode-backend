@@ -1,6 +1,6 @@
-import DifficultyModel from "../../model/DifficultyModel";
+import { Difficulty } from "../../database/model/Difficulty";
 
 export default interface IDifficultRepository{
-    save:(classroom: DifficultyModel) => Promise<DifficultyModel>;
-    findDifficultyById:(classroomID: number) => Promise<DifficultyModel | null>;
+    save:(classroom: Difficulty) => Promise<Difficulty>;
+    findDifficultyById:(classroomID: number) => Promise<Difficulty | null>;
 }

@@ -1,8 +1,7 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Alternative } from "../database/entity/Alternative";
-import { Exercise } from "../database/entity/Exercise";
-import AlternativeModel from "../model/AlternativeModel";
+import { Alternative } from "../database/model/Alternative";
+import { Exercise } from "../database/model/Exercise";
 import IAlternativeRepository from "./interface/IAlternativeRepository";
 
 export default class AlternativeRepository implements IAlternativeRepository {
@@ -11,7 +10,7 @@ export default class AlternativeRepository implements IAlternativeRepository {
         this.alternativeRepository = AppDataSource.manager.getRepository(Alternative);
     }
 
-    save = async (alternative: AlternativeModel) => {
+    save = async (alternative: Alternative) => {
         return this.alternativeRepository.save(alternative);
     }
 

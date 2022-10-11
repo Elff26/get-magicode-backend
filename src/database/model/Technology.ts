@@ -5,11 +5,21 @@ import {
     OneToMany, 
     JoinColumn 
 } from "typeorm";
+import ITechnologyProperties from "../../interfaceType/ITechnologyProperties";
 
 import { UserTechnology } from "./UserTechnology";
 
 @Entity()
 export class Technology{
+    constructor(technology: ITechnologyProperties) {
+        if(technology) {
+            this.technologyID = technology.technologyID;
+            this.name = technology.name;
+            this.imageUrl = technology.imageUrl;
+            this.users = technology.users;
+        }
+    }
+
     @PrimaryGeneratedColumn({ name: "cd_tecnologia" })
     technologyID: number;
 
@@ -21,5 +31,5 @@ export class Technology{
 
     @OneToMany(() => UserTechnology, (userTechnology) => userTechnology.technology)
     @JoinColumn({ name: 'cd_tecnologia' })
-    users: UserTechnology[];
+    users?: UserTechnology[];
 }

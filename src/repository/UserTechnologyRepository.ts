@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { UserTechnology } from "../database/entity/UserTechnology";
+import { UserTechnology } from "../database/model/UserTechnology";
 import IUserTechnologyRepository from "./interface/IUserTechnologyRepository";
 
 export default class UserTechnologyRepository implements IUserTechnologyRepository {

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { IsNull } from "typeorm";
+import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
-import StatisticsModel from "../model/StatisticsModel";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
@@ -78,7 +78,7 @@ export default class ExerciseService{
             let userStatistics = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
            
             if(!userStatistics) {
-                const statistics = new StatisticsModel();
+                const statistics = new Statistics();
                 statistics.user = userExists;
     
                 userStatistics = await this.statisticsRepository.saveOrUpdate(statistics);

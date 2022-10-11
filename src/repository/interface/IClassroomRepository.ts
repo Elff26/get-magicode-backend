@@ -1,8 +1,8 @@
-import ClassroomModel from "../../model/ClassroomModel";
+import { Classroom } from "../../database/model/Classroom";
 
 export default interface IClassroomRepository{
-    save:(classroom: ClassroomModel) => Promise<ClassroomModel>;
-    findClassroomById:(classroomID: number) => Promise<ClassroomModel | null>;
-    findClassroomByChallenge:(challengeID: number) => Promise<ClassroomModel[]>;
+    save:(classroom: Classroom) => Promise<Classroom>;
+    findClassroomById:(classroomID: number) => Promise<Classroom | null>;
+    findClassroomByChallenge:(challengeID: number) => Promise<Classroom[]>;
     countAllClassrooms: () => Promise<number>
 }

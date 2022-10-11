@@ -1,12 +1,11 @@
 import { DeleteResult, UpdateResult } from "typeorm";
-import { User } from "../../database/entity/User";
-import UserModel from "../../model/UserModel";
+import { User } from "../../database/model/User";
 
 export default interface IUserRepository{
-    save:(user: UserModel) => Promise<UserModel>;
-    createUser:(user: UserModel) => Promise<UserModel>;
-    findUserById:(userID: number) => Promise<UserModel | null>;
-    updateUser:(user: UserModel) => Promise<UserModel | null>;
+    save:(user: User) => Promise<User>;
+    createUser:(user: User) => Promise<User>;
+    findUserById:(userID: number) => Promise<User | null>;
+    updateUser:(user: User) => Promise<User | null>;
     deleteUser:(userID: number) => Promise<DeleteResult>;
     findUserByEmailOrPhone:(email: string, phone: string) => Promise<User | null>;
     findUserByExternalID:(externalID: string) => Promise<User | null>;

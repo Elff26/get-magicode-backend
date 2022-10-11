@@ -1,9 +1,8 @@
 import { SelectQueryBuilder } from "typeorm";
-import { Alternative } from "../../database/entity/Alternative";
-import AlternativeModel from "../../model/AlternativeModel";
+import { Alternative } from "../../database/model/Alternative";
 
 export default interface IAlternativeRepository {
-    save: (alternative: AlternativeModel) => Promise<AlternativeModel>;
-    findAlternativeByID:(alternativeID: number) => Promise<AlternativeModel | null>;
+    save: (alternative: Alternative) => Promise<Alternative>;
+    findAlternativeByID:(alternativeID: number) => Promise<Alternative | null>;
     findAlternativeByExercise:(exerciseID: number) => Promise<Alternative[]>;
 }

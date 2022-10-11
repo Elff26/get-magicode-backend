@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
-import { Level } from "../database/entity/Level";
-import LevelModel from "../model/LevelModel";
+import { Level } from "../database/model/Level";
 import ILevelRepository from "./interface/ILevelRepository";
 
 export default class LevelRepository implements ILevelRepository{
@@ -10,7 +9,7 @@ export default class LevelRepository implements ILevelRepository{
         this.levelRepository = AppDataSource.manager.getRepository(Level);
     }
 
-    save = async (level: LevelModel) => {
+    save = async (level: Level) => {
         return await this.levelRepository.save(level);
     }
 

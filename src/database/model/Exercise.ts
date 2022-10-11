@@ -8,6 +8,7 @@ import {
     ManyToOne, 
     OneToMany 
 } from "typeorm";
+import IExerciseProperties from "../../interfaceType/IExerciseProperties";
 
 import { Alternative } from "./Alternative";
 import { Challenge } from "./Challenge";
@@ -15,6 +16,20 @@ import { Tip } from "./Tip";
 
 @Entity()
 export class Exercise{
+    constructor(exercise?: IExerciseProperties){
+        if(exercise) {
+            this.exerciseID = exercise.exerciseID;
+            this.name = exercise.name;
+            this.description = exercise.description;
+            this.creationDate = exercise.creationDate;
+            this.modificationDate = exercise.modificationDate;
+            this.challenge = exercise.challenge;
+            this.type = exercise.type;
+            this.tips = exercise.tips;
+            this.alternatives = exercise.alternatives;
+        }
+    }
+
     @PrimaryGeneratedColumn({name:"cd_exercicio"})
     exerciseID: number;
 

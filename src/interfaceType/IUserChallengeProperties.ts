@@ -1,9 +1,9 @@
-import ChallengeModel from "../model/ChallengeModel";
-import UserModel from "../model/UserModel";
+import { Challenge } from "../database/model/Challenge";
+import { User } from "../database/model/User";
 
 export default interface IUserChallengeProperties {
     userChallengeID?: number;
-    user: UserModel;
-    challenge: ChallengeModel;
+    user: User;
+    challenge: Challenge;
     completed?: boolean;
 }

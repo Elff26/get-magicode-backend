@@ -4,11 +4,19 @@ import {
     OneToMany, 
     PrimaryGeneratedColumn 
 } from "typeorm";
+import ICategoryProperty from "../../interfaceType/ICategoryProperty";
 
 import { Challenge } from "./Challenge";
 
 @Entity()
 export class Category {
+    constructor(category?: ICategoryProperty) {
+        if(category) {
+            this.categoryID = category.categoryID
+            this.name = category.name
+            this.description = category.description
+        }
+    }
 
     @PrimaryGeneratedColumn({name: "cd_categoria"})
     categoryID: number;

@@ -1,8 +1,7 @@
 import { DeleteResult } from "typeorm";
-import TechnologyModel from "../../model/TechnologieModel";
-import UserTechnologyModel from "../../model/UserTechnologyModel";
+import { UserTechnology } from "../../database/model/UserTechnology";
 
 export default interface IUserTechnologyRepository {
-    findByID:(userTechnology: string) => Promise<UserTechnologyModel | null>;
+    findByID:(userTechnology: string) => Promise<UserTechnology | null>;
     delete:(userTechnology: string) => Promise<DeleteResult>;
 }

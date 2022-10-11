@@ -1,6 +1,6 @@
-import GoalModel from "../../model/GoalModel";
+import { Goal } from "../../database/model/Goal";
 
 export default interface IGoalRepository{
-    save:(goal: GoalModel) => Promise<GoalModel>;
-    listAllGoals:() => Promise<GoalModel[]>;
+    save:(goal: Goal) => Promise<Goal>;
+    listAllGoals:() => Promise<Goal[]>;
 }

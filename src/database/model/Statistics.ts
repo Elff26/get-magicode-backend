@@ -7,12 +7,29 @@ import {
     PrimaryGeneratedColumn, 
     UpdateDateColumn
 } from "typeorm";
+import IStatisticsProperties from "../../interfaceType/IStatisticsProperties";
 import { Level } from "./Level";
 
 import { User } from "./User";
 
 @Entity()
 export class Statistics {
+    constructor(statistics?: IStatisticsProperties){
+        if(statistics) {
+            this.statisticID = statistics.statisticID;
+            this.currentXp = statistics.currentXp;
+            this.totalXp = statistics.totalXp;
+            this.monthXp = statistics.monthXp;
+            this.dayXp = statistics.dayXp;
+            this.completedClasses = statistics.completedClasses;
+            this.numberOfHits = statistics.numberOfHits;
+            this.numberOfMistakes = statistics.numberOfMistakes;
+            this.completedGoal = statistics.completedGoal;
+            this.user = statistics.user;
+            this.level = statistics.level;
+        }
+    }
+
     @PrimaryGeneratedColumn({name: "cd_estatistica"})
     statisticID: number;
 

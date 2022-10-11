@@ -8,6 +8,7 @@ import {
     PrimaryGeneratedColumn, 
     UpdateDateColumn 
 } from "typeorm";
+import IChallengeProperties from "../../interfaceType/IChallengeProperties";
 
 import { Category } from "./Category";
 import { Classroom } from "./Classroom";
@@ -18,6 +19,22 @@ import { UserChallenge } from "./UserChallenge";
 
 @Entity()
 export class Challenge {
+    constructor(challenge?: IChallengeProperties) {
+        if(challenge) {
+            this.challengeID = challenge.challengeID;
+            this.name = challenge.name;
+            this.typeChallenge = challenge.typeChallenge;
+            this.creationDate = challenge.creationDate;
+            this.updateDate = challenge.updateDate;
+            this.technology = challenge.technology;
+            this.category = challenge.category;
+            this.difficulty = challenge.difficulty;
+            this.classes = challenge.classes;
+            this.exercises = challenge.exercises;
+            this.image = challenge.image;
+        }
+    }
+
     @PrimaryGeneratedColumn({name:"cd_desafio"})
     challengeID: number;
 
@@ -50,7 +67,7 @@ export class Challenge {
     
     @OneToMany(() => UserChallenge, (userChallange) => userChallange.challenge, {eager: true})
     @JoinColumn({name: "cd_desafio"})
-    users: UserChallenge[];
+    users?: UserChallenge[];
 
     @OneToMany(() => Exercise, (exercise) => exercise.challenge, {eager: true})
     exercises: Exercise[];

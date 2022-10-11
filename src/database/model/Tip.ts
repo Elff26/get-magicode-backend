@@ -3,19 +3,27 @@ import {
     Entity, 
     JoinColumn, 
     ManyToOne, 
-    OneToMany, 
     PrimaryGeneratedColumn 
 } from "typeorm";
+import ITipProperties from "../../interfaceType/ITipProperties";
 
 import { Exercise } from "./Exercise";
 
 @Entity()
 export class Tip {
+    constructor(tip?: ITipProperties){
+        if(tip) {
+            this.tipID = tip.tipID;
+            this.tipDescription = tip.tipDescription;
+            this.exercise = tip.exercise;
+        }
+    }
+
     @PrimaryGeneratedColumn({name: "cd_dica"})
     tipID: number;
 
     @Column({name: "ds_dica", type: "varchar", length:100, nullable: false})
-    tipDescrioption: string;
+    tipDescription: string;
 
     @ManyToOne(() => Exercise, (exercise) => exercise.tips)
     @JoinColumn({ name: "cd_exercicio" })

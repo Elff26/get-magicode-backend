@@ -4,11 +4,20 @@ import {
     OneToMany, 
     PrimaryGeneratedColumn 
 } from "typeorm";
+import IDifficultyProperties from "../../interfaceType/IDifficultyProperties";
 
 import { Challenge } from "./Challenge";
 
 @Entity()
 export class Difficulty{
+    constructor(difficulty?: IDifficultyProperties){
+        if(difficulty) {
+            this.difficultyID = difficulty.difficultyID;
+            this.description = difficulty.description;
+            this.valueXP = difficulty.valueXP;
+        }
+    }
+
     @PrimaryGeneratedColumn({name:"cd_dificuldade"})
     difficultyID: number;
 

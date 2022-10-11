@@ -11,6 +11,14 @@ import { User } from "./User";
 
 @Entity({ name: 'user_achievement' })
 export class UserAchievement {
+    constructor(user?: User, achievement?: Achievement, completed?: boolean) {
+        if(user && achievement && completed) {
+            this.user = user;
+            this.achievement = achievement;
+            this.completed = completed;
+        }
+    }
+    
     @PrimaryGeneratedColumn('increment', {
         name: "usuario_conquista_id"
     })

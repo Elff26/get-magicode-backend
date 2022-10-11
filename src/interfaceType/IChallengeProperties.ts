@@ -1,8 +1,10 @@
-import { Category } from "../database/entity/Category";
-import { Classroom } from "../database/entity/Classroom";
-import { Difficulty } from "../database/entity/Difficulty";
-import { Exercise } from "../database/entity/Exercise";
-import { Technology } from "../database/entity/Technology";
+import { Category } from "../database/model/Category";
+import { Classroom } from "../database/model/Classroom";
+import { Difficulty } from "../database/model/Difficulty";
+import { Exercise } from "../database/model/Exercise";
+import { Technology } from "../database/model/Technology";
+import { User } from "../database/model/User";
+import { UserChallenge } from "../database/model/UserChallenge";
 
 export default interface IChallengeProperties {
     challengeID: number;
@@ -16,4 +18,5 @@ export default interface IChallengeProperties {
     classes: Classroom[];
     exercises: Exercise[];
     image: string;
+    users?: UserChallenge[];
 }

@@ -1,8 +1,7 @@
-import ChallengeModel from "../../model/ChallengeModel";
-import UserChallengeModel from "../../model/UserChallengeModel";
+import { Challenge } from "../../database/model/Challenge";
 
 export default interface IChallengeRepository {
-    save: (challenge: ChallengeModel) => Promise<ChallengeModel>;
-    findChallengeByID:(challengeID: number) => Promise<ChallengeModel | null>;
-    findChallengeByTechnology:(challengeID: number) => Promise<ChallengeModel[]>;
+    save: (challenge: Challenge) => Promise<Challenge>;
+    findChallengeByID:(challengeID: number) => Promise<Challenge | null>;
+    findChallengeByTechnology:(challengeID: number) => Promise<Challenge[]>;
 }

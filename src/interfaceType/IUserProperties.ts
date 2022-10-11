@@ -1,7 +1,7 @@
-import { Statistics } from "../database/entity/Statistics";
-import { UserAchievement } from "../database/entity/UserAchievement";
-import GoalModel from "../model/GoalModel";
-import UserTechnologyModel from "../model/UserTechnologyModel";
+import { Goal } from "../database/model/Goal";
+import { Statistics } from "../database/model/Statistics";
+import { UserAchievement } from "../database/model/UserAchievement";
+import { UserTechnology } from "../database/model/UserTechnology";
 
 export default interface IUserProperties {
     userID?: number;
@@ -16,9 +16,9 @@ export default interface IUserProperties {
     createdAt?: Date;
     codeChangePassword?: string;
     expirationDate?: Date;
-    goal?: GoalModel;
+    goal?: Goal;
     statistics?: Statistics;
-    technologies?: UserTechnologyModel[];
+    technologies?: UserTechnology[];
     achievements?: UserAchievement[];
     externalID?: string;
     externalToken?: string;

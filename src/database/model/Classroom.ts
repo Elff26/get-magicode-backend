@@ -5,14 +5,24 @@ import {
     CreateDateColumn, 
     UpdateDateColumn, 
     JoinColumn, 
-    OneToMany, 
     ManyToOne
 } from "typeorm";
+import IClassroomProperties from "../../interfaceType/IClassroomProperties";
 
 import { Challenge } from "./Challenge";
 
 @Entity()
 export class Classroom{
+    constructor(classroom?: IClassroomProperties){
+        if(classroom) {
+            this.classroomID = classroom.classroomID;
+            this.name = classroom.name;
+            this.description = classroom.description;
+            this.creationDate = classroom.creationDate;
+            this.modificationDate = classroom.modificationDate;
+        }
+    }
+
     @PrimaryGeneratedColumn({ name: "cd_aula" })
     classroomID: number;
 

@@ -1,7 +1,6 @@
 import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import IUserChallengeProperties from "../interfaceType/IUserChallengeProperties";
-import UserChallengeModel from "../model/UserChallengeModel";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";

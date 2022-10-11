@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import { User } from "../database/model/User";
 import HttpError from "../exceptions/HttpError";
 import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
-import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import UserService from "../service/UserService";
@@ -18,7 +18,7 @@ export default class UserController{
 
     createUser = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const user: IUserProperties = new UserModel(request.body.user);
+            const user: IUserProperties = new User(request.body.user);
 
             if(!user.name || !user.birthday || !user.email || !user.phone || !user.password) {
                 throw new HttpError("All fields are required!", 400);

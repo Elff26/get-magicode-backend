@@ -1,9 +1,6 @@
-import axios from "axios";
+import { User } from "../database/model/User";
 import HttpError from "../exceptions/HttpError";
-import IFacebookUserProperties from "../interfaceType/IFacebookUserProperties";
 import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
-import IUserProperties from "../interfaceType/IUserProperties";
-import UserModel from "../model/UserModel";
 import IUserRepository from "../repository/interface/IUserRepository";
 import codeAndDateGenerator from "../utils/CodeAndDateGenerator";
 import SendEmail from "../utils/SendEmail";
@@ -15,7 +12,7 @@ export default class UserService{
         this.userRepository = userRepository;
     }
 
-    createUser = async (user: UserModel) => {
+    createUser = async (user: User) => {
         const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone ? user.phone : "");
 
         if(userExists) {
@@ -35,7 +32,7 @@ export default class UserService{
         return userExists;
     }
 
-    updateUser = async (userID: number, user: UserModel) => {
+    updateUser = async (userID: number, user: User) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {

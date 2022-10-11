@@ -1,4 +1,4 @@
-import { Statistics } from "../database/entity/Statistics"
+import { Statistics } from "../database/model/Statistics"
 
 export default interface ILevelProperties{
     levelID?: number;
