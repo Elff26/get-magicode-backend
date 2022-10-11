@@ -16,7 +16,7 @@ export default class UserService{
     }
 
     createUser = async (user: UserModel) => {
-        const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone?user.phone:"");
+        const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone ? user.phone : "");
 
         if(userExists) {
             throw new HttpError('This email/phone already exists!', 409)

@@ -60,4 +60,14 @@ export default class ClassroomController{
             next(error)
         }
     }
+
+    countAllClassrooms = async (request:Request, response: Response, next: NextFunction) => {
+        try {
+            const result = await this.classroomService.countAllClassrooms();
+    
+            response.status(200).json({ numberOfClasses: result });
+        } catch (error: any) {
+            next(error)
+        }
+    }
 }

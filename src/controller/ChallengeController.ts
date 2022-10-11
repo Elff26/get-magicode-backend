@@ -3,9 +3,11 @@ import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import ChallengeRepository from "../repository/ChallengeRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserChallengeRepository from "../repository/interface/IUserChallengeRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import StatisticsRepository from "../repository/StatisticsRepository";
 import TechnologyRepository from "../repository/TechnologieRepository";
 import UserChallengeRepository from "../repository/UserChallenge";
 import UserRepository from "../repository/UserRepository";
@@ -16,17 +18,20 @@ export default class ChallengeController {
     private technologyRepository: ITechnologyRepository;
     private userRepository: IUserRepository;
     private userChallengeRepository: IUserChallengeRepository;
+    private statisticsRepository: IStatisticsRepository;
     private challengeService: ChallengeService;
 
     constructor(){
         this.challengeRepository = new ChallengeRepository();
         this.technologyRepository = new TechnologyRepository();
         this.userRepository = new UserRepository();
+        this.statisticsRepository = new StatisticsRepository();
         this.userChallengeRepository = new UserChallengeRepository();
         this.challengeService = new ChallengeService(
                                                     this.challengeRepository, 
                                                     this.technologyRepository, 
                                                     this.userChallengeRepository,
+                                                    this.statisticsRepository,
                                                     this.userRepository
                                                     );
     }

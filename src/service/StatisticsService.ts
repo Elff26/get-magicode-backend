@@ -23,8 +23,14 @@ export default class StatisticsService {
         }
 
         const statistics = new StatisticsModel();
+        const level = await this.levelRepository.findFirstLevel();
+
+        if(level) {
+            statistics.level = level;
+        }
 
         userExists.statistics = statistics;
+        statistics.user = userExists;
 
         const result = this.userRepository.save(userExists);
 
@@ -41,6 +47,8 @@ export default class StatisticsService {
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
         
         if(!statisticsExists) {
+            const statistics = this.createUserStatistics(userID);
+            
             const level = await this.levelRepository.findFirstLevel();
 
             if(!level) {

@@ -17,7 +17,7 @@ export default class StatisticsModel {
             this.completedGoal = statistics.completedGoal;
             this.user = statistics.user;
             this.level = statistics.level;
-        } 
+        }
     }
 
     addExperienceToUser = (xpGain: number) => {

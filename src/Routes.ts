@@ -63,6 +63,7 @@ router.get("/ListAllGoals", goalController.listAllGoals);
 router.post("/CreateClassroom", classroomController.createClassroom);
 router.get("/FindClassroomById/:classroomID", classroomController.findClassroomById);
 router.get("/FindClassroomByChallenge/:challengeID", classroomController.findClassroomByChallenge);
+router.get("/CountAllClassrooms", classroomController.countAllClassrooms);
 
 router.post("/CreateExercise", exerciseController.createExercise);
 router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);

@@ -35,4 +35,8 @@ export default class ClassroomRepository implements IClassroomRepository{
                                                 .where('classroom.cd_desafio = :challengeID', { challengeID })
                                                 .getMany();
     }
+
+    countAllClassrooms = async () => {
+        return await this.classroomRepository.count();
+    }
 }

@@ -20,6 +20,10 @@ export default class ClassroomService{
         return await this.classroomRepository.findClassroomById(classroomID);
     }
 
+    countAllClassrooms = async () => {
+        return await this.classroomRepository.countAllClassrooms();
+    }
+
     findClassroomByChallenge = async (challengeID: number) => {
         const challengeExists = await this.challengeRepository.findChallengeByID(challengeID);
 

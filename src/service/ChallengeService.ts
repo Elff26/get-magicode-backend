@@ -3,6 +3,7 @@ import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import IUserChallengeProperties from "../interfaceType/IUserChallengeProperties";
 import UserChallengeModel from "../model/UserChallengeModel";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserChallengeRepository from "../repository/interface/IUserChallengeRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -11,17 +12,20 @@ export default class ChallengeService {
     private challengeRepository: IChallengeRepository;
     private technologyRepository: ITechnologyRepository;
     private userChallengeRepository: IUserChallengeRepository;
+    private statisticsRepository: IStatisticsRepository;
     private userRepository: IUserRepository;
 
     constructor(
         challengeRepository: IChallengeRepository, 
         technologyRepository: ITechnologyRepository, 
         userChallengeRepository: IUserChallengeRepository,
+        statisticsRepository: IStatisticsRepository,
         userRepository: IUserRepository
     ) {
         this.challengeRepository = challengeRepository;
         this.technologyRepository = technologyRepository;
         this.userChallengeRepository = userChallengeRepository;
+        this.statisticsRepository = statisticsRepository;
         this.userRepository = userRepository;
     }
 
@@ -130,8 +134,16 @@ export default class ChallengeService {
             throw new HttpError('This user has no association with this challenge!', 400);
         }
 
+        const statistics = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+
+        if(!statistics) {
+            throw new HttpError('User statistics not foun!', 400);
+        }
+
+        statistics.completedClasses += 1;
         userChallengeExists.completed = true;
 
+        await this.statisticsRepository.saveOrUpdate(statistics);
         return await this.userChallengeRepository.saveOrUpdate(userChallengeExists);
     }
 }
