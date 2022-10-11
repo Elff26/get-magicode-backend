@@ -10,7 +10,6 @@ export default interface IStatisticsProperties {
     completedClasses: number;
     numberOfHits: number;
     numberOfMistakes: number;
-    dateCompletedGoal: Date;
     completedGoal: boolean;
     user: UserModel;
     level: Level;

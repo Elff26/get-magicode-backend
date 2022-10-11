@@ -40,9 +40,6 @@ export class Statistics {
     @Column({name: "meta_completa", type: "boolean", nullable: false, default: false})
     completedGoal: boolean;
 
-    @UpdateDateColumn({name : "dt_meta_completa"})
-    dateCompletedGoal: Date;
-
     @OneToOne(() => User, (user) => user.statistics)
     user: User;
 

@@ -121,7 +121,6 @@ export default class StatisticsService {
 
     completedGoal = async (userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
-      
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
@@ -134,20 +133,11 @@ export default class StatisticsService {
             throw new HttpError('Estatistics not found!', 404);
         }
 
-        const dateCompletedGoal = new Date(statisticsExists.dateCompletedGoal.setHours(0,0,0,0)).getTime();
-        const currentDate = new Date(new Date().setHours(0,0,0,0)).getTime();
-
+        //TODO: PROCEDURE PARA SETAR FLAG COMO FALSE TODO FIM DE DIA
         if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.g_vl_meta){
             this.addExperienceToUser(userID, 10);
             statisticsExists.completedGoal = true;
-            // statisticsExists.dateCompletedGoal = removeTime(currentDate);
 
-            console.log(true,'entrou')
-            return await this.statisticsRepository.saveOrUpdate(statisticsExists);
-
-        }else if(statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.g_vl_meta){
-            statisticsExists.completedGoal = false;
-            console.log(true,'entrou else')
             return await this.statisticsRepository.saveOrUpdate(statisticsExists);
         }
     }
