@@ -6,6 +6,7 @@ import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
+import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import LanguageCodeDictionary from "../utils/LanguageCodeDictionary";
@@ -14,12 +15,19 @@ export default class ExerciseService{
     private exerciseRepository: IExerciseRepository;
     private statisticsRepository: IStatisticsRepository;
     private challangeRepository: IChallengeRepository;
+    private levelRepository: ILevelRepository;
     private userRepository: IUserRepository;
 
-    constructor(exerciseRepository:IExerciseRepository, statisticsRepository: IStatisticsRepository, userRepository: IUserRepository, challangeRepository: IChallengeRepository){
+    constructor(exerciseRepository:IExerciseRepository, 
+                statisticsRepository: IStatisticsRepository, 
+                userRepository: IUserRepository, 
+                levelRepository: ILevelRepository,
+                challangeRepository: IChallengeRepository
+    ){
         this.exerciseRepository = exerciseRepository;
         this.statisticsRepository = statisticsRepository;
         this.challangeRepository = challangeRepository;
+        this.levelRepository = levelRepository;
         this.userRepository = userRepository;
     }
 
@@ -76,9 +84,15 @@ export default class ExerciseService{
 
         if(exerciseExists.expectedOutput === responseData.output) {
             let userStatistics = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+            const level = await this.levelRepository.findFirstLevel();
+
+            if(!level) {
+                throw new HttpError('There is no level!', 404);
+            }
            
             if(!userStatistics) {
                 const statistics = new Statistics();
+                statistics.level = level;
                 statistics.user = userExists;
     
                 userStatistics = await this.statisticsRepository.saveOrUpdate(statistics);

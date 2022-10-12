@@ -1,7 +1,9 @@
+import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import IUserChallengeProperties from "../interfaceType/IUserChallengeProperties";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserChallengeRepository from "../repository/interface/IUserChallengeRepository";
@@ -12,6 +14,7 @@ export default class ChallengeService {
     private technologyRepository: ITechnologyRepository;
     private userChallengeRepository: IUserChallengeRepository;
     private statisticsRepository: IStatisticsRepository;
+    private levelRepository: ILevelRepository;
     private userRepository: IUserRepository;
 
     constructor(
@@ -19,12 +22,14 @@ export default class ChallengeService {
         technologyRepository: ITechnologyRepository, 
         userChallengeRepository: IUserChallengeRepository,
         statisticsRepository: IStatisticsRepository,
+        levelRepository: ILevelRepository,
         userRepository: IUserRepository
     ) {
         this.challengeRepository = challengeRepository;
         this.technologyRepository = technologyRepository;
         this.userChallengeRepository = userChallengeRepository;
         this.statisticsRepository = statisticsRepository;
+        this.levelRepository = levelRepository;
         this.userRepository = userRepository;
     }
 
@@ -117,6 +122,7 @@ export default class ChallengeService {
     finishChallenge = async (challengeID: number, userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
+        
         if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
         }
@@ -133,16 +139,25 @@ export default class ChallengeService {
             throw new HttpError('This user has no association with this challenge!', 400);
         }
 
-        const statistics = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+        let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+        const level = await this.levelRepository.findFirstLevel();
 
-        if(!statistics) {
-            throw new HttpError('User statistics not foun!', 400);
+        if(!level) {
+            throw new HttpError('There is no level!', 404);
         }
 
-        statistics.completedClasses += 1;
+        if(!statisticsExists) {
+            let statistics = new Statistics();
+            statistics.level = level;
+            statistics.user = userExists;
+
+            statisticsExists = await this.statisticsRepository.saveOrUpdate(statistics);
+        }
+
+        statisticsExists.completedClasses += 1;
         userChallengeExists.completed = true;
 
-        await this.statisticsRepository.saveOrUpdate(statistics);
+        await this.statisticsRepository.saveOrUpdate(statisticsExists);
         return await this.userChallengeRepository.saveOrUpdate(userChallengeExists);
     }
 }

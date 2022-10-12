@@ -28,5 +28,5 @@ export class Difficulty{
     valueXP: number;
 
     @OneToMany(() => Challenge, (challange) => challange.difficulty)
-    challanges: Challenge[];
+    challenges: Challenge[];
 }

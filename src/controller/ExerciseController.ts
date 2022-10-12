@@ -10,20 +10,24 @@ import IUserRepository from "../repository/interface/IUserRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import ChallengeRepository from "../repository/ChallengeRepository";
 import UserRepository from "../repository/UserRepository";
+import ILevelRepository from "../repository/interface/ILevelRepository";
+import LevelRepository from "../repository/LevelRepository";
 
 export default class ExerciseController{
     private exerciseRepository: IExerciseRepository;
     private statisticsRepository: IStatisticsRepository;
     private challangeRepository: IChallengeRepository;
     private userRepository: IUserRepository;
+    private levelRepository: ILevelRepository;
     private exerciseService: ExerciseService;
 
     constructor(){
         this.exerciseRepository = new ExerciseRepository();
         this.statisticsRepository = new StatisticsRepository();
         this.challangeRepository = new ChallengeRepository();
+        this.levelRepository = new LevelRepository();
         this.userRepository = new UserRepository();
-        this.exerciseService = new ExerciseService(this.exerciseRepository, this.statisticsRepository, this.userRepository, this.challangeRepository);
+        this.exerciseService = new ExerciseService(this.exerciseRepository, this.statisticsRepository, this.userRepository, this.levelRepository, this.challangeRepository);
     }
 
     createExercise = async (request: Request, response: Response, next: NextFunction) =>{

@@ -37,8 +37,8 @@ export class UserTechnology {
     technology: Technology;
 
     @Column({name: "st_completo", type: 'boolean', nullable: false, default: false})
-    completed: boolean;
+    completed?: boolean;
 
     @Column({name: "st_aprendendo", type: 'boolean', nullable: false, default: false})
-    learning: boolean;
+    learning?: boolean;
 }

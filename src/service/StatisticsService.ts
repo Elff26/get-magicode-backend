@@ -47,8 +47,6 @@ export default class StatisticsService {
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
         
         if(!statisticsExists) {
-            const statistics = this.createUserStatistics(userID);
-            
             const level = await this.levelRepository.findFirstLevel();
 
             if(!level) {

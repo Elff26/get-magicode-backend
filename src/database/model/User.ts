@@ -53,7 +53,7 @@ export class User {
     email: string;
 
     @Column({name: "ds_img_usuario", type: "varchar", length: 500, nullable: true})
-    image: string;
+    image?: string;
 
     @Column({name: "nr_telefone", type: "varchar", length: 11, unique: true, nullable: true})
     phone?: string;

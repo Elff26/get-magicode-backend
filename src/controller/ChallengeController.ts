@@ -3,10 +3,12 @@ import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import ChallengeRepository from "../repository/ChallengeRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserChallengeRepository from "../repository/interface/IUserChallengeRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import TechnologyRepository from "../repository/TechnologieRepository";
 import UserChallengeRepository from "../repository/UserChallenge";
@@ -19,6 +21,7 @@ export default class ChallengeController {
     private userRepository: IUserRepository;
     private userChallengeRepository: IUserChallengeRepository;
     private statisticsRepository: IStatisticsRepository;
+    private levelRepository: ILevelRepository;
     private challengeService: ChallengeService;
 
     constructor(){
@@ -27,11 +30,13 @@ export default class ChallengeController {
         this.userRepository = new UserRepository();
         this.statisticsRepository = new StatisticsRepository();
         this.userChallengeRepository = new UserChallengeRepository();
+        this.levelRepository = new LevelRepository();
         this.challengeService = new ChallengeService(
                                                     this.challengeRepository, 
                                                     this.technologyRepository, 
                                                     this.userChallengeRepository,
                                                     this.statisticsRepository,
+                                                    this.levelRepository,
                                                     this.userRepository
                                                     );
     }
