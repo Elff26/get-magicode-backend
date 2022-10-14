@@ -2,11 +2,12 @@ import { User } from "../database/model/User";
 import HttpError from "../exceptions/HttpError";
 import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
-import codeAndDateGenerator from "../utils/CodeAndDateGenerator";
+import CodeAndDataGenerator from "../utils/CodeAndDateGenerator";
 import SendEmail from "../utils/SendEmail";
 
 export default class UserService{
     private userRepository: IUserRepository;
+    private codeAndDataGenerator = new CodeAndDataGenerator();
 
     constructor(userRepository: IUserRepository){
         this.userRepository = userRepository;
@@ -57,15 +58,17 @@ export default class UserService{
 
     insertCodeAndDatePasswordbyUser = async (email: string) =>{
         const userExists = await this.userRepository.findUserByEmailOrPhone(email, "");
-        const response = codeAndDateGenerator(1,9999);
+
+        const code = this.codeAndDataGenerator.codeGenerator(1, 9999);
+        const expirationDate = this.codeAndDataGenerator.datePlusHours(24);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
         }
         const sendEmail = new SendEmail();
-        sendEmail.sendEmail(response.code,response.expirationDate.toString());
+        sendEmail.sendEmail(code, expirationDate.toString());
 
-        await this.userRepository.insertCodeAndDatePasswordbyUser(response.code,response.expirationDate.toString(),email)
+        await this.userRepository.insertCodeAndDatePasswordbyUser(code, expirationDate.toString(),email)
 
         return userExists.userID;
     }

@@ -29,5 +29,5 @@ export class Goal {
 
     @OneToMany(() => User, (user) => user.userID)
     @JoinColumn({name: "cd_meta"})
-    users: User[];
+    users?: User[];
 }

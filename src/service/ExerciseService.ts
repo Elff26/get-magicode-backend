@@ -116,4 +116,59 @@ export default class ExerciseService{
 
         return userResponse;
     }
+
+    sendExerciseCodeTwo = async (userID: number, exerciseID: number, userCode: string, language: string) => {
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists || !userExists.userID) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const exerciseExists = await this.exerciseRepository.findExerciseById(exerciseID);
+
+        if(!exerciseExists) {
+            throw new HttpError('Exercise not found!', 404);
+        }
+
+        let response = await axios.post(`https://api.jdoodle.com/v1/execute`, {
+            script : userCode,
+            language: LanguageCodeDictionary[language],
+            versionIndex: "0",
+            clientId: process.env.CLIENTE_ID,
+            clientSecret: process.env.CLIENT_SECRET
+        });
+        
+        let responseData: IJdoodleResponseCodeProperties = response.data;
+
+        if(!responseData) {
+            throw new HttpError('An error has occurred, please try again later.', 500);
+        }
+
+        let userResponse = {
+            ...responseData
+        };
+
+        if(exerciseExists.expectedOutput === responseData.output) {
+            userResponse = {
+                ...userResponse,
+                isCorrect: true
+            }
+        } else {
+            userResponse = {
+                ...userResponse,
+                isCorrect: false,
+                message: "Incorrect code or incorrect output format"
+            }
+        }
+
+        return userResponse;
+    }
+    
+    findExercisesByIds = async (exercisesID: number[]) => {
+        return await this.exerciseRepository.findExercisesByIds(exercisesID);
+    }
+
+    randomizeExercisesIDs = async () => {
+        return await this.exerciseRepository.randomizeExercisesIDs();
+    }
 }

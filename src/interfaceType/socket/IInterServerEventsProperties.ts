@@ -1,0 +1,3 @@
+interface IInterServerEventsProperties {
+    ping: () => void;
+}

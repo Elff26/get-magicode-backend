@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Exercise } from "../database/model/Exercise";
 import IExerciseRepository from "./interface/IExerciseRepository";
@@ -21,4 +21,23 @@ export default class ExerciseRepository implements IExerciseRepository{
             exerciseID: exerciseID
         })
     }
+
+    findExercisesByIds = async (exercisesID: number[]) => {
+        return await this.exerciseRepository.find({
+            where: {
+                exerciseID: In(exercisesID)
+            }
+        })
+    }
+
+    randomizeExercisesIDs = async () => {
+        // NO POSTGRES É RAND(), LEMBRAR DE MUDAR
+        let exerciseIDs = await this.exerciseRepository.createQueryBuilder('Exercise')
+                                            .select('Exercise.exerciseID')
+                                            .orderBy('RANDOM()')
+                                            .limit(5)
+                                            .getMany();
+
+        return exerciseIDs.map((exercise) => exercise.exerciseID);
+    };
 }
