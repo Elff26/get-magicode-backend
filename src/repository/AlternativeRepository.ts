@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Alternative } from "../database/model/Alternative";
-import { Exercise } from "../database/model/Exercise";
 import IAlternativeRepository from "./interface/IAlternativeRepository";
 
 export default class AlternativeRepository implements IAlternativeRepository {

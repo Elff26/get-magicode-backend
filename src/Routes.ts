@@ -13,6 +13,7 @@ import StatisticsController from './controller/StatisticsController';
 import GoogleController from './controller/GoogleController';
 import FacebookController from './controller/FacebookController';
 import LevelController from './controller/LevelController';
+import AchievementController from './controller/AchievementController';
 
 const router = Router();
 
@@ -29,6 +30,7 @@ const statisticsController = new StatisticsController();
 const googleController = new GoogleController();
 const facebookController = new FacebookController();
 const levelController = new LevelController();
+const achievementController = new AchievementController();
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
@@ -98,5 +100,10 @@ router.put('/CompletedGoal/:userID', statisticsController.completedGoal);
 router.post('/CreateLevel', levelController.createLevel);
 router.get('/ListAllLevels', levelController.listAllLevels);
 router.get('/FindLevelById/:levelID', levelController.findLevelById);
+
+router.post('/CreateAchievement', achievementController.createAchievement);
+router.get('/FindAchievementById/:achievementID', achievementController.findAchievementByID);
+router.get('/ListAllAchievement', achievementController.listAllAchievements);
+router.put('/AssociateUserToAchievement/:achievementID/:userID', achievementController.associateUserToAchievement);
 
 export default router; 

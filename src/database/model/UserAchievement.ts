@@ -22,7 +22,7 @@ export class UserAchievement {
     @PrimaryGeneratedColumn('increment', {
         name: "usuario_conquista_id"
     })
-    userAchievementID: number;
+    userAchievementID?: number;
 
     @ManyToOne(() => User, (user) => user.technologies)
     @JoinColumn({name: 'cd_usuario'})
