@@ -69,9 +69,7 @@ router.get("/CountAllClassrooms", classroomController.countAllClassrooms);
 
 router.post("/CreateExercise", exerciseController.createExercise);
 router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
-router.post("/SendExerciseCode/:userID/:challengeID/:exerciseID", exerciseController.sendExerciseCode);
-// ARRUMAR, REMOVER ESSE MÉTODO DE BAIXO
-router.post("/SendExerciseCodeTwo/:userID/:exerciseID", exerciseController.sendExerciseCodeTwo);
+router.post("/SendExerciseCode/:userID/:exerciseID", exerciseController.sendExerciseCode);
 router.get("/FindExercisesByIDs", exerciseController.findExercisesByIds);
 router.get("/RandomizeExercise", exerciseController.randomizeExercisesIDs);
 

@@ -60,42 +60,6 @@ export default class ExerciseController{
     sendExerciseCode = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const userID = Number(request.params.userID);
-            const challengeID = Number(request.params.challengeID);
-            const exerciseID = Number(request.params.exerciseID);
-            const userCode = request.body.userCode;
-            const language = request.body.language;
-
-            if(isNaN(userID)) {
-                throw new HttpError('User ID must be a number', 403);
-            }
-
-            if(isNaN(challengeID)) {
-                throw new HttpError('Challenge ID must be a number', 403);
-            }
-
-            if(isNaN(exerciseID)) {
-                throw new HttpError('Exercise ID must be a number', 403);
-            }
-
-            if(!userCode) {
-                throw new HttpError('Code is required', 403);
-            }
-
-            if(!language) {
-                throw new HttpError('Language is required', 403);
-            }
-
-            const result = await this.exerciseService.sendExerciseCode(userID, challengeID, exerciseID, userCode, language);
-
-            response.status(200).json({ result: result });
-        } catch(error: any) {
-            next(error)
-        }
-    }
-
-    sendExerciseCodeTwo = async (request: Request, response: Response, next: NextFunction) => {
-        try {
-            const userID = Number(request.params.userID);
             const exerciseID = Number(request.params.exerciseID);
             const userCode = request.body.userCode;
             const language = request.body.language;
@@ -116,7 +80,7 @@ export default class ExerciseController{
                 throw new HttpError('Language is required', 403);
             }
 
-            const result = await this.exerciseService.sendExerciseCodeTwo(userID, exerciseID, userCode, language);
+            const result = await this.exerciseService.sendExerciseCode(userID, exerciseID, userCode, language);
 
             response.status(200).json({ result: result });
         } catch(error: any) {
