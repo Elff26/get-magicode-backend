@@ -17,7 +17,6 @@ export default class AchievementService{
     }
 
     createAchievement = async (achievement: IAchievementProperties) => {
-        console.log(achievement, "service")
         return await this.achievementRepository.saveOrUpdate(achievement);
     }
 

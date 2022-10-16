@@ -26,8 +26,6 @@ export default class AchievementController {
         try{
             const achievement: IAchievementProperties = request.body.achievement;
 
-
-            console.log(achievement)
             const result = await this.achievementService.createAchievement(achievement);
             
             response.status(200).json({achievement: result});

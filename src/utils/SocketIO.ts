@@ -3,6 +3,7 @@ import http from 'http';
 import CodeAndDataGenerator from './CodeAndDateGenerator';
 import ExerciseRepository from "../repository/ExerciseRepository";
 import IServerToClientEventsProperties from "../interfaceType/socket/IServerToClientEventsProperties";
+import ChallengeRepository from "../repository/ChallengeRepository";
 
 export default class SocketIO {
     private io: Server<
@@ -13,6 +14,7 @@ export default class SocketIO {
     >;
     private codeAndDataGenerator = new CodeAndDataGenerator();
     private exerciseRepository = new ExerciseRepository();
+    private challengeRepository = new ChallengeRepository();
 
     constructor(server: http.Server) {
         this.io = new Server<
@@ -39,7 +41,7 @@ export default class SocketIO {
 
             socket.on('acceptChallenge', (roomNumber: string, userID: number) => {
                 if(!this.io.sockets.adapter.rooms.get(roomNumber)) {
-                    this.io.in(roomNumber).emit('roomNotExists');
+                    socket.emit('roomNotExists');
                 } else {
                     socket.data.userID = userID;
                     socket.join(roomNumber);
@@ -52,7 +54,7 @@ export default class SocketIO {
                 let usersID: number[] = usersInRoom.map((socket) => socket.data.userID);
 
                 const randomExercisesIDs: number[] = await this.exerciseRepository.randomizeExercisesIDs();
-                const randomExercises = await this.exerciseRepository.findExercisesByIds(randomExercisesIDs);
+                const randomExercises = await this.challengeRepository.findChallengesByExercisesIds(randomExercisesIDs);
 
                 this.io.in(roomNumber).emit('randomizedExercises', randomExercises, usersID);
             });

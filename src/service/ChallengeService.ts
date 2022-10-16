@@ -159,4 +159,8 @@ export default class ChallengeService {
         await this.statisticsRepository.saveOrUpdate(statisticsExists);
         return await this.userChallengeRepository.saveOrUpdate(userChallengeExists);
     }
+
+    findChallengesByExercisesIds = async (exerciseIDs: number[]) => {
+        return await this.challengeRepository.findChallengesByExercisesIds(exerciseIDs);
+    }
 }

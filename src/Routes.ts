@@ -84,6 +84,7 @@ router.get("/FindChallengeByTechnology/:technologyID", challengeController.findC
 router.get("/FindUserChallengeByTechnology/:userID/:technologyID", challengeController.findUserChallengeByTechnology);
 router.post("/InitChallenge/:userID/:challengeID", challengeController.initChallenge);
 router.put("/FinishChallenge/:userID/:challengeID", challengeController.finishChllenge);
+router.get("/FindChallengeByExercises", challengeController.findChallengesByExercisesIds);
 
 router.post("/CreateAlternative", alternativeController.createAlternative);
 router.get("/FindAlternativeById/:alternativeID", alternativeController.findAlternativeByID);
