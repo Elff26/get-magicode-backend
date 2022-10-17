@@ -5,5 +5,5 @@ export default interface IUserAchievementProperties {
     userAchievementID?: number;
     user: User;
     achievement: Achievement;
-    completed: boolean;
+    unlocked: boolean;
 }

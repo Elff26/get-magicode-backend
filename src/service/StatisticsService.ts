@@ -37,6 +37,18 @@ export default class StatisticsService {
         return result;
     }
 
+    findStatisticsByUser = async(userID: number)=>{
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists || !userExists.userID) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const result = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
+        
+        return result;
+    }
+
     addExperienceToUser = async (userID: number, xpGained: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 

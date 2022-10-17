@@ -11,11 +11,11 @@ import { User } from "./User";
 
 @Entity({ name: 'user_achievement' })
 export class UserAchievement {
-    constructor(user?: User, achievement?: Achievement, completed?: boolean) {
-        if(user && achievement && completed) {
+    constructor(user?: User, achievement?: Achievement, unlocked?: boolean) {
+        if(user && achievement && unlocked) {
             this.user = user;
             this.achievement = achievement;
-            this.completed = completed;
+            this.unlocked = unlocked;
         }
     }
     
@@ -34,6 +34,6 @@ export class UserAchievement {
     @JoinColumn({name: 'cd_conquista'})
     achievement: Achievement;
 
-    @Column({name: "st_completo", type: 'boolean', nullable: false, default: false})
-    completed: boolean;
+    @Column({name: "st_desbloqueada", type: 'boolean', nullable: false, default: false})
+    unlocked: boolean;
 }

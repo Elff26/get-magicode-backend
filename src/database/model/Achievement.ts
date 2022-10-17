@@ -3,9 +3,11 @@ import {
     Column, 
     PrimaryGeneratedColumn, 
     OneToMany, 
-    JoinColumn 
+    JoinColumn, 
+    ManyToOne
 } from "typeorm";
 import IAchievementProperties from "../../interfaceType/IAchievementProperties";
+import { Technology } from "./Technology";
 
 import { UserAchievement } from "./UserAchievement";
 
@@ -32,6 +34,16 @@ export class Achievement {
 
     @Column({name: "ds_img_conquista", type: "varchar", length: 500, nullable: false})
     image: string;
+
+    @Column({name: "nr_experiencia", type: "integer", nullable: true})
+    xp: number;
+
+    @Column({name: "nr_aulas", type: "integer", nullable: true})
+    classroom: number;
+
+    @ManyToOne(()=> Technology, (technology) => technology.technologyID, {eager: true})
+    @JoinColumn({name: "cd_tecnologia"})
+    technology: Technology;
 
     @OneToMany(()=> UserAchievement, (userAchievement) => userAchievement.achievement)
     @JoinColumn({name: "cd_conquista"})

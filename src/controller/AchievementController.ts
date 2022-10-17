@@ -3,8 +3,10 @@ import HttpError from "../exceptions/HttpError";
 import IAchievementProperties from "../interfaceType/IAchievementProperties";
 import AchievementRepository from "../repository/AchievementRepository";
 import IAchievementRepository from "../repository/interface/IAchievementRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserAchievementRepository from "../repository/interface/IUserAchievementRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import StatisticsRepository from "../repository/StatisticsRepository";
 import UserAchievementRepository from "../repository/UserAchievementRepository";
 import UserRepository from "../repository/UserRepository";
 import AchievementService from "../service/AchievementService";
@@ -14,12 +16,14 @@ export default class AchievementController {
     private userAchievementRepository: IUserAchievementRepository;
     private userRepository: IUserRepository;
     private achievementService: AchievementService;
+    private statisticsRepository: IStatisticsRepository;
 
     constructor(){
         this.achievementRepository = new AchievementRepository();
         this.userAchievementRepository = new UserAchievementRepository();
         this.userRepository = new UserRepository();
-        this.achievementService = new AchievementService(this.userRepository, this.achievementRepository, this.userAchievementRepository)
+        this.statisticsRepository = new StatisticsRepository();
+        this.achievementService = new AchievementService(this.userRepository, this.achievementRepository, this.userAchievementRepository, this.statisticsRepository)
     }
 
     createAchievement = async (request: Request, response: Response, next: NextFunction) => {
@@ -62,22 +66,38 @@ export default class AchievementController {
 
     associateUserToAchievement = async (request: Request, response: Response, next: NextFunction) => {
         try{
-            const achievementID = Number(request.params.achievementID);
             const userID = Number(request.params.userID);
-
-            if (isNaN(achievementID)){
-                throw new HttpError('Challenge ID must be a number !', 403);
-            }
+            const technologyID = Number(request.body.technologyID); 
 
             if (isNaN(userID)){
                 throw new HttpError('User ID must be a number !', 403);
             }
 
-            const result = await this.achievementService.associateUserToAchievement(achievementID, userID);
+            if (isNaN(technologyID)){
+                throw new HttpError('Technology ID must be a number !', 403);
+            }
+
+            const result = await this.achievementService.associateUserToAchievement(userID, technologyID);
 
             response.status(200).json({userAchievement: result});
         }catch(error: any){
             next(error);
+        }
+    }
+
+    listAchievementUserHave = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const userID = Number(request.params.userID)
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.achievementService.listAchievementUserHave(userID);
+    
+            response.status(200).json({ achievements: result });
+        }catch(error: any) {
+            next(error)
         }
     }
 }

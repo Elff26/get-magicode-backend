@@ -13,6 +13,10 @@ export default class UserAchievementRepository implements IUserAchievementReposi
     saveOrUpdate = (userAchievement: UserAchievement) => {
         return this.userAchievementRepository.save(userAchievement);
     };
+    
+    saveList = async (achievement: UserAchievement[]) => {
+        return await this.userAchievementRepository.save(achievement);
+    };
 
     findByUserAchievementByUserAndAchievement = async (userID: number, achievementID: number) => {
         return await this.userAchievementRepository.findOne({

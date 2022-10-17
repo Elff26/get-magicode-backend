@@ -44,6 +44,7 @@ router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
 router.put("/AddMoreUserInfo/:userID", userController.addMoreUserInfo);
 router.get("/GetGoalByUser/:userID", userController.getGoalByUser);
 
+
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
 
@@ -88,6 +89,7 @@ router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alterna
 
 router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
 router.get('/GetMonthXpByUser/:userID', statisticsController.getMonthXpByUser);
+router.get('/FindStatisticsByUser/:userID', statisticsController.findStatisticsByUser);
 router.get('/GetHigherXp/:type', statisticsController.getHigherXP);
 router.post('/Counter/:userID', statisticsController.counter);
 router.get('/GetClassroomCompletedByUser/:userID', statisticsController.getClassroomCompletedByUser);
@@ -100,6 +102,7 @@ router.get('/FindLevelById/:levelID', levelController.findLevelById);
 router.post('/CreateAchievement', achievementController.createAchievement);
 router.get('/FindAchievementById/:achievementID', achievementController.findAchievementByID);
 router.get('/ListAllAchievement', achievementController.listAllAchievements);
-router.put('/AssociateUserToAchievement/:achievementID/:userID', achievementController.associateUserToAchievement);
+router.put('/AssociateUserToAchievement/:userID', achievementController.associateUserToAchievement);
+router.get('/ListAchievementUserHave/:userID', achievementController.listAchievementUserHave);
 
-export default router; 
+export default router;

@@ -71,6 +71,22 @@ export default class StatisticsController {
         }
     }
 
+    findStatisticsByUser = async(request: Request, response: Response, next: NextFunction) =>{
+        try{
+            const userID = Number(request.params.userID);
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.statisticsService.findStatisticsByUser(userID);
+            
+            response.status(200).json({ statistics: result });
+        }catch(error: any){
+            next(error);
+        }
+    } 
+
     counter = async (request: Request, response: Response, next: NextFunction) => {
         try{            
             const userID = Number(request.params.userID);
