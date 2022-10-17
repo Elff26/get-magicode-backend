@@ -144,4 +144,24 @@ export default class ChallengeController {
             next(error);
         }
     }
+
+    findChallengesByExercisesIds = async (request: Request, response: Response, next: NextFunction) => {
+        try {   
+            const exercises = request.body.exercises;
+
+            if(!exercises) {
+                throw new HttpError('IDs are required', 403);
+            }
+
+            if(exercises.length <= 0) {
+                throw new HttpError('IDs are required', 403);
+            }
+
+            const result = await this.challengeService.findChallengesByExercisesIds(exercises);
+    
+            response.status(200).json(result);
+        }  catch(error: any) {
+            next(error)
+        }
+    }
 }

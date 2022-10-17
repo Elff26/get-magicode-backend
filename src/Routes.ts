@@ -70,7 +70,9 @@ router.get("/CountAllClassrooms", classroomController.countAllClassrooms);
 
 router.post("/CreateExercise", exerciseController.createExercise);
 router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
-router.post("/SendExerciseCode/:userID/:challengeID/:exerciseID", exerciseController.sendExerciseCode);
+router.post("/SendExerciseCode/:userID/:exerciseID", exerciseController.sendExerciseCode);
+router.get("/FindExercisesByIDs", exerciseController.findExercisesByIds);
+router.get("/RandomizeExercise", exerciseController.randomizeExercisesIDs);
 
 router.post("/CreateDifficulty", difficultyController.createDifficulty);
 router.get("/FindDifficultyId/:difficultyID", difficultyController.findDifficultyById);
@@ -81,6 +83,7 @@ router.get("/FindChallengeByTechnology/:technologyID", challengeController.findC
 router.get("/FindUserChallengeByTechnology/:userID/:technologyID", challengeController.findUserChallengeByTechnology);
 router.post("/InitChallenge/:userID/:challengeID", challengeController.initChallenge);
 router.put("/FinishChallenge/:userID/:challengeID", challengeController.finishChllenge);
+router.get("/FindChallengeByExercises", challengeController.findChallengesByExercisesIds);
 
 router.post("/CreateAlternative", alternativeController.createAlternative);
 router.get("/FindAlternativeById/:alternativeID", alternativeController.findAlternativeByID);

@@ -121,7 +121,6 @@ export default class ChallengeService {
 
     finishChallenge = async (challengeID: number, userID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
-
         
         if(!userExists || !userExists.userID) {
             throw new HttpError('User not found!', 404);
@@ -159,5 +158,9 @@ export default class ChallengeService {
 
         await this.statisticsRepository.saveOrUpdate(statisticsExists);
         return await this.userChallengeRepository.saveOrUpdate(userChallengeExists);
+    }
+
+    findChallengesByExercisesIds = async (exerciseIDs: number[]) => {
+        return await this.challengeRepository.findChallengesByExercisesIds(exerciseIDs);
     }
 }

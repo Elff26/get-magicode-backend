@@ -1,0 +1,3 @@
+interface ISocketDataProperties {
+    userID: number
+}
