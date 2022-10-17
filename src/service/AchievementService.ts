@@ -64,11 +64,7 @@ export default class AchievementService{
         const listAchivementUserNotHaveByTechnologyAndClassroom = await this.achievementRepository.listAchivementUserNotHaveByTechnologyAndClassroom(statisticsExists.completedClasses, technologyID, listAchievementUserHave);
 
         let listUserAchievements: Achievement[] = listAchivementUserNotHaveByXP.concat(listAchivementUserNotHaveByClassroom,listAchivementUserNotHaveByTechnology,listAchivementUserNotHaveByTechnologyAndClassroom);
-        console.log(listUserAchievements, "listUserAchievements")
-        
         const response: any = arrayMap(listUserAchievements, userExists);
-        console.log(response, "response")
-
         const result = await this.userAchievementRepository.saveList(response);
     
         if(!result) {
