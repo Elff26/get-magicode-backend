@@ -7,6 +7,8 @@ export default interface IUserRepository{
     findUserById:(userID: number) => Promise<User | null>;
     updateUser:(user: User) => Promise<User | null>;
     deleteUser:(userID: number) => Promise<DeleteResult>;
+    findUserByEmail:(email: string) => Promise<User | null>;
+    findUserWithPasswordByEmail:(email: string) => Promise<User | null>;
     findUserByEmailOrPhone:(email: string, phone: string) => Promise<User | null>;
     findUserByExternalID:(externalID: string) => Promise<User | null>;
     findUserByEmailAndPassword:(email:string, password: string ) => Promise<User | null>;

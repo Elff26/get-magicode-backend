@@ -3,6 +3,7 @@ import HttpError from "../exceptions/HttpError";
 import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import CodeAndDataGenerator from "../utils/CodeAndDateGenerator";
+import Crypt from "../utils/Crypt";
 import SendEmail from "../utils/SendEmail";
 
 export default class UserService{
@@ -19,6 +20,9 @@ export default class UserService{
         if(userExists) {
             throw new HttpError('This email/phone already exists!', 409)
         }
+
+        let encryptedPassword = await Crypt.encrypt(user.password);
+        user.password = encryptedPassword;
 
         return await this.userRepository.createUser(user);
     }

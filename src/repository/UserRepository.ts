@@ -23,6 +23,23 @@ export default class UserRepository implements IUserRepository{
             userID: userID
         });
     }
+
+    findUserByEmail = async (email: string) => {
+        return await this.userRepository.createQueryBuilder('User')
+            .where({
+                email
+            })
+            .getOne();
+    }
+
+    findUserWithPasswordByEmail = async (email: string) => {
+        return await this.userRepository.createQueryBuilder('User')
+            .select(['User', 'User.password'])
+            .where({
+                email
+            })
+            .getOne();
+    }
     
     findUserByEmailOrPhone = async (email: string, phone: string) => {
         return await this.userRepository.createQueryBuilder('User')
