@@ -20,11 +20,12 @@ export default class ChallengeRepository implements IChallengeRepository {
         return await this.challengeRepository.save(challenge); 
     }
 
-    findChallengeByTechnology = async (technologyID: number) => {
+    findChallengeByTechnologyAndDifficulty = async (technologyID: number, difficultyID: number) => {
         return await this.challengeRepository.createQueryBuilder('challenge')
                                             .leftJoinAndSelect('challenge.technology', 't')
                                             .leftJoinAndSelect('challenge.classes', 'c')
-                                            .where('t.cd_tecnologia = :technologyID', {technologyID})
+                                            .leftJoinAndSelect('challenge.difficulty', 'd')
+                                            .where('t.technologyID = :technologyID and d.difficultyID = :difficultyID', {technologyID, difficultyID})
                                             .getMany();
     }
 

@@ -61,8 +61,6 @@ export default class ExerciseService{
             throw new HttpError('Challenge not found!', 404);
         }
 
-       
-
         let userResponse = await this.jdoodleService.sendCode(userCode, language);
 
         if(challengeExists.exercises[0].expectedOutput === userResponse.output) {

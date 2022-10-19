@@ -24,7 +24,6 @@ export default class AchievementService{
     createAchievement = async (achievement: IAchievementProperties) => {
         return await this.achievementRepository.saveOrUpdate(achievement);
     }
-
     
     findAchievementByID = async (achievementID: number) => {
         const achievementExists = await this.achievementRepository.findAchievementByID(achievementID);

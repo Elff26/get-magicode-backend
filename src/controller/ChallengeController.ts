@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import ChallengeRepository from "../repository/ChallengeRepository";
+import DifficultyRepository from "../repository/DifficultyRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import IDifficultRepository from "../repository/interface/IDifficultyRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
@@ -11,13 +13,14 @@ import IUserRepository from "../repository/interface/IUserRepository";
 import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import TechnologyRepository from "../repository/TechnologieRepository";
-import UserChallengeRepository from "../repository/UserChallenge";
+import UserChallengeRepository from "../repository/UserChallengeRepository";
 import UserRepository from "../repository/UserRepository";
 import ChallengeService from "../service/ChallengeService";
 
 export default class ChallengeController {
     private challengeRepository: IChallengeRepository;
     private technologyRepository: ITechnologyRepository;
+    private difficultyRepository: IDifficultRepository;
     private userRepository: IUserRepository;
     private userChallengeRepository: IUserChallengeRepository;
     private statisticsRepository: IStatisticsRepository;
@@ -27,6 +30,7 @@ export default class ChallengeController {
     constructor(){
         this.challengeRepository = new ChallengeRepository();
         this.technologyRepository = new TechnologyRepository();
+        this.difficultyRepository = new DifficultyRepository();
         this.userRepository = new UserRepository();
         this.statisticsRepository = new StatisticsRepository();
         this.userChallengeRepository = new UserChallengeRepository();
@@ -34,6 +38,7 @@ export default class ChallengeController {
         this.challengeService = new ChallengeService(
                                                     this.challengeRepository, 
                                                     this.technologyRepository, 
+                                                    this.difficultyRepository,
                                                     this.userChallengeRepository,
                                                     this.statisticsRepository,
                                                     this.levelRepository,
@@ -66,15 +71,20 @@ export default class ChallengeController {
         }
     }
 
-    findChallengeByTechnology = async (request: Request, response: Response, next: NextFunction) => {
+    findChallengeByTechnologyAndDifficulty = async (request: Request, response: Response, next: NextFunction) => {
         try{
             const technologyID = Number(request.params.technologyID);
+            const difficultyID = Number(request.params.difficultyID);
 
             if (isNaN(technologyID)){
                 throw new HttpError('ID must be a number !', 403);
             }
 
-            const result = await this.challengeService.findChallengeByTechnology(technologyID);
+            if (isNaN(difficultyID)){
+                throw new HttpError('ID must be a number !', 403);
+            }
+
+            const result = await this.challengeService.findChallengeByTechnologyAndDifficulty(technologyID, difficultyID);
 
             response.status(200).json({challenges: result});
         }catch(error: any){
@@ -82,10 +92,11 @@ export default class ChallengeController {
         }
     }
 
-    findUserChallengeByTechnology = async (request: Request, response: Response, next: NextFunction) => {
+    findUserChallengeByTechnologyAndDifficulty = async (request: Request, response: Response, next: NextFunction) => {
         try{
             const technologyID = Number(request.params.technologyID);
             const userID = Number(request.params.userID);
+            const difficultyID = Number(request.params.difficultyID);
 
             if (isNaN(technologyID)){
                 throw new HttpError('Technolgy ID must be a number !', 403);
@@ -95,7 +106,11 @@ export default class ChallengeController {
                 throw new HttpError('User ID must be a number !', 403);
             }
 
-            const result = await this.challengeService.findUserChallengeByTechnology(userID, technologyID);
+            if (isNaN(difficultyID)){
+                throw new HttpError('ID must be a number !', 403);
+            }
+
+            const result = await this.challengeService.findUserChallengeByTechnologyAndDifficulty(userID, technologyID, difficultyID);
 
             response.status(200).json({userChallenges: result});
         }catch(error: any){

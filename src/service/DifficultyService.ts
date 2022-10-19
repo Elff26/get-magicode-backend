@@ -13,6 +13,10 @@ export default class DifficultyService{
         return await this.difficultyRepository.save(difficulty);
     }
 
+    findAllDifficulties = async () => {
+        return await this.difficultyRepository.findAllDifficulties();
+    }
+
     findDifficultyById = async (difficultyID: number) => {
         const difficultyExists = await this.difficultyRepository.findDifficultyById(difficultyID);
 

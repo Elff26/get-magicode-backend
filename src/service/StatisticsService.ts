@@ -25,12 +25,15 @@ export default class StatisticsService {
         const statistics = new Statistics();
         const level = await this.levelRepository.findFirstLevel();
 
-        if(level) {
-            statistics.level = level;
+        if(!level) {
+            throw new HttpError('There is no level!', 404);
         }
+        
+        statistics.level = level;
 
-        userExists.statistics = statistics;
-        statistics.user = userExists;
+        const newStatistics = await this.statisticsRepository.saveOrUpdate(statistics);
+
+        userExists.statistics = newStatistics;
 
         const result = this.userRepository.save(userExists);
 

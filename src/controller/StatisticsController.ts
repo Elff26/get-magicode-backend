@@ -22,6 +22,22 @@ export default class StatisticsController {
         this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
     }
 
+    createUserStatistics = async (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const userID = Number(request.params.userID);
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.statisticsService.createUserStatistics(userID)
+
+            response.status(200).json({ user: result });
+        } catch(error: any) {
+            next(error);
+        }
+    }
+
     addExperienceToUser = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const userID = Number(request.params.userID);

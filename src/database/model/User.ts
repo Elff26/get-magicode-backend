@@ -61,7 +61,7 @@ export class User {
     @Column({name: "ds_senha", type: "varchar", length: 100, nullable: false, select: false})
     password: string;
 
-    @Column({name: "nr_vidas", type: "integer", nullable: false, default: 0})
+    @Column({name: "nr_vidas", type: "integer", nullable: false, default: 5})
     numberOfLifes: number;
 
     @UpdateDateColumn({name: "ultima_att_nr_vidas", })

@@ -3,6 +3,7 @@ import HttpError from "../exceptions/HttpError";
 import IChallengeProperties from "../interfaceType/IChallengeProperties";
 import IUserChallengeProperties from "../interfaceType/IUserChallengeProperties";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
+import IDifficultRepository from "../repository/interface/IDifficultyRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
@@ -12,6 +13,7 @@ import IUserRepository from "../repository/interface/IUserRepository";
 export default class ChallengeService {
     private challengeRepository: IChallengeRepository;
     private technologyRepository: ITechnologyRepository;
+    private difficultyRepository: IDifficultRepository;
     private userChallengeRepository: IUserChallengeRepository;
     private statisticsRepository: IStatisticsRepository;
     private levelRepository: ILevelRepository;
@@ -20,6 +22,7 @@ export default class ChallengeService {
     constructor(
         challengeRepository: IChallengeRepository, 
         technologyRepository: ITechnologyRepository, 
+        difficultyRepository: IDifficultRepository, 
         userChallengeRepository: IUserChallengeRepository,
         statisticsRepository: IStatisticsRepository,
         levelRepository: ILevelRepository,
@@ -27,6 +30,7 @@ export default class ChallengeService {
     ) {
         this.challengeRepository = challengeRepository;
         this.technologyRepository = technologyRepository;
+        this.difficultyRepository = difficultyRepository;
         this.userChallengeRepository = userChallengeRepository;
         this.statisticsRepository = statisticsRepository;
         this.levelRepository = levelRepository;
@@ -47,14 +51,20 @@ export default class ChallengeService {
         return challengeExists;
     }
 
-    findChallengeByTechnology = async (technologyID: number) => {
+    findChallengeByTechnologyAndDifficulty = async (technologyID: number, difficultyID: number) => {
         const technologyExists = await this.technologyRepository.findByID(technologyID);
 
         if(!technologyExists) {
             throw new HttpError('Technology Not Found!', 404);
         }
 
-        const challenges = await this.challengeRepository.findChallengeByTechnology(technologyExists.technologyID);
+        const difficultyExists = await this.difficultyRepository.findDifficultyById(difficultyID);
+
+        if(!difficultyExists) {
+            throw new HttpError('Difficulty Not Found!', 404);
+        }
+
+        const challenges = await this.challengeRepository.findChallengeByTechnologyAndDifficulty(technologyExists.technologyID, difficultyExists.difficultyID);
 
         if(!challenges) {
             throw new HttpError('This technology has no challenges!', 404);
@@ -63,7 +73,7 @@ export default class ChallengeService {
         return challenges;
     }
 
-    findUserChallengeByTechnology = async (userID: number, technologyID: number) => {
+    findUserChallengeByTechnologyAndDifficulty = async (userID: number, technologyID: number, difficultyID: number) => {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
@@ -76,7 +86,13 @@ export default class ChallengeService {
             throw new HttpError('Challenge not found!', 404);
         }
 
-        const result = await this.userChallengeRepository.findUserChallengeByTechnology(userExists.userID, technologyExists.technologyID);
+        const difficultyExists = await this.difficultyRepository.findDifficultyById(difficultyID);
+
+        if(!difficultyExists) {
+            throw new HttpError('Difficulty Not Found!', 404);
+        }
+
+        const result = await this.userChallengeRepository.findUserChallengeByTechnologyAndDifficulty(userExists.userID, technologyExists.technologyID, difficultyExists.difficultyID);
 
         if(!result) {
             throw new HttpError('This user has no challenges with this technology', 404);
@@ -153,7 +169,10 @@ export default class ChallengeService {
             statisticsExists = await this.statisticsRepository.saveOrUpdate(statistics);
         }
 
-        statisticsExists.completedClasses += 1;
+        if(!userChallengeExists.completed) {
+            statisticsExists.completedClasses += 1;
+        }
+
         userChallengeExists.completed = true;
 
         await this.statisticsRepository.saveOrUpdate(statisticsExists);

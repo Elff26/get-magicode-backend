@@ -15,6 +15,10 @@ export default class DifficultyRepository implements IDifficultRepository{
         return await this.difficultyRepository.save(difficulty);
     }
 
+    findAllDifficulties = async () => {
+        return await this.difficultyRepository.find();
+    }
+
     findDifficultyById = async (difficultyID: number) => {
         return await this.difficultyRepository.findOneBy({
             difficultyID: difficultyID

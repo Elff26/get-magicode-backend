@@ -25,6 +25,16 @@ export default class DifficultyController{
         }
     }
 
+    findAllDifficulties = async (request:Request, response: Response, next: NextFunction) => {
+        try {
+            const result = await this.difficultyService.findAllDifficulties();
+    
+            response.status(200).json({ difficulties: result });
+        }  catch(error: any) {
+            next(error)
+        }
+    }
+
     findDifficultyById = async (request:Request, response: Response, next: NextFunction) => {
         try {
             const difficultyID = Number(request.params.difficultyID);

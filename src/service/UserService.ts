@@ -115,7 +115,7 @@ export default class UserService{
             throw new HttpError('User not found!', 404);
         }
 
-        if(userExists.numberOfLifes > 5){
+        if(userExists.numberOfLifes >= 5){
             throw new HttpError('User owns all lives', 202)
         }
 

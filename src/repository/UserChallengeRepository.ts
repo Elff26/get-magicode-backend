@@ -14,15 +14,17 @@ export default class UserChallengeRepository implements IUserChallengeRepository
         return this.userChallengeRepository.save(userChallenge);
     };
 
-    findUserChallengeByTechnology = async (userID: number, technologyID: number) => {
+    findUserChallengeByTechnologyAndDifficulty = async (userID: number, technologyID: number, difficultyID: number) => {
         return await this.userChallengeRepository.createQueryBuilder('user_challenge')
                                             .leftJoinAndSelect('user_challenge.user', 'u')
                                             .leftJoinAndSelect('u.technologies', 'ut')
                                             .leftJoinAndSelect('ut.technology', 't')
                                             .leftJoinAndSelect('user_challenge.challenge', 'c')
+                                            .leftJoinAndSelect('c.difficulty', 'd')
                                             .where('t.cd_tecnologia = :technologyID', { technologyID })
                                             .andWhere('u.cd_usuario = :userID', { userID })
                                             .andWhere('c.technology = :technologyID', { technologyID })
+                                            .andWhere('d.difficultyID = :difficultyID', { difficultyID })
                                             .getMany();
     }
 
