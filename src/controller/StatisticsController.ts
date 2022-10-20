@@ -15,9 +15,9 @@ export default class StatisticsController {
     private levelRepository: ILevelRepository;
 
     constructor() {
-        this.statisticsRepository = new StatisticsRepository;
-        this.userRepository = new UserRepository;
-        this.levelRepository = new LevelRepository;
+        this.statisticsRepository = new StatisticsRepository();
+        this.userRepository = new UserRepository();
+        this.levelRepository = new LevelRepository();
 
         this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
     }

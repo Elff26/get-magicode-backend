@@ -53,11 +53,11 @@ export default class UserRepository implements IUserRepository{
     }
 
     findUserByExternalID = async (externalID: string) => {
-        return await this.userRepository.createQueryBuilder('User')
-            .where({
-                externalID
+        return await this.userRepository.findOne({
+                where: {
+                    externalID: externalID
+                }
             })
-            .getOne();
     }
     
     updateUser = async (user: User) => {

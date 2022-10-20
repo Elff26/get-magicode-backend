@@ -5,13 +5,22 @@ import IGoogleMoreInfoUserDataProperties from "../interfaceType/IGoogleMoreInfoU
 import IGoogleTokensProperties from "../interfaceType/IGoogleTokensProperties";
 import IGoogleUserDataProperties from "../interfaceType/IGoogleUserDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
+import ILevelRepository from "../repository/interface/ILevelRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import StatisticsService from "./StatisticsService";
 
 export default class GoogleService {
     private userRepository: IUserRepository;
+    private statisticsRepository: IStatisticsRepository;
+    private levelRepository: ILevelRepository;
+    private statisticsService: StatisticsService;
 
-    constructor(userRepository: IUserRepository){
+    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository){
         this.userRepository = userRepository;
+        this.statisticsRepository = statisticsRepository;
+        this.levelRepository = levelRepository;
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
     }
 
     siginWithGoogle = async (googleCode: string) => {
@@ -43,8 +52,14 @@ export default class GoogleService {
 
         const savedUser = await this.userRepository.save(userExists);
 
+        if(!savedUser || !savedUser.userID) {
+            throw new HttpError("Error when trying to create user. Try again later!", 500);
+        }
+
+        const userWithStatistics = await this.statisticsService.createUserStatistics(savedUser.userID);
+
         return {
-            user: savedUser,
+            user: userWithStatistics,
             token: tokens.access_token
         };
     }

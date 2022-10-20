@@ -4,13 +4,23 @@ import IFAcebookInspectTokenProperties from "../interfaceType/IFAcebookInspectTo
 import IFacebookTokensProperties from "../interfaceType/IFacebookTokensProperties";
 import IFacebookUserDataProperties from "../interfaceType/IFacebookUserDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
+import ILevelRepository from "../repository/interface/ILevelRepository";
+import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import StatisticsRepository from "../repository/StatisticsRepository";
+import StatisticsService from "./StatisticsService";
 
 export default class FacebookService {
     private userRepository: IUserRepository;
+    private statisticsRepository: IStatisticsRepository;
+    private levelRepository: ILevelRepository;
+    private statisticsService: StatisticsService;
 
-    constructor(userRepository: IUserRepository){
+    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository){
         this.userRepository = userRepository;
+        this.statisticsRepository = statisticsRepository;
+        this.levelRepository = levelRepository;
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
     }
 
     siginWithFacebook = async (facebookCode: string) => {
@@ -36,7 +46,15 @@ export default class FacebookService {
 
         userExists.externalToken = tokens.access_token;
 
-        const savedUser = await this.userRepository.save(userExists);
+        let savedUser = await this.userRepository.save(userExists);
+
+        if(!savedUser || !savedUser.userID) {
+            throw new HttpError("Error when trying to create user. Try again later!", 500);
+        }
+
+        if(!savedUser.statistics) {
+            savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
+        }
 
         return {
             user: savedUser,
