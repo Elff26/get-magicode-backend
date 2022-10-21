@@ -5,7 +5,7 @@ export default interface IServerToClientEventsProperties {
   roomNumber: (roomNumber: string) => void;
   initChallenge: (roomNumber: string) => void;
   roomNotExists: () => void;
-  randomizedExercises: (exercise: IChallengeProperties[], usersID: number[]) => void;
+  randomizedExercises: (exercise: IChallengeProperties[], usersID: number[], technologyName: string | undefined) => void;
   opponentAnswer: (opponentAnswer: boolean) => void;
   goToNextQuestion: () => void;
   challengeFinished: () => void;

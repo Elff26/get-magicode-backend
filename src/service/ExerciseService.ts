@@ -14,22 +14,16 @@ import JDoodleService from "./JDoodleService";
 
 export default class ExerciseService{
     private exerciseRepository: IExerciseRepository;
-    private statisticsRepository: IStatisticsRepository;
     private challangeRepository: IChallengeRepository;
-    private levelRepository: ILevelRepository;
     private userRepository: IUserRepository;
     private jdoodleService: JDoodleService;
 
     constructor(exerciseRepository:IExerciseRepository, 
-                statisticsRepository: IStatisticsRepository, 
                 userRepository: IUserRepository, 
-                levelRepository: ILevelRepository,
                 challangeRepository: IChallengeRepository
     ){
         this.exerciseRepository = exerciseRepository;
-        this.statisticsRepository = statisticsRepository;
         this.challangeRepository = challangeRepository;
-        this.levelRepository = levelRepository;
         this.userRepository = userRepository;
         this.jdoodleService = new JDoodleService();
     }
@@ -83,7 +77,7 @@ export default class ExerciseService{
         return await this.exerciseRepository.findExercisesByIds(exercisesID);
     }
 
-    randomizeExercisesIDs = async () => {
-        return await this.exerciseRepository.randomizeExercisesIDs();
+    randomizeExercisesIDs = async (technologyID: number) => {
+        return await this.exerciseRepository.randomizeExercisesIDs(technologyID);
     }
 }

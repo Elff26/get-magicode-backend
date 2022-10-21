@@ -4,30 +4,22 @@ import ExerciseService from "../service/ExerciseService";
 import { NextFunction, Request, Response } from "express";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
 import HttpError from "../exceptions/HttpError";
-import StatisticsRepository from "../repository/StatisticsRepository";
-import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import ChallengeRepository from "../repository/ChallengeRepository";
 import UserRepository from "../repository/UserRepository";
-import ILevelRepository from "../repository/interface/ILevelRepository";
-import LevelRepository from "../repository/LevelRepository";
 
 export default class ExerciseController{
     private exerciseRepository: IExerciseRepository;
-    private statisticsRepository: IStatisticsRepository;
     private challangeRepository: IChallengeRepository;
     private userRepository: IUserRepository;
-    private levelRepository: ILevelRepository;
     private exerciseService: ExerciseService;
 
     constructor(){
         this.exerciseRepository = new ExerciseRepository();
-        this.statisticsRepository = new StatisticsRepository();
         this.challangeRepository = new ChallengeRepository();
-        this.levelRepository = new LevelRepository();
         this.userRepository = new UserRepository();
-        this.exerciseService = new ExerciseService(this.exerciseRepository, this.statisticsRepository, this.userRepository, this.levelRepository, this.challangeRepository);
+        this.exerciseService = new ExerciseService(this.exerciseRepository, this.userRepository, this.challangeRepository);
     }
 
     createExercise = async (request: Request, response: Response, next: NextFunction) =>{
@@ -106,7 +98,13 @@ export default class ExerciseController{
 
     randomizeExercisesIDs = async (request: Request, response: Response, next: NextFunction) => {
         try {   
-            const result = await this.exerciseService.randomizeExercisesIDs();
+            let technologyID = Number(request.params.userID);
+
+            if(isNaN(technologyID)) {
+                throw new HttpError('Technology ID must be a number', 403);
+            }
+
+            const result = await this.exerciseService.randomizeExercisesIDs(technologyID);
     
             response.status(200).json(result);
         }  catch(error: any) {

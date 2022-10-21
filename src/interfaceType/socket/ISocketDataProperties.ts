@@ -1,3 +1,4 @@
 interface ISocketDataProperties {
-    userID: number
+    userID: number;
+    technologyID: number;
 }
