@@ -5,6 +5,7 @@ import IAchievementRepository from "./interface/IAchievementRepository";
 
 export default class AchievementRepository implements IAchievementRepository{
     private achievementRepository: Repository<Achievement>;
+    
     constructor(){
         this.achievementRepository = AppDataSource.manager.getRepository(Achievement);
     }

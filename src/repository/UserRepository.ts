@@ -40,6 +40,15 @@ export default class UserRepository implements IUserRepository{
             })
             .getOne();
     }
+
+    findUserWithRefreshTokenById = async (userID: number) => {
+        return await this.userRepository.createQueryBuilder('User')
+            .select(['User', 'User.externalToken'])
+            .where({
+                userID
+            })
+            .getOne();
+    }
     
     findUserByEmailOrPhone = async (email: string, phone: string) => {
         return await this.userRepository.createQueryBuilder('User')

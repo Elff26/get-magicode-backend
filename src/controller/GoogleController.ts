@@ -40,12 +40,17 @@ export default class GoogleController {
     checkGoogleToken = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const googleToken: string | string[] | undefined = request.headers.accesstoken;
+            const userID: number = Number(request.headers.userid);
 
             if(!googleToken || typeof(googleToken) !== "string") {
                 throw new HttpError("Token is required!", 400);
             }
+
+            if(isNaN(userID)) {
+                throw new HttpError("ID must be a number!", 400);
+            }
     
-            const result = await this.googleService.checkGoogleToken(googleToken);
+            const result = await this.googleService.checkGoogleToken(googleToken, userID);
 
             response.status(200).send(result);
         } catch(error: any) {
