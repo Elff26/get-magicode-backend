@@ -19,60 +19,34 @@ import { UserAchievement } from './src/database/model/UserAchievement';
 import { UserChallenge } from './src/database/model/UserChallenge';
 import { Level } from './src/database/model/Level';
 
-// export const AppDataSource = new DataSource({
-//    type: "postgres",
-//    host: process.env.DATABASE_HOSTNAME,
-//    database: process.env.DATABASE_NAME,
-//    port: Number(process.env.DATABASE_PORT),
-//    username: process.env.DATABASE_USER,
-//    password: process.env.DATABASE_PASSWORD,
-//    synchronize: true,
-//    logging: true,
-//    entities: [
-//     Achievement,
-//     Alternative,
-//     Category,
-//     Challenge,
-//     Classroom,
-//     Difficulty,
-//     Exercise,
-//     Goal,
-//     Level,
-//     Statistics,
-//     Technology,
-//     Tip,
-//     User,
-//     UserChallenge,
-//     UserTechnology,
-//     UserAchievement
-//   ],
-//    migrations: ['src/database/migrations/*{.ts,.js}']
-// })
-
 export const AppDataSource = new DataSource({
-  type: "sqlite",
-  database: "./GetMagiCode.sqlite",
-  synchronize: true,
-  logging: true,
-  entities: [
-   Achievement,
-   Alternative,
-   Category,
-   Challenge,
-   Classroom,
-   Difficulty,
-   Exercise,
-   Goal,
-   Level,
-   Statistics,
-   Technology,
-   Tip,
-   User,
-   UserChallenge,
-   UserTechnology,
-   UserAchievement
- ],
-  migrations: ['src/database/migrations/*{.ts,.js}']
+   type: "postgres",
+   host: process.env.DATABASE_HOSTNAME,
+   database: process.env.DATABASE_NAME,
+   port: Number(process.env.DATABASE_PORT),
+   username: process.env.DATABASE_USER,
+   password: process.env.DATABASE_PASSWORD,
+   synchronize: true,
+   logging: true,
+   entities: [
+    Achievement,
+    Alternative,
+    Category,
+    Challenge,
+    Classroom,
+    Difficulty,
+    Exercise,
+    Goal,
+    Level,
+    Statistics,
+    Technology,
+    Tip,
+    User,
+    UserChallenge,
+    UserTechnology,
+    UserAchievement
+  ],
+   migrations: ['src/database/migrations/*{.ts,.js}']
 })
 
 AppDataSource.initialize()
