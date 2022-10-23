@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 import UserController from './controller/UserController';
 import AuthController from './controller/AuthController';
@@ -33,6 +33,12 @@ const facebookController = new FacebookController();
 const levelController = new LevelController();
 const achievementController = new AchievementController();
 const tipController = new TipController();
+
+router.get('/', (req: Request, res: Response) => {
+    res.status(200).json({
+        succes: true
+    })
+})
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
