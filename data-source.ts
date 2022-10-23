@@ -22,10 +22,7 @@ import { Level } from './src/database/model/Level';
 export const AppDataSource = new DataSource({
    type: "postgres",
    host: process.env.DATABASE_HOSTNAME,
-   database: process.env.DATABASE_NAME,
-   port: Number(process.env.DATABASE_PORT),
-   username: process.env.DATABASE_USER,
-   password: process.env.DATABASE_PASSWORD,
+   url: process.env.DATABASE_URL,
    synchronize: true,
    logging: true,
    entities: [
