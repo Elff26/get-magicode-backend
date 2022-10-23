@@ -2,6 +2,6 @@ import { Exercise } from "../database/model/Exercise";
 
 export default interface ITipProperties {
     tipID: number,
-    tipDescription: string;
+    description: string;
     exercise: Exercise;
 }

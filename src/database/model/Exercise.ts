@@ -56,7 +56,6 @@ export class Exercise{
     challenge: Challenge;
 
     @OneToMany(() => Tip, (tip) => tip.exercise, {eager: true})
-    @JoinColumn({ name: "cd_exercicio" })
     tips: Tip[];
 
     @OneToMany(() => Alternative, (Alternative) => Alternative.exercise, {eager: true})
