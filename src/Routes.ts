@@ -14,6 +14,7 @@ import GoogleController from './controller/GoogleController';
 import FacebookController from './controller/FacebookController';
 import LevelController from './controller/LevelController';
 import AchievementController from './controller/AchievementController';
+import TipController from './controller/TipController';
 
 const router = Router();
 
@@ -31,6 +32,7 @@ const googleController = new GoogleController();
 const facebookController = new FacebookController();
 const levelController = new LevelController();
 const achievementController = new AchievementController();
+const tipController = new TipController();
 
 router.post("/CreateUser", userController.createUser);
 router.get("/FindUserById/:userID", userController.findUserById);
@@ -109,5 +111,8 @@ router.get('/FindAchievementById/:achievementID', achievementController.findAchi
 router.get('/ListAllAchievement', achievementController.listAllAchievements);
 router.put('/AssociateUserToAchievement/:userID', achievementController.associateUserToAchievement);
 router.get('/ListAchievementUserHave/:userID', achievementController.listAchievementUserHave);
+
+router.post('/CreateTip', tipController.createTip);
+router.get('/FindTipByExercise/:exerciseID', tipController.findTipByExercise);
 
 export default router;
