@@ -48,6 +48,7 @@ export const AppDataSource = new DataSource({
   ],
    migrations: ['src/database/migrations/*{.ts,.js}']
 })
+
 AppDataSource.initialize()
     .then(() => {
       console.log("Data Source has been initialized!")

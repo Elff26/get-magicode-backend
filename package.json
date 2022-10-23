@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.ts",
     "start:dev": "ts-node-dev --respawn --transpile-only app.ts",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -d ./data-source.ts",
     "migration:generate": "npm run typeorm:cli migration:generate ./src/database/migrations/DBMigration",
