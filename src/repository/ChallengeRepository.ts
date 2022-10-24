@@ -11,8 +11,16 @@ export default class ChallengeRepository implements IChallengeRepository {
     }
 
     findChallengeByID = async (challengeID: number) => {
-        return await this.challengeRepository.findOneBy({
-            challengeID: challengeID
+        return await this.challengeRepository.findOne({
+            where: {
+                challengeID: challengeID
+            },
+            order: {
+                challengeID: 'ASC',
+                classes: {
+                    classroomID: 'asc'
+                }
+            }
         });
     }
 
