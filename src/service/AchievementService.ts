@@ -54,6 +54,10 @@ export default class AchievementService{
 
         const listAchievementUserHave = await this.achievementRepository.listAchievementUserHave(userID);
 
+        if(listAchievementUserHave.length === 0) {
+            listAchievementUserHave.push(0);
+        }
+
         const listAchivementUserNotHaveByXP = await this.achievementRepository.listAchivementUserNotHaveByXP(statisticsExists.totalXp, listAchievementUserHave);
 
         const listAchivementUserNotHaveByClassroom = await this.achievementRepository.listAchivementUserNotHaveByClassroom(statisticsExists.completedClasses, listAchievementUserHave);
@@ -65,7 +69,7 @@ export default class AchievementService{
         let listUserAchievements: Achievement[] = listAchivementUserNotHaveByXP.concat(listAchivementUserNotHaveByClassroom,listAchivementUserNotHaveByTechnology,listAchivementUserNotHaveByTechnologyAndClassroom);
         const response: any = arrayMap(listUserAchievements, userExists);
         const result = await this.userAchievementRepository.saveList(response);
-    
+
         if(!result) {
             throw new HttpError('Error when trying associate user with challenge. Try again later!', 400);
         }

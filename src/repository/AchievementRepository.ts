@@ -40,7 +40,7 @@ export default class AchievementRepository implements IAchievementRepository{
     listAchivementUserNotHaveByXP = async (xpUser:number, listAchievements: number[]) => {
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
-                                               .andWhere('Achievement.xp < :xpUser',{xpUser})
+                                               .andWhere('Achievement.xp <= :xpUser',{xpUser})
                                                .getMany();
 
     }
@@ -48,7 +48,7 @@ export default class AchievementRepository implements IAchievementRepository{
     listAchivementUserNotHaveByClassroom = async (classroomUser:number, listAchievements: number[]) => {
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
-                                               .andWhere('Achievement.classroom < :classroomUser',{classroomUser})
+                                               .andWhere('Achievement.classroom <= :classroomUser',{classroomUser})
                                                .getMany();
 
     }
