@@ -65,7 +65,7 @@ export default class SocketIO {
                 const randomExercisesIDs: number[] = await this.exerciseRepository.randomizeExercisesIDs(technologyID);
                 const randomExercises = await this.challengeRepository.findChallengesByExercisesIds(randomExercisesIDs);
 
-                this.io.in(roomNumber).emit('randomizedExercises', randomExercises, usersID, technology?.name);
+                this.io.in(roomNumber).emit('randomizedExercises', randomExercises, usersID, technology);
             });
 
             socket.on('answered', async (roomNumber: string, isCorrect: boolean) => {

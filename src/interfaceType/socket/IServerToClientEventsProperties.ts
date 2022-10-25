@@ -1,11 +1,11 @@
+import { Technology } from "../../database/model/Technology";
 import IChallengeProperties from "../IChallengeProperties";
-import IExerciseProperties from "../IExerciseProperties";
 
 export default interface IServerToClientEventsProperties {
   roomNumber: (roomNumber: string) => void;
   initChallenge: (roomNumber: string) => void;
   roomNotExists: () => void;
-  randomizedExercises: (exercise: IChallengeProperties[], usersID: number[], technologyName: string | undefined) => void;
+  randomizedExercises: (exercise: IChallengeProperties[], usersID: number[], technology: Technology) => void;
   opponentAnswer: (opponentAnswer: boolean) => void;
   goToNextQuestion: () => void;
   challengeFinished: () => void;
