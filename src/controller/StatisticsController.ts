@@ -107,12 +107,15 @@ export default class StatisticsController {
         try{            
             const userID = Number(request.params.userID);
             const type = request.body.type;
+            const numberOfHits = request.body.numberOfHits;
+            const numberOfClasses = request.body.numberOfClasses;
+            const numberOfMistakes = request.body.numberOfMistakes;
 
             if(isNaN(userID)) {
                 throw new HttpError('ID must be a number', 403);
             }
 
-            const result = await this.statisticsService.counter(userID, type);
+            const result = await this.statisticsService.counter(userID, type, numberOfHits, numberOfClasses, numberOfMistakes);
 
             response.status(200).json({ response: result });
         }catch(error: any){

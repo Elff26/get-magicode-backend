@@ -1,5 +1,6 @@
 import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
+import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -102,7 +103,7 @@ export default class StatisticsService {
         return await this.statisticsRepository.getHigherXP(type);
     }
 
-    counter = async (userID: number, type:string) => {
+    counter = async (userID: number, type:string, numberOfHits: number, numberOfClasses: number, numberOfMistakes: number) => {
         const userExists = await this.userRepository.findUserById(userID);
         const statistics = await this.statisticsRepository.findStatisticsByUser(userID);
 
@@ -114,18 +115,24 @@ export default class StatisticsService {
             throw new HttpError('Statistics not found!', 404);
         }
 
-        if(type === 'hits'){
-            statistics.numberOfHits += 1;
-            return await this.statisticsRepository.saveOrUpdate(statistics);
+        let updatedStatistics: Statistics;
+
+        if(!isNaN(numberOfHits)){
+            statistics.numberOfHits += numberOfHits;
+            updatedStatistics = await this.statisticsRepository.saveOrUpdate(statistics);
         }
 
-        if(type === 'classroom'){
-            statistics.completedClasses += 1;
-            return await this.statisticsRepository.saveOrUpdate(statistics);
+        if(!isNaN(numberOfClasses)){
+            statistics.completedClasses += numberOfClasses;
+            updatedStatistics = await this.statisticsRepository.saveOrUpdate(statistics);
         }
 
-        statistics.numberOfMistakes += 1;
-        return await this.statisticsRepository.saveOrUpdate(statistics);
+        if(!isNaN(numberOfMistakes)) {
+            statistics.numberOfMistakes += numberOfMistakes;
+            updatedStatistics = await this.statisticsRepository.saveOrUpdate(statistics)
+        }
+
+        return updatedStatistics;
     }
 
     getClassroomCompletedByUser = async (userID: number) => {
