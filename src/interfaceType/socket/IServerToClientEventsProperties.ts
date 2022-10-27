@@ -8,6 +8,7 @@ export default interface IServerToClientEventsProperties {
   randomizedExercises: (exercise: IChallengeProperties[], usersID: number[], technology: Technology) => void;
   opponentAnswer: (opponentAnswer: boolean) => void;
   goToNextQuestion: () => void;
+  resetNextQuestion: () => void;
   challengeFinished: () => void;
   opponentWantsRematch: () => void;
   rematchAccepted: () => void;

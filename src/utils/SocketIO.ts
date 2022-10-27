@@ -40,6 +40,7 @@ export default class SocketIO {
                 let roomNumber =  this.codeAndDataGenerator.codeGenerator(1, 9999);
                 socket.data.userID = userID;
                 socket.data.technologyID = technologyID;
+                socket.data.nextQuestion = false;
 
                 socket.join(roomNumber);
                 socket.emit('roomNumber', roomNumber);
@@ -51,6 +52,7 @@ export default class SocketIO {
                 } else {
                     socket.data.userID = userID;
                     socket.data.technologyID = technologyID;
+                    socket.data.nextQuestion = false;
                     socket.join(roomNumber);
                     this.io.in(roomNumber).emit('initChallenge', roomNumber);
                 }
@@ -69,11 +71,23 @@ export default class SocketIO {
             });
 
             socket.on('answered', async (roomNumber: string, isCorrect: boolean) => {
+                socket.data.nextQuestion = true;
                 socket.to(roomNumber).emit('opponentAnswer', isCorrect);
             });
 
-            socket.on('nextQuestion', (roomNumber: string) => {
-                this.io.in(roomNumber).emit('goToNextQuestion');
+            socket.on('nextQuestion', async (roomNumber: string) => {
+                const usersInRoom = await this.io.in(roomNumber).fetchSockets();
+                let nextQuestion: boolean[] = usersInRoom.map((socket) => socket.data.nextQuestion);
+                
+                if(nextQuestion[0] && nextQuestion[1]) {
+                    socket.data.nextQuestion = false;
+                    this.io.in(roomNumber).emit('goToNextQuestion');
+                    this.io.in(roomNumber).emit('resetNextQuestion');
+                }
+            });
+
+            socket.on('resetUserNextQuestion', () => {
+                socket.data.nextQuestion = false;
             });
 
             socket.on('allUsersFinished', (roomNumber: string) => {

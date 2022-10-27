@@ -31,6 +31,7 @@ export default class GoogleService {
         if(!userExists) {
             let userGetCustomFields: IGoogleCustomDataProperties = await this.getCustomGoogleFields(tokens.access_token);
 
+            console.log(userGetCustomFields)
             const newUser: IUserProperties = {
                 name: userData.name,
                 email: userData.email,
@@ -111,7 +112,7 @@ export default class GoogleService {
             if(moreInfoUserData.birthdays) {
                 let birthDate = moreInfoUserData.birthdays[0].date;
         
-                birthday = new Date(Number(birthDate.year), Number(birthDate.month) - 1, Number(birthDate.day));
+                birthday = new Date(Number(birthDate.year), Number(birthDate.month) - 1, Number(birthDate.day)).toLocaleDateString("en");
             }
     
             if(moreInfoUserData.phoneNumbers) {
