@@ -6,21 +6,26 @@ export default class SendEmail{
     constructor(){
     }
 
-    sendEmail = (code:string, expirationDate: string) =>{
+    sendEmail = (code:string, expirationDate: String, email: string) =>{
         let mailOptions = {
-            from: "portalband@band.com.br",
-            to: "lukas27@ethereal.email",
+            from: process.env.APPMAIL,
+            to: email,
             subject: "Recuperação de Senha",
             html: EmailHTML(code, expirationDate)
         };
 
         const transporter = nodemailer.createTransport({
+            pool: true,
             host: process.env.HOST,
-            port: 2525,
+            port: Number(process.env.MAILPORT),
+            secure: true,
             auth: {
               user: process.env.USER,
-              pass: process.env.PASSWORD,
+              pass: process.env.PASSWORD
             },
+            tls: {
+                rejectUnauthorized: false
+            }
         });
 
         transporter.verify(function (error, success) {
@@ -33,6 +38,7 @@ export default class SendEmail{
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
+                console.log(error)
                 return error;
             } else {
                 return "E-mail enviado com sucesso!";

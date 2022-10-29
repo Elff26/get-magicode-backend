@@ -31,7 +31,6 @@ export default class GoogleService {
         if(!userExists) {
             let userGetCustomFields: IGoogleCustomDataProperties = await this.getCustomGoogleFields(tokens.access_token);
 
-            console.log(userGetCustomFields)
             const newUser: IUserProperties = {
                 name: userData.name,
                 email: userData.email,

@@ -4,6 +4,7 @@ import IUserMoreDataInterface from "../interfaceType/IUserMoreDataProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import CodeAndDataGenerator from "../utils/CodeAndDateGenerator";
 import Crypt from "../utils/Crypt";
+import DateUtils from "../utils/DateUtils";
 import SendEmail from "../utils/SendEmail";
 
 export default class UserService{
@@ -45,7 +46,8 @@ export default class UserService{
         } 
 
         user.userID = userExists.userID;
-        user.password = user.password;
+        let encryptedPassword = await Crypt.encrypt(user.password);
+        user.password = encryptedPassword;
 
         return this.userRepository.updateUser(user);
     }
@@ -65,14 +67,15 @@ export default class UserService{
 
         const code = this.codeAndDataGenerator.codeGenerator(1, 9999);
         const expirationDate = this.codeAndDataGenerator.datePlusHours(24);
+        let expirationDateConverted = new DateUtils().dateConvertToEUA(expirationDate);
 
         if(!userExists) {
             throw new HttpError('User not found!', 404);
         }
         const sendEmail = new SendEmail();
-        sendEmail.sendEmail(code, expirationDate.toString());
+        sendEmail.sendEmail(code, expirationDate, email);
 
-        await this.userRepository.insertCodeAndDatePasswordbyUser(code, expirationDate.toString(),email)
+        await this.userRepository.insertCodeAndDatePasswordbyUser(code, expirationDateConverted.toString(), email);
 
         return userExists.userID;
     }
@@ -87,7 +90,11 @@ export default class UserService{
         
         const expirationDate = new Date(user.expirationDate); 
 
-        if(user.codeChangePassword != code || expirationDate.getTime() > dateCurrent.getTime()){
+        console.log("CODIGOE  DATA", user.expirationDate, user.codeChangePassword, expirationDate.getTime(), dateCurrent.getTime())
+        console.log(user.codeChangePassword, code)
+        console.log(expirationDate.getTime() > dateCurrent.getTime(), user.codeChangePassword != code)
+
+        if(user.codeChangePassword != code || expirationDate.getTime() <= dateCurrent.getTime()){
             throw new HttpError('Code stay invalid!', 404);
         }
         
