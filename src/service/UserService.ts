@@ -90,10 +90,6 @@ export default class UserService{
         
         const expirationDate = new Date(user.expirationDate); 
 
-        console.log("CODIGOE  DATA", user.expirationDate, user.codeChangePassword, expirationDate.getTime(), dateCurrent.getTime())
-        console.log(user.codeChangePassword, code)
-        console.log(expirationDate.getTime() > dateCurrent.getTime(), user.codeChangePassword != code)
-
         if(user.codeChangePassword != code || expirationDate.getTime() <= dateCurrent.getTime()){
             throw new HttpError('Code stay invalid!', 404);
         }
@@ -187,5 +183,18 @@ export default class UserService{
 
         const result = await this.userRepository.updateUser(userExists);
         return result;
+    }
+
+    getProfilePicture = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const result = await this.userRepository.getImageByUser(userID);
+        const resultConvert = Buffer.from(result.image).toString('base64');
+
+        return resultConvert;
     }
 }

@@ -214,4 +214,20 @@ export default class UserController{
             next(error)
         }
     }
+
+    getProfilePicture = async (request: Request, response: Response, next: NextFunction) =>{
+        try{
+            const userID = Number(request.params.userID);
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.userService.getProfilePicture(userID);
+    
+            response.status(200).json({ user: result });
+        }catch(error: any) {
+            next(error)
+        }
+    }
 }

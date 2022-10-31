@@ -17,4 +17,5 @@ export default interface IUserRepository{
     insertCodeAndDatePasswordbyUser:(code: string, date: string, email: string) => Promise<UpdateResult>;
     verificationResetPassword:(userID: number, passwordReset: string) => Promise<UpdateResult>;
     getGoalByUser:(userID: number) => Promise<any>;
+    getImageByUser:(userID:number) => Promise<User>;
 }

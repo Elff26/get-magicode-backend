@@ -121,4 +121,13 @@ export default class UserRepository implements IUserRepository{
                                               .where({userID})
                                               .getRawOne();
     }
+
+    getImageByUser = async (userID:number) => {
+        return await this.userRepository.createQueryBuilder('User')
+                                        .select(['User.image'])
+                                        .where({
+                                            userID
+                                        })
+                                        .getOne();
+    }
 }

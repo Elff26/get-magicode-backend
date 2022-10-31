@@ -52,6 +52,7 @@ router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
 router.put("/AddMoreUserInfo/:userID", userController.addMoreUserInfo);
 router.get("/GetGoalByUser/:userID", userController.getGoalByUser);
 router.put("/SaveProfilePicture/:userID", userController.saveProfilePicture);
+router.get("/GetProfilePicture/:userID", userController.getProfilePicture);
 
 router.post("/Login", authControler.login);
 router.put("/ChangePassword/:userID", authControler.changePassword);
