@@ -35,14 +35,14 @@ export default class StatisticsRepository implements IStatisticsRepository {
 
         if(type === 'general'){
             return await this.statisticsRepository.createQueryBuilder('Statistics')
-                                              .leftJoinAndSelect('Statistics.user', 'u')
+                                              .innerJoinAndSelect('Statistics.user', 'u')
                                               .select(['Statistics.totalXp', 'u'])
                                               .orderBy('Statistics.totalXp', 'DESC')
                                               .getMany();
         }
 
         return await this.statisticsRepository.createQueryBuilder('Statistics')
-                                              .leftJoinAndSelect('Statistics.user', 'u')
+                                              .innerJoinAndSelect('Statistics.user', 'u')
                                               .select(['Statistics.monthXp', 'u'])
                                               .orderBy('Statistics.monthXp', 'DESC')
                                               .getMany();
