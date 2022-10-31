@@ -193,8 +193,13 @@ export default class UserService{
         }
 
         const result = await this.userRepository.getImageByUser(userID);
-        const resultConvert = Buffer.from(result.image).toString('base64');
 
-        return resultConvert;
+        if(result) {
+            const resultConvert = Buffer.from(result.image).toString('base64');
+
+            return resultConvert;
+        }
+
+        return result;
     }
 }
