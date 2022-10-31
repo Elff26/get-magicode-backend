@@ -52,8 +52,8 @@ export class User {
     @Column({name: "ds_email", type: "varchar", length: 100, unique: true, nullable: false})
     email: string;
 
-    @Column({name: "ds_img_usuario", type: "varchar", length: 500, nullable: true})
-    image?: string;
+    @Column({name: "ds_img_usuario", type: "bytea", nullable: true})
+    image?: Buffer;
 
     @Column({name: "nr_telefone", type: "varchar", length: 11, unique: true, nullable: true})
     phone?: string;

@@ -198,5 +198,20 @@ export default class UserController{
         }
     }
 
+    saveProfilePicture = async (request: Request, response: Response, next: NextFunction) =>{
+        try{
+            const userID = Number(request.params.userID);
+            const image = request.body.image;
 
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.userService.saveProfilePicture(userID, image);
+    
+            response.status(200).json({ user: result });
+        }catch(error: any) {
+            next(error)
+        }
+    }
 }

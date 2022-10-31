@@ -175,4 +175,17 @@ export default class UserService{
 
         return result;
     }
+
+    saveProfilePicture = async (userID: number, image: string) => {
+        const userExists = await this.userRepository.findUserById(userID);
+
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        userExists.image = Buffer.from(image, "base64") ;
+
+        const result = await this.userRepository.updateUser(userExists);
+        return result;
+    }
 }
