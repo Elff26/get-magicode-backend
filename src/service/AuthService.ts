@@ -27,7 +27,6 @@ export default class AuthService {
         const userToReturn = await this.userRepository.findUserById(userExists.userID);
 
         var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
-         console.log("Token",token);
 
         return {user: userToReturn, token};
     }

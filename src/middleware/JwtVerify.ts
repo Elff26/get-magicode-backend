@@ -19,7 +19,6 @@ export default class JwtVerify{
                 message: "Invalid Token!"
             });
             
-            console.log(decoded)    
             next()
           }); 
     }
