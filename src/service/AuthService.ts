@@ -2,6 +2,7 @@ import HttpError from "../exceptions/HttpError";
 import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import Crypt from "../utils/Crypt";
+import jwt from "jsonwebtoken";
 
 export default class AuthService {
     private userRepository: IUserRepository;
@@ -25,7 +26,10 @@ export default class AuthService {
 
         const userToReturn = await this.userRepository.findUserById(userExists.userID);
 
-        return userToReturn;
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
+         console.log("Token",token);
+
+        return {user: userToReturn, token};
     }
 
     changePassword = async (userID: number, password: string, newPassword: string) => {

@@ -15,6 +15,7 @@ import FacebookController from './controller/FacebookController';
 import LevelController from './controller/LevelController';
 import AchievementController from './controller/AchievementController';
 import TipController from './controller/TipController';
+import JwtVerify from './middleware/JwtVerify';
 
 const router = Router();
 
@@ -34,6 +35,8 @@ const levelController = new LevelController();
 const achievementController = new AchievementController();
 const tipController = new TipController();
 
+const jwtVerify = new JwtVerify();
+
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json({
         succes: true
@@ -41,21 +44,21 @@ router.get('/', (req: Request, res: Response) => {
 })
 
 router.post("/CreateUser", userController.createUser);
-router.get("/FindUserById/:userID", userController.findUserById);
-router.put("/UpdateUser/:userID", userController.updateUser);
-router.delete("/DeleteUser/:userID", userController.deleteUSer);
-router.put("/CodeAndDateGenerator", userController.insertCodeAndDatePasswordbyUser);
-router.post("/VerificationCode/:userID", userController.verificationCode);
-router.put("/DecreaseNumberOfLifes/:userID", userController.decreaseNumberOfLifes);
-router.put("/AddUserLife/:userID", userController.addUserLife);
-router.get("/GetNumberOfLife/:userID", userController.getNumberOfLifes);
-router.put("/AddMoreUserInfo/:userID", userController.addMoreUserInfo);
-router.get("/GetGoalByUser/:userID", userController.getGoalByUser);
-router.put("/SaveProfilePicture/:userID", userController.saveProfilePicture);
-router.get("/GetProfilePicture/:userID", userController.getProfilePicture);
+router.get("/FindUserById/:userID", jwtVerify.verify, userController.findUserById);
+router.put("/UpdateUser/:userID", jwtVerify.verify, userController.updateUser);
+router.delete("/DeleteUser/:userID", jwtVerify.verify, userController.deleteUSer);
+router.put("/CodeAndDateGenerator", jwtVerify.verify, userController.insertCodeAndDatePasswordbyUser);
+router.post("/VerificationCode/:userID", jwtVerify.verify, userController.verificationCode);
+router.put("/DecreaseNumberOfLifes/:userID", jwtVerify.verify, userController.decreaseNumberOfLifes);
+router.put("/AddUserLife/:userID", jwtVerify.verify, userController.addUserLife);
+router.get("/GetNumberOfLife/:userID", jwtVerify.verify, userController.getNumberOfLifes);
+router.put("/AddMoreUserInfo/:userID", jwtVerify.verify, userController.addMoreUserInfo);
+router.get("/GetGoalByUser/:userID", jwtVerify.verify, userController.getGoalByUser);
+router.put("/SaveProfilePicture/:userID", jwtVerify.verify, userController.saveProfilePicture);
+router.get("/GetProfilePicture/:userID", jwtVerify.verify, userController.getProfilePicture);
 
 router.post("/Login", authControler.login);
-router.put("/ChangePassword/:userID", authControler.changePassword);
+router.put("/ChangePassword/:userID", jwtVerify.verify, authControler.changePassword);
 
 router.post("/SiginWithGoogle", googleController.siginWithGoogle);
 router.get('/CheckGoogleToken', googleController.checkGoogleToken);
@@ -64,23 +67,23 @@ router.post("/SiginWithFacebook", facebookController.siginWithFacebook);
 router.get('/CheckFacebookToken', facebookController.checkFacebookToken);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
-router.get("/ListAllTechnologies", technologyController.listAllTechnologies);
-router.post("/AssociateToTechnology/:userID", technologyController.associateUserToTechnology);
-router.post('/ChangeTechnology', technologyController.changeTechnology);
+router.get("/ListAllTechnologies", jwtVerify.verify, technologyController.listAllTechnologies);
+router.post("/AssociateToTechnology/:userID", jwtVerify.verify, technologyController.associateUserToTechnology);
+router.post('/ChangeTechnology', jwtVerify.verify, technologyController.changeTechnology);
 
 router.post("/CreateGoal", goalController.createGoal);
-router.post("/AssociateToGoal/:userID", goalController.associateUserToGoal);
-router.get("/ListAllGoals", goalController.listAllGoals);
+router.post("/AssociateToGoal/:userID", jwtVerify.verify, goalController.associateUserToGoal);
+router.get("/ListAllGoals", jwtVerify.verify, goalController.listAllGoals);
 
 router.post("/CreateClassroom", classroomController.createClassroom);
-router.get("/FindClassroomById/:classroomID", classroomController.findClassroomById);
-router.get("/FindClassroomByChallenge/:challengeID", classroomController.findClassroomByChallenge);
+router.get("/FindClassroomById/:classroomID", jwtVerify.verify, classroomController.findClassroomById);
+router.get("/FindClassroomByChallenge/:challengeID", jwtVerify.verify, classroomController.findClassroomByChallenge);
 router.get("/CountAllClassrooms", classroomController.countAllClassrooms);
 
 router.post("/CreateExercise", exerciseController.createExercise);
-router.get("/FindExerciseId/:exerciseID", exerciseController.findExerciseById);
-router.post("/SendExerciseCode/:userID/:exerciseID", exerciseController.sendExerciseCode);
-router.get("/FindExercisesByIDs", exerciseController.findExercisesByIds);
+router.get("/FindExerciseId/:exerciseID", jwtVerify.verify, exerciseController.findExerciseById);
+router.post("/SendExerciseCode/:userID/:exerciseID", jwtVerify.verify, exerciseController.sendExerciseCode);
+router.get("/FindExercisesByIDs", jwtVerify.verify, exerciseController.findExercisesByIds);
 router.get("/RandomizeExercise", exerciseController.randomizeExercisesIDs);
 
 router.post("/CreateDifficulty", difficultyController.createDifficulty);
@@ -101,13 +104,13 @@ router.get("/FindAlternativeByExercise/:exerciseID", alternativeController.findA
 router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alternativeIsCorrect);
 
 router.post('/CreateUserStatistics/:userID', statisticsController.createUserStatistics);
-router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
-router.get('/GetMonthXpByUser/:userID', statisticsController.getMonthXpByUser);
-router.get('/FindStatisticsByUser/:userID', statisticsController.findStatisticsByUser);
+router.post('/AddExperienceToUser/:userID', jwtVerify.verify, statisticsController.addExperienceToUser);
+router.get('/GetMonthXpByUser/:userID', jwtVerify.verify, statisticsController.getMonthXpByUser);
+router.get('/FindStatisticsByUser/:userID', jwtVerify.verify,  statisticsController.findStatisticsByUser);
 router.get('/GetHigherXp/:type', statisticsController.getHigherXP);
 router.post('/Counter/:userID', statisticsController.counter);
-router.get('/GetClassroomCompletedByUser/:userID', statisticsController.getClassroomCompletedByUser);
-router.put('/CompletedGoal/:userID', statisticsController.completedGoal);
+router.get('/GetClassroomCompletedByUser/:userID', jwtVerify.verify, statisticsController.getClassroomCompletedByUser);
+router.put('/CompletedGoal/:userID', jwtVerify.verify, statisticsController.completedGoal);
 
 router.post('/CreateLevel', levelController.createLevel);
 router.get('/ListAllLevels', levelController.listAllLevels);
@@ -116,8 +119,8 @@ router.get('/FindLevelById/:levelID', levelController.findLevelById);
 router.post('/CreateAchievement', achievementController.createAchievement);
 router.get('/FindAchievementById/:achievementID', achievementController.findAchievementByID);
 router.get('/ListAllAchievement', achievementController.listAllAchievements);
-router.put('/AssociateUserToAchievement/:userID', achievementController.associateUserToAchievement);
-router.get('/ListAchievementUserHave/:userID', achievementController.listAchievementUserHave);
+router.put('/AssociateUserToAchievement/:userID', jwtVerify.verify, achievementController.associateUserToAchievement);
+router.get('/ListAchievementUserHave/:userID', jwtVerify.verify, achievementController.listAchievementUserHave);
 
 router.post('/CreateTip', tipController.createTip);
 router.get('/FindTipByExercise/:exerciseID', tipController.findTipByExercise);

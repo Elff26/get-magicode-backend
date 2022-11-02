@@ -25,7 +25,7 @@ export default class UserController{
 
             const result = await this.authService.login(user);
             
-            response.status(200).json({ user: result });
+            response.status(200).json({ data: result });
         } catch(error: any) {
             next(error);
         }
