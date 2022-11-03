@@ -143,25 +143,31 @@ export default class GoogleService {
 
     checkIfCanGetUserInfo = async (externalAccessToken: string, userID: number) => {
         try {
-            const userData = await axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json`, {
-                headers: {
-                    Authorization: "Bearer " + externalAccessToken
-                }
-            });
-
-            var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
-
-            return {
-                userData: userData.data,
-                token
-            };
+            return await this.getGoogleInfo(userID, externalAccessToken);
         } catch(error: any) {
             if(error.response.data.error.status === 'UNAUTHENTICATED') {
-                return this.refreshGoogleToken(userID);
+                let { externalAccessToken } = await this.refreshGoogleToken(userID);
+
+                return await this.getGoogleInfo(userID, externalAccessToken);
             }
 
             return this.externalAuthLogout();
         }
+    }
+
+    getGoogleInfo = async (userID: number, externalAccessToken: string) => {
+        const userData = await axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json`, {
+            headers: {
+                Authorization: "Bearer " + externalAccessToken
+            }
+        });
+
+        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+
+        return {
+            userData: userData.data,
+            token
+        };
     }
 
     refreshGoogleToken = async (userID: number) => {
