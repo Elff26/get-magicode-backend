@@ -1,4 +1,5 @@
 import { DeleteResult, UpdateResult } from "typeorm";
+import { Goal } from "../../database/model/Goal";
 import { User } from "../../database/model/User";
 
 export default interface IUserRepository{
@@ -16,6 +17,5 @@ export default interface IUserRepository{
     findUserByIdAndPassword:(userID:number, password: string ) => Promise<User | null>;
     insertCodeAndDatePasswordbyUser:(code: string, date: string, email: string) => Promise<UpdateResult>;
     verificationResetPassword:(userID: number, passwordReset: string) => Promise<UpdateResult>;
-    getGoalByUser:(userID: number) => Promise<any>;
     getImageByUser:(userID:number) => Promise<User>;
 }

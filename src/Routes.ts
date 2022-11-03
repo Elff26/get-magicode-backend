@@ -53,7 +53,6 @@ router.put("/DecreaseNumberOfLifes/:userID", jwtVerify.verify, userController.de
 router.put("/AddUserLife/:userID", jwtVerify.verify, userController.addUserLife);
 router.get("/GetNumberOfLife/:userID", jwtVerify.verify, userController.getNumberOfLifes);
 router.put("/AddMoreUserInfo/:userID", jwtVerify.verify, userController.addMoreUserInfo);
-router.get("/GetGoalByUser/:userID", jwtVerify.verify, userController.getGoalByUser);
 router.put("/SaveProfilePicture/:userID", jwtVerify.verify, userController.saveProfilePicture);
 router.get("/GetProfilePicture/:userID", jwtVerify.verify, userController.getProfilePicture);
 
@@ -74,6 +73,7 @@ router.post('/ChangeTechnology', jwtVerify.verify, technologyController.changeTe
 router.post("/CreateGoal", goalController.createGoal);
 router.post("/AssociateToGoal/:userID", jwtVerify.verify, goalController.associateUserToGoal);
 router.get("/ListAllGoals", jwtVerify.verify, goalController.listAllGoals);
+router.get("/GetGoalByUser/:userID", jwtVerify.verify, goalController.getGoalByUser);
 
 router.post("/CreateClassroom", classroomController.createClassroom);
 router.get("/FindClassroomById/:classroomID", jwtVerify.verify, classroomController.findClassroomById);

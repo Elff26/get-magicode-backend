@@ -56,4 +56,20 @@ export default class GoalController {
             next(error);
         }
     }
+
+    getGoalByUser = async (request: Request, response: Response, next: NextFunction) => {
+        try{
+            const userID = Number(request.params.userID)
+
+            if(isNaN(userID)) {
+                throw new HttpError('ID must be a number', 403);
+            }
+
+            const result = await this.goalService.getGoalByUser(userID);
+    
+            response.status(200).json({ goal: result });
+        }catch(error: any) {
+            next(error)
+        }
+    }
 }

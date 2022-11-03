@@ -18,4 +18,12 @@ export default class GoalRepository implements IGoalRepository{
                                         .select("Goal")
                                         .getMany();
     }
+
+    getGoalByUser = async (userID: number) => {
+        return await this.goalRepository.createQueryBuilder('Goal')
+                                              .leftJoinAndSelect('Goal.users', 'u')
+                                              .select('Goal')
+                                              .where("u.userID = :userID",{userID})
+                                              .getOne();
+    }
 }

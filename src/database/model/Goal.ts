@@ -2,8 +2,7 @@ import {
     Entity, 
     Column, 
     PrimaryGeneratedColumn,
-    OneToMany,
-    JoinColumn
+    OneToMany
 } from "typeorm";
 import IGoalProperties from "../../interfaceType/IGoalProperties";
 
@@ -27,7 +26,6 @@ export class Goal {
     @Column({name: "vl_meta", type: "integer", nullable:false})
     value: number;
 
-    @OneToMany(() => User, (user) => user.userID)
-    @JoinColumn({name: "cd_meta"})
+    @OneToMany(() => User, (user) => user.goal)
     users?: User[];
 }

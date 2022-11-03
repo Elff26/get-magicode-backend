@@ -114,14 +114,6 @@ export default class UserRepository implements IUserRepository{
                                         .execute();
     }
 
-    getGoalByUser = async (userID: number) => {
-        return await this.userRepository.createQueryBuilder('User')
-                                              .leftJoinAndSelect('User.goal', 'g')
-                                              .select(['User.goal','g.value'])
-                                              .where({userID})
-                                              .getRawOne();
-    }
-
     getImageByUser = async (userID:number) => {
         return await this.userRepository.createQueryBuilder('User')
                                         .select(['User.image'])

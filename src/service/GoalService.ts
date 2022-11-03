@@ -32,4 +32,16 @@ export default class GoalService{
         return await this.goalRepository.listAllGoals();
     }
 
+    
+    getGoalByUser = async (userID: number) => {
+        const userExists = await this.userRepository.findUserById(userID);
+        
+        if(!userExists) {
+            throw new HttpError('User not found!', 404);
+        }
+
+        const result = await this.goalRepository.getGoalByUser(userID);
+
+        return result;
+    }
 }

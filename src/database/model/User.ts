@@ -82,7 +82,7 @@ export class User {
     @Column({name: "ds_token_externo", type: "varchar", length: 1000, nullable: true, select: false})
     externalToken?: string;
     
-    @ManyToOne(() => Goal,{eager: true})
+    @ManyToOne(() => Goal, (goal) => goal.users,{eager: true})
     @JoinColumn({name: "cd_meta"})
     goal?: Goal;
 
