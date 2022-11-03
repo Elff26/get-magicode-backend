@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import HttpError from "../exceptions/HttpError";
 import IGoogleCustomDataProperties from "../interfaceType/IGoogleCustomDataProperties";
 import IGoogleMoreInfoUserDataProperties from "../interfaceType/IGoogleMoreInfoUserDataProperties";
@@ -58,9 +59,12 @@ export default class GoogleService {
 
         const userWithStatistics = await this.statisticsService.createUserStatistics(savedUser.userID);
 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+        
         return {
             user: userWithStatistics,
-            token: tokens.access_token
+            externalToken: tokens.access_token,
+            token: token
         };
     }
 
@@ -127,8 +131,8 @@ export default class GoogleService {
         }
     }
 
-    checkGoogleToken = async (accessToken: string, userID: number) => {
-        let result = await this.checkIfCanGetUserInfo(accessToken, userID);
+    checkGoogleToken = async (externalAccessToken: string, userID: number) => {
+        let result = await this.checkIfCanGetUserInfo(externalAccessToken, userID);
 
         if(!result) {
             return false;
@@ -137,15 +141,20 @@ export default class GoogleService {
         return result;
     }
 
-    checkIfCanGetUserInfo = async (accessToken: string, userID: number) => {
+    checkIfCanGetUserInfo = async (externalAccessToken: string, userID: number) => {
         try {
             const userData = await axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json`, {
                 headers: {
-                    Authorization: "Bearer " + accessToken
+                    Authorization: "Bearer " + externalAccessToken
                 }
             });
 
-            return userData.data;
+            var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+
+            return {
+                userData: userData.data,
+                token
+            };
         } catch(error: any) {
             if(error.response.data.error.status === 'UNAUTHENTICATED') {
                 return this.refreshGoogleToken(userID);
@@ -173,7 +182,7 @@ export default class GoogleService {
             userExists.externalToken = result.access_token;
 
             return {
-                accessToken: result.access_token
+                externalAccessToken: result.access_token
             };
         } catch(error: any) {
             throw new HttpError("Error on refresh token, please try again later!", 401);

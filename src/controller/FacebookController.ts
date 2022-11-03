@@ -31,7 +31,7 @@ export default class FacebookController {
 
             const result = await this.facebookService.siginWithFacebook(facebookCode);
     
-            response.status(201).send(result);
+            response.status(201).send({ userInfo: result });
         } catch(error: any) {
             next(error)
         }
@@ -39,15 +39,20 @@ export default class FacebookController {
 
     checkFacebookToken = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const facebookToken: string | string[] | undefined = request.headers.accesstoken;
+            const facebookToken: string | string[] | undefined = request.headers.externalaccesstoken;
+            const userID: number = Number(request.headers.userid);
 
             if(!facebookToken || typeof(facebookToken) !== "string") {
                 throw new HttpError("Token is required!", 400);
             }
+
+            if(isNaN(userID)) {
+                throw new HttpError("ID must be a number!", 400);
+            }
     
-            const result = await this.facebookService.checkFacebookToken(facebookToken);
+            const result = await this.facebookService.checkFacebookToken(facebookToken, userID);
     
-            response.status(200).send(result);
+            response.status(200).send({ userInfo: result });
         } catch(error: any) {
             next(error)
         }

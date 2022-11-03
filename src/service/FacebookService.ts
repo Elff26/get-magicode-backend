@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import HttpError from "../exceptions/HttpError";
 import IFAcebookInspectTokenProperties from "../interfaceType/IFAcebookInspectTokenProperties";
 import IFacebookTokensProperties from "../interfaceType/IFacebookTokensProperties";
@@ -56,9 +57,12 @@ export default class FacebookService {
             savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
         }
 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
+
         return {
             user: savedUser,
-            token: tokens.access_token
+            externalToken: tokens.access_token,
+            token: token
         };
     }
 
@@ -94,8 +98,8 @@ export default class FacebookService {
         return inspectToken;
     }
 
-    getFacebookUserInfo = async (accessToken: string) => {
-        const userData: IFacebookUserDataProperties = (await axios.get(`https://graph.facebook.com/me?fields=email,name,picture&access_token=${accessToken}`)).data;
+    getFacebookUserInfo = async (externalAccessToken: string) => {
+        const userData: IFacebookUserDataProperties = (await axios.get(`https://graph.facebook.com/me?fields=email,name,picture&access_token=${externalAccessToken}`)).data;
 
         if(userData.error) {
             return this.externalAuthLogout();
@@ -104,10 +108,24 @@ export default class FacebookService {
         return userData;
     }
 
-    checkFacebookToken = async (accessToken: string) => {
-        await this.getFacebookUserInfo(accessToken);
+    checkFacebookToken = async (externalAccessToken: string, userID: number) => {
+        let result = await this.checkIfCanGetFacebookUserInfo(externalAccessToken, userID);
 
-        return true;
+        return result;
+    }
+
+    checkIfCanGetFacebookUserInfo = async (externalAccessToken: string, userID: number) => {
+        const userData: IFacebookUserDataProperties = (await axios.get(`https://graph.facebook.com/me?fields=email,name,picture&access_token=${externalAccessToken}`)).data;
+        if(userData.error) {
+            return this.externalAuthLogout();
+        }
+
+        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+
+        return {
+            userData,
+            token
+        };
     }
 
     externalAuthLogout = async () => {

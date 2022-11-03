@@ -31,7 +31,7 @@ export default class GoogleController {
     
             const result = await this.googleService.siginWithGoogle(googleCode);
     
-            response.status(201).send(result);
+            response.status(201).send({ userInfo: result });
         } catch(error: any) {
             next(error)
         }
@@ -39,7 +39,7 @@ export default class GoogleController {
 
     checkGoogleToken = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const googleToken: string | string[] | undefined = request.headers.accesstoken;
+            const googleToken: string | string[] | undefined = request.headers.externalaccesstoken;
             const userID: number = Number(request.headers.userid);
 
             if(!googleToken || typeof(googleToken) !== "string") {
@@ -52,7 +52,7 @@ export default class GoogleController {
     
             const result = await this.googleService.checkGoogleToken(googleToken, userID);
 
-            response.status(200).send(result);
+            response.status(200).send({ userInfo: result });
         } catch(error: any) {
             next(error)
         }
