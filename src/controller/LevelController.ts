@@ -1,14 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
-import IGoalProperties from "../interfaceType/IGoalProperties"
 import ILevelProperties from "../interfaceType/ILevelProperties";
-import GoalRepository from "../repository/GoalRepository";
-import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
-import IUserRepository from "../repository/interface/IUserRepository";
 import LevelRepository from "../repository/LevelRepository";
-import UserRepository from "../repository/UserRepository";
-import GoalService from "../service/GoalService";
 import LevelService from "../service/LevelService";
 
 export default class LevelController {

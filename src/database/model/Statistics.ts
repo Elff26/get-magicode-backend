@@ -64,6 +64,14 @@ export class Statistics {
     @JoinColumn({name: "cd_nivel"})
     level: Level;
 
+    initStatistics = (level: Level) => {
+        this.level = level;
+        this.currentXp = 0;
+        this.totalXp = 0;
+        this.dayXp = 0;
+        this.monthXp = 0;
+    }
+
     addExperienceToUser = (xpGain: number) => {
         const total = this.currentXp + xpGain;
         const rest = total - 150;

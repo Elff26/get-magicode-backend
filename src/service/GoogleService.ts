@@ -6,6 +6,8 @@ import IGoogleMoreInfoUserDataProperties from "../interfaceType/IGoogleMoreInfoU
 import IGoogleTokensProperties from "../interfaceType/IGoogleTokensProperties";
 import IGoogleUserDataProperties from "../interfaceType/IGoogleUserDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
+import GoalRepository from "../repository/GoalRepository";
+import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -15,13 +17,15 @@ export default class GoogleService {
     private userRepository: IUserRepository;
     private statisticsRepository: IStatisticsRepository;
     private levelRepository: ILevelRepository;
+    private goalRepository: IGoalRepository;
     private statisticsService: StatisticsService;
 
-    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository){
+    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository, goalRepository: IGoalRepository){
         this.userRepository = userRepository;
         this.statisticsRepository = statisticsRepository;
         this.levelRepository = levelRepository;
-        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
+        this.goalRepository = goalRepository;
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository, this.goalRepository);
     }
 
     siginWithGoogle = async (googleCode: string) => {
@@ -51,18 +55,20 @@ export default class GoogleService {
             
         userExists.externalToken = tokens.refresh_token;
 
-        const savedUser = await this.userRepository.save(userExists);
+        let savedUser = await this.userRepository.save(userExists);
 
         if(!savedUser || !savedUser.userID) {
             throw new HttpError("Error when trying to create user. Try again later!", 500);
         }
 
-        const userWithStatistics = await this.statisticsService.createUserStatistics(savedUser.userID);
+        if(!savedUser.statistics) {
+            savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
+        }
 
         var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
         
         return {
-            user: userWithStatistics,
+            user: savedUser,
             externalToken: tokens.access_token,
             token: token
         };

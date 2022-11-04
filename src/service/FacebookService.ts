@@ -5,6 +5,7 @@ import IFAcebookInspectTokenProperties from "../interfaceType/IFAcebookInspectTo
 import IFacebookTokensProperties from "../interfaceType/IFacebookTokensProperties";
 import IFacebookUserDataProperties from "../interfaceType/IFacebookUserDataProperties";
 import IUserProperties from "../interfaceType/IUserProperties";
+import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -15,13 +16,15 @@ export default class FacebookService {
     private userRepository: IUserRepository;
     private statisticsRepository: IStatisticsRepository;
     private levelRepository: ILevelRepository;
+    private goalRepository: IGoalRepository;
     private statisticsService: StatisticsService;
 
-    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository){
+    constructor(userRepository: IUserRepository, statisticsRepository: IStatisticsRepository, levelRepository: ILevelRepository, goalRepository: IGoalRepository){
         this.userRepository = userRepository;
         this.statisticsRepository = statisticsRepository;
         this.levelRepository = levelRepository;
-        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
+        this.goalRepository = goalRepository;
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository, this.goalRepository);
     }
 
     siginWithFacebook = async (facebookCode: string) => {
@@ -57,7 +60,7 @@ export default class FacebookService {
             savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
         }
 
-        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, {expiresIn: '1h'}); 
 
         return {
             user: savedUser,

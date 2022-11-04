@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
+import GoalRepository from "../repository/GoalRepository";
+import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -13,13 +15,15 @@ export default class StatisticsController {
     private statisticsRepository: IStatisticsRepository;
     private userRepository: IUserRepository;
     private levelRepository: ILevelRepository;
+    private goalRepository: IGoalRepository;
 
     constructor() {
         this.statisticsRepository = new StatisticsRepository();
         this.userRepository = new UserRepository();
         this.levelRepository = new LevelRepository();
+        this.goalRepository = new GoalRepository();
 
-        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository);
+        this.statisticsService = new StatisticsService(this.statisticsRepository, this.userRepository, this.levelRepository, this.goalRepository);
     }
 
     createUserStatistics = async (request: Request, response: Response, next: NextFunction) => {

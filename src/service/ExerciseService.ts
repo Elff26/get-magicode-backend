@@ -1,15 +1,8 @@
-import axios from "axios";
-import { IsNull } from "typeorm";
-import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
-import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
-import ILevelRepository from "../repository/interface/ILevelRepository";
-import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
-import LanguageCodeDictionary from "../utils/LanguageCodeDictionary";
 import JDoodleService from "./JDoodleService";
 
 export default class ExerciseService{
@@ -56,6 +49,10 @@ export default class ExerciseService{
         }
 
         let userResponse = await this.jdoodleService.sendCode(userCode, language);
+
+        console.log(">>>>>>>>>>>>>>")
+        console.log(">>>>>>>>>>>>>> ", challengeExists.exercises[0].expectedOutput, userResponse.output, userResponse)
+        console.log(">>>>>>>>>>>>>>")
 
         if(challengeExists.exercises[0].expectedOutput === userResponse.output) {
             userResponse = {

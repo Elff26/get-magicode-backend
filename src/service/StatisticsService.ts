@@ -1,6 +1,7 @@
 import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
 import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
+import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -9,11 +10,13 @@ export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
     private levelRepository: ILevelRepository;
     private userRepository: IUserRepository;
+    private goalRepository: IGoalRepository;
 
-    constructor(statisticsRepository: IStatisticsRepository, userRepository: IUserRepository, levelRepository: ILevelRepository){
+    constructor(statisticsRepository: IStatisticsRepository, userRepository: IUserRepository, levelRepository: ILevelRepository, goalRepository: IGoalRepository){
         this.statisticsRepository = statisticsRepository;
         this.levelRepository = levelRepository;
         this.userRepository = userRepository;
+        this.goalRepository = goalRepository;
     }
 
     createUserStatistics = async (userID: number) => {
@@ -69,17 +72,16 @@ export default class StatisticsService {
                 throw new HttpError('There is no level!', 404);
             }
 
-            statisticsExists = new Statistics();
-            statisticsExists.level = level;
-            statisticsExists.currentXp = 0;
-            statisticsExists.totalXp = 0;
-            statisticsExists.dayXp = 0;
-            statisticsExists.monthXp = 0;
+            statisticsExists.initStatistics(level);
         }
 
         statisticsExists.addExperienceToUser(xpGained);
 
+        const levelUp = await this.levelRepository.findLevelForUser(statisticsExists.totalXp);
+        statisticsExists.level = levelUp;
+
         const savedStatistics = await this.statisticsRepository.saveOrUpdate(statisticsExists);
+
         userExists.statistics = savedStatistics;
 
         const result = await this.userRepository.save(userExists);
@@ -154,7 +156,7 @@ export default class StatisticsService {
             throw new HttpError('User not found!', 404);
         }
 
-        const goalUser = await this.userRepository.getGoalByUser(userID);
+        const goalUser = await this.goalRepository.getGoalByUser(userID);
         const statisticsExists = await this.statisticsRepository.findStatisticsByUser(userID);
 
         if(!statisticsExists) {
@@ -162,7 +164,7 @@ export default class StatisticsService {
         }
 
         //TODO: PROCEDURE PARA SETAR FLAG COMO FALSE TODO FIM DE DIA
-        if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.g_vl_meta){
+        if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.value){
             this.addExperienceToUser(userID, 10);
             statisticsExists.completedGoal = true;
 

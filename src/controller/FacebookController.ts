@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../exceptions/HttpError";
+import GoalRepository from "../repository/GoalRepository";
+import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
@@ -12,13 +14,15 @@ export default class FacebookController {
     private userRepository: IUserRepository;
     private facebookService: FacebookService;
     private statisticsRepository: IStatisticsRepository;
+    private goalRepository: IGoalRepository;
     private levelRepository: ILevelRepository;
 
     constructor() {
         this.userRepository = new UserRepository();
         this.levelRepository = new LevelRepository();
         this.statisticsRepository = new StatisticsRepository();
-        this.facebookService = new FacebookService(this.userRepository, this.statisticsRepository, this.levelRepository);
+        this.goalRepository = new GoalRepository();
+        this.facebookService = new FacebookService(this.userRepository, this.statisticsRepository, this.levelRepository, this.goalRepository);
     }
 
     siginWithFacebook = async (request: Request, response: Response, next: NextFunction) => {
