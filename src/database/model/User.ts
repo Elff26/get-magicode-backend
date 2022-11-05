@@ -64,7 +64,7 @@ export class User {
     @Column({name: "nr_vidas", type: "integer", nullable: false, default: 5})
     numberOfLifes: number;
 
-    @UpdateDateColumn({name: "ultima_att_nr_vidas", })
+    @UpdateDateColumn({name: "ultima_att_nr_vidas" })
     lastUpdateNumberOfLifes?: Date;
 
     @CreateDateColumn({name: "dt_criacao"})
