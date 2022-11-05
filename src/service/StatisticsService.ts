@@ -186,7 +186,11 @@ export default class StatisticsService {
 
     clearUserXpMonth = async () => {
         try {
-            return await this.statisticsRepository.clearUserXpMonth();
+            let diaAtual = new Date().getDate();
+            
+            if(diaAtual === 1) {
+                return await this.statisticsRepository.clearUserXpMonth();
+            }
         } catch(e){
             console.log(e)
         }
