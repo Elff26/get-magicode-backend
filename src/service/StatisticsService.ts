@@ -5,6 +5,7 @@ import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import DateUtils from "../utils/DateUtils";
 
 export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
@@ -75,7 +76,7 @@ export default class StatisticsService {
             statisticsExists.initStatistics(level);
         }
 
-        statisticsExists.addExperienceToUser(xpGained);
+        statisticsExists.addExperienceToUser(xpGained, statisticsExists.level);
 
         const levelUp = await this.levelRepository.findLevelForUser(statisticsExists.totalXp);
         statisticsExists.level = levelUp;
@@ -163,13 +164,25 @@ export default class StatisticsService {
             throw new HttpError('Estatistics not found!', 404);
         }
 
-        //TODO: PROCEDURE PARA SETAR FLAG COMO FALSE TODO FIM DE DIA
-        if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.value){
+        if(statisticsExists.dateCompletedGoal !== null) {
+            let dataAtual = new Date().setHours(0, 0, 0);
+            let dataCompleto = new DateUtils().databaseDateConvertToEua(statisticsExists.dateCompletedGoal);
+
+            if(statisticsExists.completedGoal && dataCompleto < dataAtual) {
+                statisticsExists.dayXp = 0;
+                statisticsExists.completedGoal = false;
+            }
+        }
+
+        if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.value) {
             this.addExperienceToUser(userID, 10);
             statisticsExists.completedGoal = true;
+            statisticsExists.dateCompletedGoal = new Date();
 
             return await this.statisticsRepository.saveOrUpdate(statisticsExists);
         }
+
+        return await this.statisticsRepository.saveOrUpdate(statisticsExists);
     }
 }
 

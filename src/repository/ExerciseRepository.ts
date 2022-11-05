@@ -31,7 +31,6 @@ export default class ExerciseRepository implements IExerciseRepository{
     }
 
     randomizeExercisesIDs = async (technologyID: number) => {
-        // NO POSTGRES É RAND(), LEMBRAR DE MUDAR
         let exerciseIDs = await this.exerciseRepository.createQueryBuilder('Exercise')
                                             .select('Exercise.exerciseID')
                                             .leftJoinAndSelect('Exercise.challenge', 'c')

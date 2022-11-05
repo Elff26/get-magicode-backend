@@ -13,6 +13,7 @@ export default interface IStatisticsProperties {
     completedGoal: boolean;
     user: User;
     level: Level;
+    dateCompletedGoal?: Date;
 
     addExperienceToUser: () => void;
 }

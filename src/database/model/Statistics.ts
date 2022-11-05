@@ -57,6 +57,9 @@ export class Statistics {
     @Column({name: "meta_completa", type: "boolean", nullable: false, default: false})
     completedGoal: boolean;
 
+    @Column({name: "dt_meta_completa", type: "date", nullable: true})
+    dateCompletedGoal?: Date;
+
     @OneToOne(() => User, (user) => user.statistics)
     user: User;
 
@@ -72,11 +75,11 @@ export class Statistics {
         this.monthXp = 0;
     }
 
-    addExperienceToUser = (xpGain: number) => {
+    addExperienceToUser = (xpGain: number, level: Level) => {
         const total = this.currentXp + xpGain;
-        const rest = total - 150;
+        const rest = total - level.valueXp;
 
-        if(total >= 150){
+        if(total >= level.valueXp){
             this.currentXp = rest;
         }else{
             this.currentXp += xpGain;
