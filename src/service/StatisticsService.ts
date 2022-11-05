@@ -1,6 +1,5 @@
 import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
-import IStatisticsProperties from "../interfaceType/IStatisticsProperties";
 import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
@@ -183,6 +182,14 @@ export default class StatisticsService {
         }
 
         return await this.statisticsRepository.saveOrUpdate(statisticsExists);
+    }
+
+    clearUserXpMonth = async () => {
+        try {
+            return await this.statisticsRepository.clearUserXpMonth();
+        } catch(e){
+            console.log(e)
+        }
     }
 }
 

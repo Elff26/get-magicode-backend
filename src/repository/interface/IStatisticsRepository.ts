@@ -1,3 +1,4 @@
+import { UpdateResult } from "typeorm";
 import { Statistics } from "../../database/model/Statistics";
 
 export default interface IStatisticsRepository {
@@ -7,4 +8,5 @@ export default interface IStatisticsRepository {
     getHigherXP:(type: string) => Promise<Statistics[]>;
     getCurrentXp:(userID: number) => Promise<any>;
     getClassroomCompletedByUser:(userID: number) => Promise<any>;
+    clearUserXpMonth: () => Promise<UpdateResult>;
 }

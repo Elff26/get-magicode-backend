@@ -50,10 +50,6 @@ export default class ExerciseService{
 
         let userResponse = await this.jdoodleService.sendCode(userCode, language);
 
-        console.log(">>>>>>>>>>>>>>")
-        console.log(">>>>>>>>>>>>>> ", challengeExists.exercises[0].expectedOutput, userResponse.output, userResponse)
-        console.log(">>>>>>>>>>>>>>")
-
         if(challengeExists.exercises[0].expectedOutput === userResponse.output) {
             userResponse = {
                 ...userResponse,

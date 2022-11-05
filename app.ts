@@ -10,6 +10,7 @@ import cors from "cors";
 import routes from './src/Routes'
 import errorMiddleware from "./src/middleware/ErrorMiddleware";
 import SocketIO from "./src/utils/SocketIO";
+import Cron from './src/utils/Cron';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,8 @@ app.use(cors());
 app.use(json());
 app.use(routes);
 app.use(errorMiddleware);
+
+new Cron().clearUserXpDaily();
 
 const server = http.createServer(app);
 

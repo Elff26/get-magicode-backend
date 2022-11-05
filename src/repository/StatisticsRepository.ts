@@ -62,4 +62,13 @@ export default class StatisticsRepository implements IStatisticsRepository {
                                               .where("Statistics.user = :userID",{userID})
                                               .getRawOne();
     }
+
+    clearUserXpMonth = async () => {
+        return await this.statisticsRepository.createQueryBuilder('Statistics')
+                                        .update()
+                                        .set({
+                                            monthXp: 0
+                                        })
+                                        .execute();
+    }
 }

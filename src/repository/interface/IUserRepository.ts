@@ -1,5 +1,4 @@
 import { DeleteResult, UpdateResult } from "typeorm";
-import { Goal } from "../../database/model/Goal";
 import { User } from "../../database/model/User";
 
 export default interface IUserRepository{
