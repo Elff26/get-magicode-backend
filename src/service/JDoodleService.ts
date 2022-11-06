@@ -6,9 +6,10 @@ import LanguageCodeDictionary from "../utils/LanguageCodeDictionary";
 export default class JDoodleService {
     constructor() {}
 
-    sendCode = async (userCode: string, language: string) => {
-        let responseData: IJdoodleResponseCodeProperties = (await axios.post(`https://api.jdoodle.com/v1/execute`, {
+    sendCode = async (userCode: string, language: string, input: string) => {
+            let responseData: IJdoodleResponseCodeProperties = (await axios.post(`https://api.jdoodle.com/v1/execute`, {
             script : userCode,
+            stdin: input,
             language: LanguageCodeDictionary[language],
             versionIndex: "0",
             clientId: process.env.CLIENTE_ID,
