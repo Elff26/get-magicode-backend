@@ -8,7 +8,7 @@ export default interface IUserProperties {
     name: string;
     birthday?: string;
     email: string;
-    image?: Buffer;
+    image?: Buffer | string;
     phone?: string;
     password: string;
     numberOfLifes: number

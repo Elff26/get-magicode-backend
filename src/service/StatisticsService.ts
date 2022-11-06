@@ -102,7 +102,17 @@ export default class StatisticsService {
     }
 
     getHigherXP = async (type: string) => {
-        return await this.statisticsRepository.getHigherXP(type);
+        let usersHigherXp = await this.statisticsRepository.getHigherXP(type);
+
+        let usersHigherXpWithImage = usersHigherXp.map((statistics) => {
+            if(statistics.user.image) {
+                statistics.user.image = Buffer.from(statistics.user.image).toString('base64');
+            }
+
+            return statistics;
+        });
+
+        return usersHigherXpWithImage;
     }
 
     counter = async (userID: number, type:string, numberOfHits: number, numberOfClasses: number, numberOfMistakes: number) => {

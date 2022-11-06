@@ -53,7 +53,7 @@ export class User {
     email: string;
 
     @Column({name: "ds_img_usuario", type: "bytea", nullable: true, select: false})
-    image?: Buffer;
+    image?: Buffer | string;
 
     @Column({name: "nr_telefone", type: "varchar", length: 11, unique: true, nullable: true})
     phone?: string;
