@@ -19,6 +19,9 @@ export default class ChallengeRepository implements IChallengeRepository {
                 challengeID: 'ASC',
                 classes: {
                     classroomID: 'asc'
+                },
+                exercises: {
+                    exerciseID: 'asc'
                 }
             }
         });

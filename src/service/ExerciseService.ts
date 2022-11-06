@@ -1,10 +1,11 @@
 import HttpError from "../exceptions/HttpError";
 import IExerciseProperties from "../interfaceType/IExerciseProperties";
-import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
+import IUserCodeReturn from "../interfaceType/IUserCodeReturn";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import JDoodleService from "./JDoodleService";
+import validJson from '../utils/ValidJson';
 
 export default class ExerciseService{
     private exerciseRepository: IExerciseRepository;
@@ -54,30 +55,42 @@ export default class ExerciseService{
         if(!inputs)
            inputs = [""];
 
-        var min = 0;
-        var userResponseToReturn: IJdoodleResponseCodeProperties[] = []; 
-        let outputs = JSON.parse(challengeExists.exercises[0].expectedOutput);
+        var min = 0, isCorrect = 0;
+        var userResponseToReturn: IUserCodeReturn = {
+            isCorrect: false,
+            jdoodleResponse: []
+        }; 
 
-        do{
-            if(inputs.length == 0)
-                inputs.push("");
+        let outputs: string[] | number[];
 
+        if(validJson(challengeExists.exercises[0].expectedOutput)) {
+            outputs = JSON.parse(challengeExists.exercises[0].expectedOutput);
+        } else {
+            outputs = [challengeExists.exercises[0].expectedOutput];
+        }
+
+        do {
             let userResponse = await this.jdoodleService.sendCode(userCode, language, inputs[min]);
            
-            if(outputs[min] === Number.parseInt(userResponse.output)) {
-                userResponseToReturn.push({
+            if(outputs[min].toString() === userResponse.output) {
+                userResponseToReturn.jdoodleResponse.push({
                     ...userResponse,
                     isCorrect: true
-                })
+                });
+
+                isCorrect++;
             } else {
-                userResponseToReturn.push({
+                userResponseToReturn.jdoodleResponse.push({
                     ...userResponse,
                     isCorrect: false,
                     message: "Incorrect code or incorrect output format"
                 })
             }
+
             min++;
-        }while(min < inputs.length)
+        } while(min < inputs.length);
+
+        userResponseToReturn.isCorrect = isCorrect === outputs.length
 
         return userResponseToReturn;
     }
