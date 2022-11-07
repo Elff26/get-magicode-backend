@@ -104,7 +104,7 @@ router.get("/FindAlternativeByExercise/:exerciseID", alternativeController.findA
 router.get("/AlternativeIsCorrect/:alternativeID", alternativeController.alternativeIsCorrect);
 
 router.post('/CreateUserStatistics/:userID', statisticsController.createUserStatistics);
-router.post('/AddExperienceToUser/:userID', jwtVerify.verify, statisticsController.addExperienceToUser);
+router.post('/AddExperienceToUser/:userID', statisticsController.addExperienceToUser);
 router.get('/GetMonthXpByUser/:userID', jwtVerify.verify, statisticsController.getMonthXpByUser);
 router.get('/FindStatisticsByUser/:userID', jwtVerify.verify,  statisticsController.findStatisticsByUser);
 router.get('/GetHigherXp/:type', statisticsController.getHigherXP);

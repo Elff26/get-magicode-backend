@@ -76,13 +76,16 @@ export default class StatisticsService {
             statisticsExists.initStatistics(level);
         }
 
+        let oldCurrentXp = statisticsExists.currentXp + xpGained;
+
         statisticsExists.addExperienceToUser(xpGained, statisticsExists.level);
 
-        const levelUp = await this.levelRepository.findLevelForUser(statisticsExists.totalXp);
+        const levelUp = await this.levelRepository.findLevelForUser(oldCurrentXp);
         
         if(levelUp) {
             statisticsExists.level = levelUp;
         } 
+
 
         const savedStatistics = await this.statisticsRepository.saveOrUpdate(statisticsExists);
 
