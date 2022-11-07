@@ -130,8 +130,18 @@ export default class UserService{
         let differenceInMinutes = Math.round(difference / 60000)
 
         if(differenceInMinutes >= 20) {
-            userExists.numberOfLifes += 1;
-            userExists.lastUpdateNumberOfLifes = new Date();
+            let livesToAdd = Math.floor(differenceInMinutes / 20);
+
+            userExists.numberOfLifes += livesToAdd;
+
+            if(userExists.numberOfLifes > 5) {
+                userExists.numberOfLifes = 5
+            }
+
+            let date = new Date();
+            date.setMinutes(new Date().getMinutes() - (differenceInMinutes % 20))
+
+            userExists.lastUpdateNumberOfLifes = date;
         }
 
         return await this.userRepository.updateUser(userExists)

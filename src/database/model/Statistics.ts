@@ -51,7 +51,7 @@ export class Statistics {
     @Column({name: "nr_acertos", type: "integer", default: 0})
     numberOfHits: number;
 
-    @Column({name: "nr_error", type: "integer", default: 0})
+    @Column({name: "nr_erros", type: "integer", default: 0})
     numberOfMistakes: number;
 
     @Column({name: "meta_completa", type: "boolean", nullable: false, default: false})

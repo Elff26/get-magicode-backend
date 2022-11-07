@@ -1,5 +1,6 @@
 import { Statistics } from "../database/model/Statistics";
 import HttpError from "../exceptions/HttpError";
+import ICompletedGoalProperties from "../interfaceType/ICompletedGoalProperties";
 import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
@@ -176,6 +177,10 @@ export default class StatisticsService {
             throw new HttpError('Estatistics not found!', 404);
         }
 
+        let completedGoal: ICompletedGoalProperties = {
+            isComplete: false
+        };
+
         if(statisticsExists.dateCompletedGoal !== null) {
             let dataAtual = new Date().setHours(0, 0, 0);
             let dataCompleto = new DateUtils().databaseDateConvertToEua(statisticsExists.dateCompletedGoal);
@@ -187,14 +192,21 @@ export default class StatisticsService {
         }
 
         if(!statisticsExists.completedGoal && statisticsExists.dayXp >= goalUser.value) {
-            this.addExperienceToUser(userID, 10);
+            this.addExperienceToUser(userID, Math.floor(goalUser.value / 5));
             statisticsExists.completedGoal = true;
             statisticsExists.dateCompletedGoal = new Date();
 
-            return await this.statisticsRepository.saveOrUpdate(statisticsExists);
+            completedGoal.isComplete = true;
+            completedGoal.xp = Math.floor(goalUser.value / 5);
+
+            await this.statisticsRepository.saveOrUpdate(statisticsExists);
+
+            return completedGoal;
         }
 
-        return await this.statisticsRepository.saveOrUpdate(statisticsExists);
+        await this.statisticsRepository.saveOrUpdate(statisticsExists);
+
+        return completedGoal;
     }
 
     clearUserXpMonth = async () => {
