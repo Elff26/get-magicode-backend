@@ -37,6 +37,7 @@ export default class ChallengeRepository implements IChallengeRepository {
                                             .leftJoinAndSelect('challenge.classes', 'c')
                                             .leftJoinAndSelect('challenge.difficulty', 'd')
                                             .where('t.technologyID = :technologyID and d.difficultyID = :difficultyID', {technologyID, difficultyID})
+                                            .orderBy('challenge.challengeID', 'ASC')
                                             .getMany();
     }
 
