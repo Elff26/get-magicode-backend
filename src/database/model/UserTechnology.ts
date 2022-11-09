@@ -26,7 +26,9 @@ export class UserTechnology {
     })
     userTechnologyID: string;
 
-    @ManyToOne(() => User, (user) => user.technologies)
+    @ManyToOne(() => User, (user) => user.technologies, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn({name: 'cd_usuario'})
     user: User;
 

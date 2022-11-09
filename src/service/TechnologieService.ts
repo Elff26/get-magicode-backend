@@ -52,7 +52,7 @@ export default class TechnologyService{
         technologies[0].learning = true;
         
         userExists.technologies = technologies;
-        
+
         await this.userRepository.save(userExists);
 
         return this.userRepository.findUserById(userExists.userID);

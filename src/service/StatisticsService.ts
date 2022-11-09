@@ -167,6 +167,10 @@ export default class StatisticsService {
     }
 
     completedGoal = async (userID: number) => {
+        let completedGoal: ICompletedGoalProperties = {
+            isComplete: false
+        };
+
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
@@ -174,15 +178,16 @@ export default class StatisticsService {
         }
 
         const goalUser = await this.goalRepository.getGoalByUser(userID);
+
+        if(!goalUser) {
+            return completedGoal;
+        }
+
         const statisticsExists = await this.statisticsRepository.findStatisticsByUser(userID);
 
         if(!statisticsExists) {
             throw new HttpError('Estatistics not found!', 404);
         }
-
-        let completedGoal: ICompletedGoalProperties = {
-            isComplete: false
-        };
 
         if(statisticsExists.dateCompletedGoal !== null) {
             let dataAtual = new Date().setHours(0, 0, 0);

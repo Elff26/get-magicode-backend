@@ -24,7 +24,9 @@ export class UserAchievement {
     })
     userAchievementID?: number;
 
-    @ManyToOne(() => User, (user) => user.technologies)
+    @ManyToOne(() => User, (user) => user.achievements, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn({name: 'cd_usuario'})
     user: User;
 

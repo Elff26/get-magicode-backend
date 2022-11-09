@@ -32,13 +32,20 @@ export default class AuthService {
     }
 
     changePassword = async (userID: number, password: string, newPassword: string) => {
-        const userExists = await this.userRepository.findUserByIdAndPassword(userID, password);
+        const userExists = await this.userRepository.findUserWithPasswordById(userID);
 
         if(!userExists) {
+            throw new HttpError('Invalid user!', 400);
+        }
+
+        let passwordEquals = await Crypt.decrypt(password, userExists.password);
+
+        if(!passwordEquals) {
             throw new HttpError('Invalid password!', 400);
         }
 
-        userExists.password = newPassword;
+        let encryptedPassword = await Crypt.encrypt(newPassword);
+        userExists.password = encryptedPassword;
 
         return this.userRepository.updateUser(userExists);
     }

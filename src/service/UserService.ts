@@ -46,8 +46,11 @@ export default class UserService{
         } 
 
         user.userID = userExists.userID;
-        let encryptedPassword = await Crypt.encrypt(user.password);
-        user.password = encryptedPassword;
+
+        if(user.password) {
+            let encryptedPassword = await Crypt.encrypt(user.password);
+            user.password = encryptedPassword;
+        }
 
         return this.userRepository.updateUser(user);
     }

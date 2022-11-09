@@ -25,7 +25,9 @@ export class UserChallenge {
     })
     userChallengeID?: number;
 
-    @ManyToOne(() => User, (user) => user.technologies)
+    @ManyToOne(() => User, (user) => user.challenges, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn({name: 'cd_usuario'})
     user: User;
 
