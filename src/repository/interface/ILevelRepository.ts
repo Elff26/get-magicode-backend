@@ -5,5 +5,5 @@ export default interface ILevelRepository{
     listAllLevels:() => Promise<Level[]>;
     findLevelById: (levelID: number) => Promise<Level | null>;
     findFirstLevel: () => Promise<Level | null>;
-    findLevelForUser: (userXp: number) => Promise<Level>;
+    findLevelForUser: (userXp: number, levelNumber: number) => Promise<Level>;
 }

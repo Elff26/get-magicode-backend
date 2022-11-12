@@ -29,9 +29,10 @@ export default class LevelRepository implements ILevelRepository{
                                             .getOne();
     }
 
-    findLevelForUser = async (userXp: number) => {
+    findLevelForUser = async (userXp: number, levelNumber: number) => {
         return await this.levelRepository.createQueryBuilder("Level")
                                             .where(':userXp < Level.valueXp', {userXp})
+                                            .andWhere('Level.levelNumber >= :levelNumber', {levelNumber})
                                             .orderBy('Level.valueXp', 'ASC')
                                             .getOne();
     }

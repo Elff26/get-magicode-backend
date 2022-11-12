@@ -155,18 +155,16 @@ export default class ChallengeService {
         }
 
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
-        const level = await this.levelRepository.findFirstLevel();
-
-        if(!level) {
-            throw new HttpError('There is no level!', 404);
-        }
 
         if(!statisticsExists) {
-            let statistics = new Statistics();
-            statistics.level = level;
-            statistics.user = userExists;
+            const level = await this.levelRepository.findFirstLevel();
 
-            statisticsExists = await this.statisticsRepository.saveOrUpdate(statistics);
+            if(!level) {
+                throw new HttpError('There is no level!', 404);
+            }
+
+            let statistics = new Statistics();
+            statistics.initStatistics(level);
         }
 
         if(!userChallengeExists.completed) {

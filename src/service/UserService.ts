@@ -129,8 +129,13 @@ export default class UserService{
             throw new HttpError('User owns all lives', 202)
         }
 
+        if(!userExists.lastUpdateNumberOfLifes) {
+            userExists.numberOfLifes += 1;
+            return await this.userRepository.updateUser(userExists);
+        }
+
         let difference = Math.abs(userExists.lastUpdateNumberOfLifes.getTime() - new Date().getTime());
-        let differenceInMinutes = Math.round(difference / 60000)
+        let differenceInMinutes = Math.round(difference / 60000);
 
         if(differenceInMinutes >= 20) {
             let livesToAdd = Math.floor(differenceInMinutes / 20);
