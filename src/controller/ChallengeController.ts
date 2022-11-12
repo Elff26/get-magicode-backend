@@ -16,6 +16,7 @@ import TechnologyRepository from "../repository/TechnologieRepository";
 import UserChallengeRepository from "../repository/UserChallengeRepository";
 import UserRepository from "../repository/UserRepository";
 import ChallengeService from "../service/ChallengeService";
+import Messages from "../utils/Messages";
 
 export default class ChallengeController {
     private challengeRepository: IChallengeRepository;
@@ -61,7 +62,7 @@ export default class ChallengeController {
         try{
             const challengeID = Number(request.params.challengeID);
             if (isNaN(challengeID)){
-                throw new HttpError('ID must be a number !', 403);
+                throw new HttpError(Messages.CHALLENGE_ID_INCORRECT_TYPE, 403);
             }
             const result = await this.challengeService.findChallengeByID(Number(request.params.challengeID));
 
@@ -77,11 +78,11 @@ export default class ChallengeController {
             const difficultyID = Number(request.params.difficultyID);
 
             if (isNaN(technologyID)){
-                throw new HttpError('ID must be a number !', 403);
+                throw new HttpError(Messages.TECHNOLOGY_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(difficultyID)){
-                throw new HttpError('ID must be a number !', 403);
+                throw new HttpError(Messages.DIFFICULTY_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.challengeService.findChallengeByTechnologyAndDifficulty(technologyID, difficultyID);
@@ -99,15 +100,15 @@ export default class ChallengeController {
             const difficultyID = Number(request.params.difficultyID);
 
             if (isNaN(technologyID)){
-                throw new HttpError('Technolgy ID must be a number !', 403);
+                throw new HttpError(Messages.TECHNOLOGY_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(userID)){
-                throw new HttpError('User ID must be a number !', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(difficultyID)){
-                throw new HttpError('ID must be a number !', 403);
+                throw new HttpError(Messages.DIFFICULTY_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.challengeService.findUserChallengeByTechnologyAndDifficulty(userID, technologyID, difficultyID);
@@ -124,11 +125,11 @@ export default class ChallengeController {
             const userID = Number(request.params.userID);
 
             if (isNaN(challengeID)){
-                throw new HttpError('Challenge ID must be a number !', 403);
+                throw new HttpError(Messages.CHALLENGE_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(userID)){
-                throw new HttpError('User ID must be a number !', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.challengeService.initChallenge(challengeID, userID);
@@ -145,11 +146,11 @@ export default class ChallengeController {
             const userID = Number(request.params.userID);
 
             if (isNaN(challengeID)){
-                throw new HttpError('Challenge ID must be a number !', 403);
+                throw new HttpError(Messages.CHALLENGE_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(userID)){
-                throw new HttpError('User ID must be a number !', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.challengeService.finishChallenge(challengeID, userID);
@@ -165,11 +166,11 @@ export default class ChallengeController {
             const exercises = request.body.exercises;
 
             if(!exercises) {
-                throw new HttpError('IDs are required', 403);
+                throw new HttpError(Messages.EXERCISES_IDS_REQUIRED, 403);
             }
 
             if(exercises.length <= 0) {
-                throw new HttpError('IDs are required', 403);
+                throw new HttpError(Messages.EXERCISES_IDS_REQUIRED, 403);
             }
 
             const result = await this.challengeService.findChallengesByExercisesIds(exercises);

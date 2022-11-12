@@ -6,6 +6,7 @@ import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import JDoodleService from "./JDoodleService";
 import validJson from '../utils/ValidJson';
+import Messages from "../utils/Messages";
 
 export default class ExerciseService{
     private exerciseRepository: IExerciseRepository;
@@ -31,7 +32,7 @@ export default class ExerciseService{
         const exerciseExists = await this.exerciseRepository.findExerciseById(exerciseID);
 
         if(!exerciseExists) {
-            throw new HttpError('Exercise not found!', 404);
+            throw new HttpError(Messages.EXERCISE_NOT_FOUND, 404);
         }
 
         return exerciseExists;
@@ -41,13 +42,13 @@ export default class ExerciseService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const [challengeExists] = await this.challangeRepository.findChallengesByExercisesIds([exerciseID]);
 
         if(!challengeExists) {
-            throw new HttpError('Challenge not found!', 404);
+            throw new HttpError(Messages.CHALLENGE_NOT_FOUND, 404);
         }
 
         let inputs:string[] = JSON.parse(challengeExists.exercises[0].description).input;

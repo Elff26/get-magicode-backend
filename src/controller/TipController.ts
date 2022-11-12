@@ -4,6 +4,7 @@ import ITipProperties from "../interfaceType/ITipProperties";
 import ITipRepository from "../repository/interface/ITipRepository";
 import TipRepository from "../repository/TipRepository";
 import TipService from "../service/TipService";
+import Messages from "../utils/Messages";
 
 export default class TipController {
     private tipService: TipService;
@@ -32,7 +33,7 @@ export default class TipController {
             const exerciseID = Number(request.params.exerciseID);
 
             if(isNaN(exerciseID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.EXERCISE_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.tipService.findTipByExercise(exerciseID);

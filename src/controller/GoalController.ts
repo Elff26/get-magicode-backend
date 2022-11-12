@@ -6,6 +6,7 @@ import IGoalRepository from "../repository/interface/IGoalRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import GoalService from "../service/GoalService";
+import Messages from "../utils/Messages";
 
 export default class GoalController {
     private goalService: GoalService;
@@ -36,7 +37,7 @@ export default class GoalController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.goalService.associateUserToGoal(userID, goal);
@@ -62,7 +63,7 @@ export default class GoalController {
             const userID = Number(request.params.userID)
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.goalService.getGoalByUser(userID);

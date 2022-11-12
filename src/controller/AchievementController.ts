@@ -10,6 +10,7 @@ import StatisticsRepository from "../repository/StatisticsRepository";
 import UserAchievementRepository from "../repository/UserAchievementRepository";
 import UserRepository from "../repository/UserRepository";
 import AchievementService from "../service/AchievementService";
+import Messages from "../utils/Messages";
 
 export default class AchievementController {
     private achievementRepository: IAchievementRepository;
@@ -41,8 +42,9 @@ export default class AchievementController {
     findAchievementByID = async (request: Request, response: Response, next: NextFunction) => {
         try{
             const achievementID = Number(request.params.achievementID);
+
             if (isNaN(achievementID)){
-                throw new HttpError('ID must be a number !', 403);
+                throw new HttpError(Messages.ACHIEVEMENT_ID_INCORRECT_TYPE, 403);
             }
             const result = await this.achievementService.findAchievementByID(achievementID);
 
@@ -68,11 +70,11 @@ export default class AchievementController {
             const technologyID = Number(request.body.technologyID); 
 
             if (isNaN(userID)){
-                throw new HttpError('User ID must be a number !', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             if (isNaN(technologyID)){
-                throw new HttpError('Technology ID must be a number !', 403);
+                throw new HttpError(Messages.TECHNOLOGY_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.achievementService.associateUserToAchievement(userID, technologyID);
@@ -88,7 +90,7 @@ export default class AchievementController {
             const userID = Number(request.params.userID)
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.achievementService.listAchievementUserHave(userID);

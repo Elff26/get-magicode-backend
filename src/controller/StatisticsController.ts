@@ -9,6 +9,7 @@ import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import UserRepository from "../repository/UserRepository";
 import StatisticsService from "../service/StatisticsService";
+import Messages from "../utils/Messages";
 
 export default class StatisticsController {
     private statisticsService: StatisticsService;
@@ -31,7 +32,7 @@ export default class StatisticsController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.createUserStatistics(userID)
@@ -48,11 +49,11 @@ export default class StatisticsController {
             const xpGain = Number(request.body.xpGain);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             if(isNaN(xpGain)) {
-                throw new HttpError('XP must be a number', 403);
+                throw new HttpError(Messages.EXPERIENCE_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.addExperienceToUser(userID, xpGain)
@@ -69,7 +70,7 @@ export default class StatisticsController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.getMonthXpByUser(userID);
@@ -96,7 +97,7 @@ export default class StatisticsController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.findStatisticsByUser(userID);
@@ -116,7 +117,7 @@ export default class StatisticsController {
             const numberOfMistakes = request.body.numberOfMistakes;
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.counter(userID, type, numberOfHits, numberOfClasses, numberOfMistakes);
@@ -132,7 +133,7 @@ export default class StatisticsController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.getClassroomCompletedByUser(userID);
@@ -148,7 +149,7 @@ export default class StatisticsController {
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.statisticsService.completedGoal(userID);

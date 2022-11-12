@@ -8,6 +8,7 @@ import IUserRepository from "../repository/interface/IUserRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import ChallengeRepository from "../repository/ChallengeRepository";
 import UserRepository from "../repository/UserRepository";
+import Messages from "../utils/Messages";
 
 export default class ExerciseController{
     private exerciseRepository: IExerciseRepository;
@@ -38,7 +39,7 @@ export default class ExerciseController{
             const exerciseID = Number(request.params.exerciseID);
 
             if(isNaN(exerciseID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.EXERCISE_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.exerciseService.findExerciseById(Number(request.params.exerciseID));
@@ -57,19 +58,19 @@ export default class ExerciseController{
             const language = request.body.language;
 
             if(isNaN(userID)) {
-                throw new HttpError('User ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             if(isNaN(exerciseID)) {
-                throw new HttpError('Exercise ID must be a number', 403);
+                throw new HttpError(Messages.EXERCISE_ID_INCORRECT_TYPE, 403);
             }
 
             if(!userCode) {
-                throw new HttpError('Code is required', 403);
+                throw new HttpError(Messages.CODE_IS_REQUIRED, 403);
             }
 
             if(!language) {
-                throw new HttpError('Language is required', 403);
+                throw new HttpError(Messages.LANGUAGE_IS_REQUIRED, 403);
             }
 
             const result = await this.exerciseService.sendExerciseCode(userID, exerciseID, userCode, language);
@@ -85,7 +86,7 @@ export default class ExerciseController{
             const exercises = request.body.exercises;
 
             if(exercises.length <= 0) {
-                throw new HttpError('IDs are required', 403);
+                throw new HttpError(Messages.EXERCISES_IDS_REQUIRED, 403);
             }
 
             const result = await this.exerciseService.findExercisesByIds(exercises);
@@ -101,7 +102,7 @@ export default class ExerciseController{
             let technologyID = Number(request.params.userID);
 
             if(isNaN(technologyID)) {
-                throw new HttpError('Technology ID must be a number', 403);
+                throw new HttpError(Messages.TECHNOLOGY_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.exerciseService.randomizeExercisesIDs(technologyID);

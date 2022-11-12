@@ -3,6 +3,7 @@ import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import Crypt from "../utils/Crypt";
 import jwt from "jsonwebtoken";
+import Messages from "../utils/Messages";
 
 export default class AuthService {
     private userRepository: IUserRepository;
@@ -15,13 +16,13 @@ export default class AuthService {
         const userExists = await this.userRepository.findUserWithPasswordByEmail(user.email);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('Invalid email or password!', 400);
+            throw new HttpError(Messages.EMAIL_OR_PASSWORD_INVALID, 400);
         }
 
         let passwordEquals = await Crypt.decrypt(user.password, userExists.password);
         
         if(!passwordEquals) {
-            throw new HttpError('Invalid email or password!', 400);
+            throw new HttpError(Messages.EMAIL_OR_PASSWORD_INVALID, 400);
         }
 
         const userToReturn = await this.userRepository.findUserById(userExists.userID);
@@ -35,13 +36,13 @@ export default class AuthService {
         const userExists = await this.userRepository.findUserWithPasswordById(userID);
 
         if(!userExists) {
-            throw new HttpError('Invalid user!', 400);
+            throw new HttpError(Messages.USER_NOT_FOUND, 400);
         }
 
         let passwordEquals = await Crypt.decrypt(password, userExists.password);
 
         if(!passwordEquals) {
-            throw new HttpError('Invalid password!', 400);
+            throw new HttpError(Messages.INVALID_PASSWORD, 400);
         }
 
         let encryptedPassword = await Crypt.encrypt(newPassword);

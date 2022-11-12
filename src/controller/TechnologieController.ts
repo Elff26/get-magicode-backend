@@ -9,6 +9,7 @@ import TechnologyRepository from "../repository/TechnologieRepository";
 import UserRepository from "../repository/UserRepository";
 import UserTechnologyRepository from "../repository/UserTechnologyRepository";
 import TechnologyService from "../service/TechnologieService";
+import Messages from "../utils/Messages";
 
 export default class TechnologyController{
     private userRepository: IUserRepository;
@@ -51,15 +52,15 @@ export default class TechnologyController{
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             if(technologies.length <= 0) {
-                throw new HttpError('It is necessary to select at least 1 technology', 400);
+                throw new HttpError(Messages.TECHNOLOGY_MINIMUM_NUMBER, 400);
             }
 
             if(technologies.length > 2) {
-                throw new HttpError('Select a maximum of 2 technologies', 400);
+                throw new HttpError(Messages.TECHNOLOGY_MAXIMUM_NUMBER, 400);
             }
 
             const result = await this.technologyService.associateUserToTechnology(userID, technologies);

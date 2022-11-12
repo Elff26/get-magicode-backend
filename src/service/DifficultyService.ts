@@ -1,6 +1,7 @@
 import HttpError from "../exceptions/HttpError";
 import IDifficultyProperties from "../interfaceType/IDifficultyProperties";
 import IDifficultyRepository from "../repository/interface/IDifficultyRepository";
+import Messages from "../utils/Messages";
 
 export default class DifficultyService{
     private difficultyRepository: IDifficultyRepository;
@@ -21,7 +22,7 @@ export default class DifficultyService{
         const difficultyExists = await this.difficultyRepository.findDifficultyById(difficultyID);
 
         if(!difficultyExists) {
-            throw new HttpError('Exercise not found!', 404);
+            throw new HttpError(Messages.EXERCISE_NOT_FOUND, 404);
         }
 
         return difficultyExists;

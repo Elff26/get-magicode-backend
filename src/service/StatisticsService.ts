@@ -6,6 +6,7 @@ import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import DateUtils from "../utils/DateUtils";
+import Messages from "../utils/Messages";
 
 export default class StatisticsService {
     private statisticsRepository: IStatisticsRepository;
@@ -24,14 +25,14 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const statistics = new Statistics();
         const level = await this.levelRepository.findFirstLevel();
 
         if(!level) {
-            throw new HttpError('There is no level!', 404);
+            throw new HttpError(Messages.LEVEL_NOT_FOUND, 404);
         }
         
         statistics.level = level;
@@ -49,7 +50,7 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
@@ -61,7 +62,7 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         let statisticsExists = await this.statisticsRepository.findStatisticsByUser(userExists.userID);
@@ -70,7 +71,7 @@ export default class StatisticsService {
             const level = await this.levelRepository.findFirstLevel();
 
             if(!level) {
-                throw new HttpError('There is no level!', 404);
+                throw new HttpError(Messages.LEVEL_NOT_FOUND, 404);
             }
 
             statisticsExists.initStatistics(level);
@@ -100,7 +101,7 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.statisticsRepository.getMonthXpByUser(userID);
@@ -127,11 +128,11 @@ export default class StatisticsService {
         const statistics = await this.statisticsRepository.findStatisticsByUser(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         if(!statistics) {
-            throw new HttpError('Statistics not found!', 404);
+            throw new HttpError(Messages.STATISTICS_NOT_FOUND, 404);
         }
 
         let updatedStatistics: Statistics;
@@ -158,7 +159,7 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.statisticsRepository.getClassroomCompletedByUser(userID);
@@ -174,7 +175,7 @@ export default class StatisticsService {
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const goalUser = await this.goalRepository.getGoalByUser(userID);
@@ -186,7 +187,7 @@ export default class StatisticsService {
         const statisticsExists = await this.statisticsRepository.findStatisticsByUser(userID);
 
         if(!statisticsExists) {
-            throw new HttpError('Estatistics not found!', 404);
+            throw new HttpError(Messages.STATISTICS_NOT_FOUND, 404);
         }
 
         if(statisticsExists.dateCompletedGoal !== null) {

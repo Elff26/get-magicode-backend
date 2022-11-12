@@ -2,6 +2,7 @@ import axios from "axios";
 import HttpError from "../exceptions/HttpError";
 import IJdoodleResponseCodeProperties from "../interfaceType/IJdoodleResponseCodeProperties";
 import LanguageCodeDictionary from "../utils/LanguageCodeDictionary";
+import Messages from "../utils/Messages";
 
 export default class JDoodleService {
     constructor() {}
@@ -17,7 +18,7 @@ export default class JDoodleService {
         })).data;
 
         if(!responseData) {
-            throw new HttpError('An error has occurred, please try again later.', 500);
+            throw new HttpError(Messages.GENERIC_SERVER_ERROR, 500);
         }
 
         return responseData;

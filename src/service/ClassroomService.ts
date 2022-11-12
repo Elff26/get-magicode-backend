@@ -2,6 +2,7 @@ import HttpError from "../exceptions/HttpError";
 import IClassroomProperties from "../interfaceType/IClassroomProperties";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IClassroomRepository from "../repository/interface/IClassroomRepository";
+import Messages from "../utils/Messages";
 
 export default class ClassroomService{
     private classroomRepository: IClassroomRepository;
@@ -28,13 +29,13 @@ export default class ClassroomService{
         const challengeExists = await this.challengeRepository.findChallengeByID(challengeID);
 
         if(!challengeExists) {
-            throw new HttpError('Challenge not found!', 404);
+            throw new HttpError(Messages.CHALLENGE_NOT_FOUND, 404);
         }
 
         const classrooms = await this.classroomRepository.findClassroomByChallenge(challengeExists.challengeID);
 
         if(!classrooms || classrooms.length === 0) {
-            throw new HttpError('This challenge has no classes!', 404);
+            throw new HttpError(Messages.CHALLENGE_HAS_NO_CLASSROOMS, 404);
         }
 
         return classrooms;

@@ -7,6 +7,7 @@ import IStatisticsRepository from "../repository/interface/IStatisticsRepository
 import IUserAchievementRepository from "../repository/interface/IUserAchievementRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import arrayMap from "../utils/ArrayMap";
+import Messages from "../utils/Messages";
 
 export default class AchievementService{
     private userRepository: IUserRepository;
@@ -29,7 +30,7 @@ export default class AchievementService{
         const achievementExists = await this.achievementRepository.findAchievementByID(achievementID);
 
         if (!achievementExists) {
-            throw new HttpError('Achievement Not Found!', 404);
+            throw new HttpError(Messages.ACHIEVEMENT_NOT_FOUND, 404);
         }
 
         return achievementExists;
@@ -43,13 +44,13 @@ export default class AchievementService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const statisticsExists = await this.statisticsRepository.findStatisticsByUser(userID);
 
         if(!statisticsExists) {
-            throw new HttpError('Statistics not found!', 404);
+            throw new HttpError(Messages.STATISTICS_NOT_FOUND, 404);
         }
 
         const listAchievementUserHave = await this.achievementRepository.listAchievementUserHave(userID);
@@ -71,7 +72,7 @@ export default class AchievementService{
         const result = await this.userAchievementRepository.saveList(response);
 
         if(!result) {
-            throw new HttpError('Error when trying associate user with challenge. Try again later!', 400);
+            throw new HttpError(Messages.ASSOCIATE_USER_TECHNOLOGY, 400);
         }
 
         return result;
@@ -82,7 +83,7 @@ export default class AchievementService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.achievementRepository.listAchievementUserHave(userID);

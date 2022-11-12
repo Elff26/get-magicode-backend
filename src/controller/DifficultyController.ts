@@ -4,6 +4,7 @@ import DifficultyService from "../service/DifficultyService";
 import IDifficultyRepository from "../repository/interface/IDifficultyRepository";
 import DifficultyRepository from "../repository/DifficultyRepository";
 import IDifficultyProperties from "../interfaceType/IDifficultyProperties";
+import Messages from "../utils/Messages";
 
 export default class DifficultyController{
     private difficultyRepository: IDifficultyRepository
@@ -40,7 +41,7 @@ export default class DifficultyController{
             const difficultyID = Number(request.params.difficultyID);
 
             if(isNaN(difficultyID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.DIFFICULTY_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.difficultyService.findDifficultyById(Number(request.params.difficultyID));

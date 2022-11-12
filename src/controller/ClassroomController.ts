@@ -6,6 +6,7 @@ import ClassroomRepository from "../repository/ClassroomRepository";
 import IChallengeRepository from "../repository/interface/IChallengeRepository";
 import IClassroomRepository from "../repository/interface/IClassroomRepository";
 import ClassroomService from "../service/ClassroomService";
+import Messages from "../utils/Messages";
 
 export default class ClassroomController{
     private classroomRepository: IClassroomRepository;
@@ -34,7 +35,7 @@ export default class ClassroomController{
             const classroomID = Number(request.params.classroomID);
 
             if(isNaN(classroomID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.CLASSROOM_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.classroomService.findClassroomById(classroomID);
@@ -50,7 +51,7 @@ export default class ClassroomController{
             const challengeID = Number(request.params.challengeID);
 
             if(isNaN(challengeID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.CHALLENGE_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.classroomService.findClassroomByChallenge(challengeID);

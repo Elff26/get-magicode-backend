@@ -9,6 +9,7 @@ import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import UserRepository from "../repository/UserRepository";
 import FacebookService from "../service/FacebookService";
+import Messages from "../utils/Messages";
 
 export default class FacebookController {
     private userRepository: IUserRepository;
@@ -30,7 +31,7 @@ export default class FacebookController {
             const facebookCode: string = request.body.facebookCode;
 
             if(!facebookCode) {
-                throw new HttpError("Error when trying to connect to facebook!", 400);
+                throw new HttpError(Messages.FACEBOOK_LOGIN_ERROR, 400);
             }
 
             const result = await this.facebookService.siginWithFacebook(facebookCode);
@@ -47,11 +48,11 @@ export default class FacebookController {
             const userID: number = Number(request.headers.userid);
 
             if(!facebookToken || typeof(facebookToken) !== "string") {
-                throw new HttpError("Token is required!", 400);
+                throw new HttpError(Messages.TOKEN_IS_REQUIRED, 400);
             }
 
             if(isNaN(userID)) {
-                throw new HttpError("ID must be a number!", 400);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 400);
             }
     
             const result = await this.facebookService.checkFacebookToken(facebookToken, userID);

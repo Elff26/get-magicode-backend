@@ -4,6 +4,7 @@ import ILevelProperties from "../interfaceType/ILevelProperties";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import LevelRepository from "../repository/LevelRepository";
 import LevelService from "../service/LevelService";
+import Messages from "../utils/Messages";
 
 export default class LevelController {
     private levelService: LevelService;
@@ -19,7 +20,7 @@ export default class LevelController {
             const level: ILevelProperties = request.body.level;
 
             if(!level.levelNumber || !level.valueXp) {
-                throw new HttpError('Level number and xp value is required', 400); 
+                throw new HttpError(Messages.LEVEL_AND_EXPERIENCE_ARE_REQUIRED, 400); 
             }
 
             const result = await this.levelService.createLevel(level);
@@ -45,7 +46,7 @@ export default class LevelController {
             const levelID = Number(request.params.levelID);
 
             if(isNaN(levelID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.LEVEL_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.levelService.findLevelById(levelID);

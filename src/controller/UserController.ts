@@ -6,6 +6,7 @@ import IUserProperties from "../interfaceType/IUserProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import UserService from "../service/UserService";
+import Messages from "../utils/Messages";
 
 export default class UserController{
     private userRepository: IUserRepository
@@ -21,7 +22,7 @@ export default class UserController{
             const user: IUserProperties = new User(request.body.user);
 
             if(!user.name || !user.birthday || !user.email || !user.phone || !user.password) {
-                throw new HttpError("All fields are required!", 400);
+                throw new HttpError(Messages.ALL_FIELDS_ARE_REQUIRED, 400);
             }
     
             const result = await this.userService.createUser(user);
@@ -37,7 +38,7 @@ export default class UserController{
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.findUserById(Number(request.params.userID));
@@ -54,7 +55,7 @@ export default class UserController{
             const userID = Number(request.params.userID);
     
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number!', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.updateUser(userID, user);
@@ -70,7 +71,7 @@ export default class UserController{
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number!', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.deleteUser(Number(request.params.userID));
@@ -100,12 +101,12 @@ export default class UserController{
             const code = request.body.codeChangePassword;
             
             if(isNaN(userID)){
-                throw new HttpError('ID must be a number!', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.userService.verificationCode(code, userID)
 
-            response.status(200).json({ message: "Código verificado com sucesso"});
+            response.status(200).json({ message: "Código verificado com sucesso", token: result });
             
         }catch(error: any){
             next(error)
@@ -117,7 +118,7 @@ export default class UserController{
             const userID = Number(request.params.userID)
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.decreaseNumberOfLifes(userID);
@@ -133,7 +134,7 @@ export default class UserController{
             const userID = Number(request.params.userID)
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.addUserLife(userID);
@@ -149,7 +150,7 @@ export default class UserController{
             const userID = Number(request.params.userID)
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
     
             const result = await this.userService.getNumberOfLifes(userID);
@@ -166,11 +167,11 @@ export default class UserController{
             const userData: IUserMoreDataInterface = request.body.userData;
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
             
             if(!userData.phone && !userData.birthday) {
-                throw new HttpError('Phone number and birthday are required', 400);
+                throw new HttpError(Messages.PHONENUMBER_AND_BIRTHDAY_ARE_REQUIRED, 400);
             }
 
             const result = await this.userService.addMoreUserInfo(userID, userData);
@@ -187,7 +188,7 @@ export default class UserController{
             const image = request.body.image;
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.userService.saveProfilePicture(userID, image);
@@ -203,7 +204,7 @@ export default class UserController{
             const userID = Number(request.params.userID);
 
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.userService.getProfilePicture(userID);

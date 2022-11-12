@@ -6,6 +6,7 @@ import ExerciseRepository from "../repository/ExerciseRepository";
 import IAlternativeRepository from "../repository/interface/IAlternativeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
 import AlternativeService from "../service/AlternativeService";
+import Messages from "../utils/Messages";
 
 export default class AlternativeController {
     private alternativeRepository: IAlternativeRepository;
@@ -23,7 +24,7 @@ export default class AlternativeController {
             const alternative: IAlternativeProperties = request.body.alternative;
 
             if(!alternative) {
-                throw new HttpError("Alternative is required!", 400)
+                throw new HttpError(Messages.ALTERNATIVE_IS_REQUIRED, 400)
             }
 
             const result = await this.alternativeService.createAlternative(alternative);
@@ -39,7 +40,7 @@ export default class AlternativeController {
             const alternativeID = Number(request.params.alternativeID);
 
             if (isNaN(alternativeID)){
-                throw new HttpError('Alternative ID must be a number !', 403);
+                throw new HttpError(Messages.ALTERNATIVE_ID_INCORRECT_TYPE, 403);
             }
             const result = await this.alternativeService.findAlternativeByID(alternativeID);
 
@@ -55,7 +56,7 @@ export default class AlternativeController {
             const exerciseID = Number(request.params.exerciseID);
 
             if (isNaN(exerciseID)){
-                throw new HttpError('Exercise ID must be a number !', 403);
+                throw new HttpError(Messages.EXERCISE_ID_INCORRECT_TYPE, 403);
             }
             const result = await this.alternativeService.findAlternativeByExercise(exerciseID);
 
@@ -70,7 +71,7 @@ export default class AlternativeController {
             const alternativeID = Number(request.params.alternativeID);
 
             if (isNaN(alternativeID)){
-                throw new HttpError('AlternativeID must be a number !', 403);
+                throw new HttpError(Messages.ALTERNATIVE_ID_INCORRECT_TYPE, 403);
             }
             const result = await this.alternativeService.alternativeIsCorrect(alternativeID);
 

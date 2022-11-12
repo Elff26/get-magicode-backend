@@ -5,6 +5,7 @@ import IUserTechnologyProperties from "../interfaceType/IUserTechnologiesPropert
 import ITechnologyRepository from "../repository/interface/ITechnologieRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import IUserTechnologyRepository from "../repository/interface/IUserTechnologyRepository";
+import Messages from "../utils/Messages";
 
 
 export default class TechnologyService{
@@ -30,7 +31,7 @@ export default class TechnologyService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists || !userExists.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         if(userExists.technologies) {
@@ -45,7 +46,7 @@ export default class TechnologyService{
             if(loadedTechnology) {
                 tech.technology = loadedTechnology;
             } else {
-                throw new HttpError('Technology not found!', 404);
+                throw new HttpError(Messages.TECHNOLOGY_NOT_FOUND, 404);
             }
         })
 
@@ -60,17 +61,17 @@ export default class TechnologyService{
     
     changeTechnology = async (userTechnology: IUserTechnologyProperties) => {
         if(!userTechnology.user.userID) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const userExists = await this.userRepository.findUserById(userTechnology.user.userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         if(!userExists.technologies) {
-            throw new HttpError("User hasn't technologies!", 404);
+            throw new HttpError(Messages.USER_TECHNOLOGY_ASSOCIATION, 404);
         }
 
         let updatedTechs = userExists.technologies.map(tech => {

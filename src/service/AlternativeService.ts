@@ -2,6 +2,7 @@ import HttpError from "../exceptions/HttpError";
 import IAlternativeProperties from "../interfaceType/IAlternativeProperties";
 import IAlternativeRepository from "../repository/interface/IAlternativeRepository";
 import IExerciseRepository from "../repository/interface/IExerciseRepository";
+import Messages from "../utils/Messages";
 
 export default class AlternativeService {
     private alternativeRepository: IAlternativeRepository;
@@ -20,7 +21,7 @@ export default class AlternativeService {
         const alternativeExists = await this.alternativeRepository.findAlternativeByID(alternativeID);
 
         if(!alternativeExists) {
-            throw new HttpError("Alternative not found!", 404);
+            throw new HttpError(Messages.ALTERNATIVE_NOT_FOUND, 404);
         }
 
         return alternativeExists;
@@ -30,7 +31,7 @@ export default class AlternativeService {
         const exerciseExists = await this.exerciseRepository.findExerciseById(exerciseID);
 
         if(!exerciseExists) {
-            throw new HttpError('Exercise not found!', 404);
+            throw new HttpError(Messages.EXERCISE_NOT_FOUND, 404);
         }
 
         const alternatives = await this.alternativeRepository.findAlternativeByExercise(exerciseExists.exerciseID);
@@ -42,7 +43,7 @@ export default class AlternativeService {
         const alternativeExists = await this.alternativeRepository.findAlternativeByID(alternativeID);
 
         if(!alternativeExists) {
-            throw new HttpError('Alternative not found!', 404);
+            throw new HttpError(Messages.ALTERNATIVE_NOT_FOUND, 404);
         }
 
         return alternativeExists.isCorrect;

@@ -10,6 +10,7 @@ import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
+import Messages from "../utils/Messages";
 import StatisticsService from "./StatisticsService";
 
 export default class FacebookService {
@@ -53,7 +54,7 @@ export default class FacebookService {
         let savedUser = await this.userRepository.save(userExists);
 
         if(!savedUser || !savedUser.userID) {
-            throw new HttpError("Error when trying to create user. Try again later!", 500);
+            throw new HttpError(Messages.CREATING_USER, 500);
         }
 
         if(!savedUser.statistics) {
@@ -75,7 +76,7 @@ export default class FacebookService {
                                             `&client_secret=${process.env.FACEBOOK_CLIENT_SECRET}&code=${facebookCode}`)).data;
 
         if(resultTokens.error) {
-            throw new HttpError("Error when trying to connect to Facebook!", 400);
+            throw new HttpError(Messages.FACEBOOK_LOGIN_ERROR, 400);
         }
 
         return resultTokens;
@@ -85,7 +86,7 @@ export default class FacebookService {
         const appToken = (await axios.get(`https://graph.facebook.com/oauth/access_token?client_id=${process.env.FACEBOOK_CLIENT_ID}&client_secret=${process.env.FACEBOOK_CLIENT_SECRET}&grant_type=client_credentials`)).data;
     
         if(appToken.error) {
-            throw new HttpError("Error when trying to connect to Facebook!", 400);
+            throw new HttpError(Messages.FACEBOOK_LOGIN_ERROR, 400);
         }
 
         return appToken;
@@ -132,6 +133,6 @@ export default class FacebookService {
     }
 
     externalAuthLogout = async () => {
-        throw new HttpError("You need to refresh token!", 401);
+        throw new HttpError(Messages.REFRESH_TOKEN_IS_NECESSARY, 401);
     }
 }

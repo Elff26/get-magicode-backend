@@ -6,6 +6,8 @@ import CodeAndDataGenerator from "../utils/CodeAndDateGenerator";
 import Crypt from "../utils/Crypt";
 import DateUtils from "../utils/DateUtils";
 import SendEmail from "../utils/SendEmail";
+import jwt from "jsonwebtoken";
+import Messages from "../utils/Messages";
 
 export default class UserService{
     private userRepository: IUserRepository;
@@ -19,7 +21,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserByEmailOrPhone(user.email, user.phone ? user.phone : "");
 
         if(userExists) {
-            throw new HttpError('This email/phone already exists!', 409)
+            throw new HttpError(Messages.EMAIL_PHONE_ALREADY_EXISTS, 409)
         }
 
         let encryptedPassword = await Crypt.encrypt(user.password);
@@ -32,7 +34,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         return userExists;
@@ -42,7 +44,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         } 
 
         user.userID = userExists.userID;
@@ -59,7 +61,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         return await this.userRepository.deleteUser(userID);
@@ -73,7 +75,7 @@ export default class UserService{
         let expirationDateConverted = new DateUtils().dateConvertToEUA(expirationDate);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
         const sendEmail = new SendEmail();
         sendEmail.sendEmail(code, expirationDate, email);
@@ -84,20 +86,22 @@ export default class UserService{
     }
 
     verificationCode = async (code: string, userID: number) =>{
-        const user = await this.userRepository.findUserById(userID);
+        const userExists = await this.userRepository.findUserById(userID);
         const dateCurrent = new Date()
 
-        if(!user || !user.expirationDate) {
-            throw new HttpError('User not found!', 404);
+        if(!userExists || !userExists.expirationDate) {
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
         
-        const expirationDate = new Date(user.expirationDate); 
+        const expirationDate = new Date(userExists.expirationDate); 
 
-        if(user.codeChangePassword != code || expirationDate.getTime() <= dateCurrent.getTime()){
-            throw new HttpError('Code stay invalid!', 404);
+        if(userExists.codeChangePassword != code || expirationDate.getTime() <= dateCurrent.getTime()){
+            throw new HttpError(Messages.INVALID_CODE, 404);
         }
+
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
         
-        return user;
+        return token;
     }
 
     decreaseNumberOfLifes = async (userID: number) => {
@@ -105,11 +109,11 @@ export default class UserService{
         const currentDate = new Date()
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         if(userExists.numberOfLifes < 1){
-            throw new HttpError('User has no lives', 202)
+            throw new HttpError(Messages.USER_NO_LIVES, 202)
         }
 
         userExists.numberOfLifes -= 1;
@@ -122,11 +126,11 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
         
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         if(userExists.numberOfLifes >= 5){
-            throw new HttpError('User owns all lives', 202)
+            throw new HttpError(Messages.USER_LIVES_FULL, 202)
         }
 
         if(!userExists.lastUpdateNumberOfLifes) {
@@ -159,7 +163,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
         
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         return userExists.numberOfLifes;
@@ -169,7 +173,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
         
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
         
         if(!userExists.phone) {
@@ -189,7 +193,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         userExists.image = Buffer.from(image, "base64") ;
@@ -202,7 +206,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.userRepository.getImageByUser(userID);

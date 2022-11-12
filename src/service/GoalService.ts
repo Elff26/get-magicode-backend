@@ -2,6 +2,7 @@ import HttpError from "../exceptions/HttpError";
 import IGoalProperties from "../interfaceType/IGoalProperties";
 import IGoalRepository from "../repository/interface/IGoalRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import Messages from "../utils/Messages";
 
 export default class GoalService{
     private goalRepository: IGoalRepository;
@@ -20,7 +21,7 @@ export default class GoalService{
         const userExists = await this.userRepository.findUserById(userID);
 
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         userExists.goal = goal
@@ -37,7 +38,7 @@ export default class GoalService{
         const userExists = await this.userRepository.findUserById(userID);
         
         if(!userExists) {
-            throw new HttpError('User not found!', 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         const result = await this.goalRepository.getGoalByUser(userID);

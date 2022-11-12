@@ -9,6 +9,7 @@ import LevelRepository from "../repository/LevelRepository";
 import StatisticsRepository from "../repository/StatisticsRepository";
 import UserRepository from "../repository/UserRepository";
 import GoogleService from "../service/GoogleService";
+import Messages from "../utils/Messages";
 
 export default class GoogleController {
     private userRepository: IUserRepository;
@@ -30,7 +31,7 @@ export default class GoogleController {
             const googleCode: string = request.body.googleCode;
 
             if(!googleCode) {
-                throw new HttpError("Error when trying to connect to google!", 400);
+                throw new HttpError(Messages.GOOGLE_LOGIN_ERROR, 400);
             }
     
             const result = await this.googleService.siginWithGoogle(googleCode);
@@ -47,11 +48,11 @@ export default class GoogleController {
             const userID: number = Number(request.headers.userid);
 
             if(!googleToken || typeof(googleToken) !== "string") {
-                throw new HttpError("Token is required!", 400);
+                throw new HttpError(Messages.TOKEN_IS_REQUIRED, 400);
             }
 
             if(isNaN(userID)) {
-                throw new HttpError("ID must be a number!", 400);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 400);
             }
     
             const result = await this.googleService.checkGoogleToken(googleToken, userID);

@@ -11,6 +11,7 @@ import IGoalRepository from "../repository/interface/IGoalRepository";
 import ILevelRepository from "../repository/interface/ILevelRepository";
 import IStatisticsRepository from "../repository/interface/IStatisticsRepository";
 import IUserRepository from "../repository/interface/IUserRepository";
+import Messages from "../utils/Messages";
 import StatisticsService from "./StatisticsService";
 
 export default class GoogleService {
@@ -58,7 +59,7 @@ export default class GoogleService {
         let savedUser = await this.userRepository.save(userExists);
 
         if(!savedUser || !savedUser.userID) {
-            throw new HttpError("Error when trying to create user. Try again later!", 500);
+            throw new HttpError(Messages.CREATING_USER, 500);
         }
 
         if(!savedUser.statistics) {
@@ -85,7 +86,7 @@ export default class GoogleService {
             });
 
             if(!resultTokens.data.access_token) {
-                throw new HttpError("Error when trying to connect to Google!", 400);
+                throw new HttpError(Messages.GOOGLE_LOGIN_ERROR, 400);
             }
 
             return resultTokens.data;
@@ -180,7 +181,7 @@ export default class GoogleService {
         let userExists = await this.userRepository.findUserWithRefreshTokenById(userID);
 
         if(!userExists) {
-            throw new HttpError("User not found!", 404);
+            throw new HttpError(Messages.USER_NOT_FOUND, 404);
         }
 
         try {
@@ -197,11 +198,11 @@ export default class GoogleService {
                 externalAccessToken: result.access_token
             };
         } catch(error: any) {
-            throw new HttpError("Error on refresh token, please try again later!", 401);
+            throw new HttpError(Messages.REFRESH_TOKEN, 401);
         }
     }
 
     externalAuthLogout = async () => {
-        throw new HttpError("You need to refresh token!", 401);
+        throw new HttpError(Messages.REFRESH_TOKEN_IS_NECESSARY, 401);
     }
 }

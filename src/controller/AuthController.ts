@@ -5,6 +5,7 @@ import ILoginProperties from "../interfaceType/ILoginProperties";
 import IUserRepository from "../repository/interface/IUserRepository";
 import UserRepository from "../repository/UserRepository";
 import AuthService from "../service/AuthService";
+import Messages from "../utils/Messages";
 
 export default class UserController{
     private userRepository: IUserRepository;
@@ -20,7 +21,7 @@ export default class UserController{
             const user: ILoginProperties = request.body;
 
             if(!user.email || !user.password) {
-                throw new HttpError("Email or password is invalid!", 400);
+                throw new HttpError(Messages.EMAIL_OR_PASSWORD_INVALID, 400);
             }
 
             const result = await this.authService.login(user);
@@ -37,7 +38,7 @@ export default class UserController{
             const userID = Number(request.params.userID);
     
             if(isNaN(userID)) {
-                throw new HttpError('ID must be a number!', 403);
+                throw new HttpError(Messages.USER_ID_INCORRECT_TYPE, 403);
             }
 
             const result = await this.authService.changePassword(userID, user.password, user.newPassword)
