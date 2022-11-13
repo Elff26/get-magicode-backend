@@ -12,4 +12,5 @@ export default interface IServerToClientEventsProperties {
   challengeFinished: () => void;
   opponentWantsRematch: () => void;
   rematchAccepted: () => void;
+  opponentLeaveRoom: () => void;
 }

@@ -9,4 +9,5 @@ interface IClientToServerEventsProperties {
     exitRoom: (roomNumber: string) => void;
     rematch: (roomNumber: string) => void;
     acceptRematch: (roomNumber: string) => void;
+    leaveRoom: (roomNumber: string) => void;
 }

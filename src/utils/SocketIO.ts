@@ -98,12 +98,9 @@ export default class SocketIO {
                 socket.leave(roomNumber);
             });
 
-            socket.on('rematch', (roomNumber: string) => {
-                socket.to(roomNumber).emit('opponentWantsRematch');
-            });
-
-            socket.on('acceptRematch', (roomNumber: string) => {
-                socket.to(roomNumber).emit('rematchAccepted');
+            socket.on('leaveRoom', (roomNumber: string) => {
+                console.log(roomNumber)
+                socket.to(roomNumber).emit('opponentLeaveRoom')
             });
             
             socket.on('disconnect', () => {
