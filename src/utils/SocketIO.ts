@@ -99,7 +99,6 @@ export default class SocketIO {
             });
 
             socket.on('leaveRoom', (roomNumber: string) => {
-                console.log(roomNumber)
                 socket.to(roomNumber).emit('opponentLeaveRoom')
             });
             
