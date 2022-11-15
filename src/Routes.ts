@@ -67,6 +67,7 @@ router.get('/CheckFacebookToken', facebookController.checkFacebookToken);
 
 router.post("/CreateTechnology", technologyController.createTechnology);
 router.get("/ListAllTechnologies", jwtVerify.verify, technologyController.listAllTechnologies);
+router.get("/ListAllTechnologiesWithExercise", jwtVerify.verify, technologyController.listAllTechnologiesWithExercise);
 router.post("/AssociateToTechnology/:userID", jwtVerify.verify, technologyController.associateUserToTechnology);
 router.post('/ChangeTechnology', jwtVerify.verify, technologyController.changeTechnology);
 

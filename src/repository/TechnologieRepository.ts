@@ -16,6 +16,15 @@ export default class TechnologyRepository implements ITechnologyRepository{
                                               .getMany();
     }
 
+    listAllTechnologiesWithExercises = async () => {
+        return await this.technologyRepository.createQueryBuilder('Technology')
+                                              .innerJoin('Technology.challenges', 'c')
+                                              .innerJoin('c.exercises', 'e')
+                                              .select("Technology")
+                                              .getMany();
+    }
+
+
     save = async (technology: Technology) => {
         return await this.technologyRepository.save(technology);
     }

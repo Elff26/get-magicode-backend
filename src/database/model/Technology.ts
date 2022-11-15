@@ -6,6 +6,7 @@ import {
     JoinColumn 
 } from "typeorm";
 import ITechnologyProperties from "../../interfaceType/ITechnologyProperties";
+import { Challenge } from "./Challenge";
 
 import { UserTechnology } from "./UserTechnology";
 
@@ -32,4 +33,7 @@ export class Technology{
     @OneToMany(() => UserTechnology, (userTechnology) => userTechnology.technology)
     @JoinColumn({ name: 'cd_tecnologia' })
     users?: UserTechnology[];
+
+    @OneToMany(() => Challenge, (challenge) => challenge.technology)
+    challenges?: Challenge[];
 }
