@@ -41,6 +41,8 @@ export default class AchievementRepository implements IAchievementRepository{
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
                                                .andWhere('Achievement.xp <= :xpUser',{xpUser})
+                                               .andWhere('Achievement.classroom IS NULL')
+                                               .andWhere('Achievement.technology IS NULL')
                                                .getMany();
 
     }
@@ -49,6 +51,8 @@ export default class AchievementRepository implements IAchievementRepository{
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
                                                .andWhere('Achievement.classroom <= :classroomUser',{classroomUser})
+                                               .andWhere('Achievement.xp IS NULL')
+                                               .andWhere('Achievement.technology IS NULL')
                                                .getMany();
 
     }
@@ -57,6 +61,8 @@ export default class AchievementRepository implements IAchievementRepository{
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
                                                .andWhere('Achievement.technology = :technologyUser',{technologyUser})
+                                               .andWhere('Achievement.xp IS NULL')
+                                               .andWhere('Achievement.classroom IS NULL')
                                                .getMany();
 
     }
@@ -64,7 +70,8 @@ export default class AchievementRepository implements IAchievementRepository{
     listAchivementUserNotHaveByTechnologyAndClassroom = async (classroomUser:number,technologyUser:number, listAchievements: number[]) => {
         return await this.achievementRepository.createQueryBuilder('Achievement')
                                                .where('Achievement.achievementID NOT IN(:...ids)', {ids:listAchievements})
-                                               .andWhere('Achievement.technology = :technologyUser AND Achievement.classroom < :classroomUser',{technologyUser, classroomUser})
+                                               .andWhere('Achievement.technology = :technologyUser AND Achievement.classroom <= :classroomUser',{technologyUser, classroomUser})
+                                               .andWhere('Achievement.xp IS NULL')
                                                .getMany();
 
     }
