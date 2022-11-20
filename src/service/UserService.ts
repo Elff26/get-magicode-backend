@@ -48,13 +48,22 @@ export default class UserService{
         } 
 
         user.userID = userExists.userID;
+        user.externalToken = userExists.externalToken;
+
+        const userToSave = {
+            ...userExists,
+            name: user.name ? user.name : userExists.name,
+            email: user.email ? user.email : userExists.email,
+            phone: user.phone ? user.phone : userExists.phone,
+            birthday: user.birthday ? user.birthday : userExists.birthday
+        }
 
         if(user.password) {
             let encryptedPassword = await Crypt.encrypt(user.password);
-            user.password = encryptedPassword;
+            userToSave.password = encryptedPassword;
         }
 
-        return this.userRepository.updateUser(user);
+        return this.userRepository.updateUser(userToSave);
     }
     
     deleteUser = async (userID: number) => {
