@@ -1,9 +1,9 @@
 export default class DateUtils {
     dateConvertToEUA(date: String) {
         let separatedDate = date.split('/');
-        let data = new Date(Number(separatedDate[2]), Number(separatedDate[1]) - 1, Number(separatedDate[0])).toLocaleString('en-US');
-    
-        return data;
+        let dateConverted = new Date(Number(separatedDate[2]), Number(separatedDate[1]) - 1, Number(separatedDate[0])).toISOString();
+
+        return dateConverted.split('T')[0];
     }
 
     dateConvertToBrasil(date: String) {

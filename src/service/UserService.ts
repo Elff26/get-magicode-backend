@@ -89,6 +89,7 @@ export default class UserService{
         const sendEmail = new SendEmail();
         sendEmail.sendEmail(code, expirationDate, email);
 
+        console.log("BBBB", expirationDateConverted, expirationDate)
         await this.userRepository.insertCodeAndDatePasswordbyUser(code, expirationDateConverted.toString(), email);
 
         return userExists.userID;
@@ -104,6 +105,8 @@ export default class UserService{
         
         const expirationDate = new Date(userExists.expirationDate); 
 
+        console.log(expirationDate, dateCurrent)
+        console.log("AAA", userExists.codeChangePassword, code, expirationDate.getTime(), dateCurrent.getTime(), expirationDate.getTime() <= dateCurrent.getTime())
         if(userExists.codeChangePassword != code || expirationDate.getTime() <= dateCurrent.getTime()){
             throw new HttpError(Messages.INVALID_CODE, 404);
         }
