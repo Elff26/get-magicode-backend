@@ -12,6 +12,6 @@ export default class CodeAndDataGenerator {
         const currentDate = new Date();
         currentDate.setHours(currentDate.getHours() + hours);
 
-        return currentDate.toLocaleDateString();
+        return currentDate.toLocaleDateString('pt-BR');
     }
 }
