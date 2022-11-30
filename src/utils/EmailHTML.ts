@@ -48,7 +48,7 @@ const bodyMail = (code:string, expirationDate: String) =>{
                             <br/>
                             <p>Data de expiração: ${expirationDate}</p>
                             <br/>
-                            <p>Esse código irá expirar em 24h, após isso será necessário solicitar a recuperação novamente. </p>
+                            <p>Esse código irá expirar em 48h, após isso será necessário solicitar a recuperação novamente. </p>
                             </br></br>
 
                             <p><b>ATENÇÃO:</b> Caso não tenha feito essa requisição, por favor, ignore essa mensagem.</p>
