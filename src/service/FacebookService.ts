@@ -61,7 +61,7 @@ export default class FacebookService {
             savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
         }
 
-        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, {expiresIn: '1h'}); 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, {expiresIn: '24h'}); 
 
         return {
             user: savedUser,
@@ -124,7 +124,7 @@ export default class FacebookService {
             return this.externalAuthLogout();
         }
 
-        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '24h' }); 
 
         return {
             userData,

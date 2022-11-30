@@ -66,7 +66,7 @@ export default class GoogleService {
             savedUser = await this.statisticsService.createUserStatistics(savedUser.userID);
         }
 
-        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET, { expiresIn: '24h' }); 
         
         return {
             user: savedUser,
@@ -169,7 +169,7 @@ export default class GoogleService {
             }
         });
 
-        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '1h' }); 
+        var token = jwt.sign({ user: userID }, process.env.TOKEN_SECRET, { expiresIn: '24h' }); 
 
         return {
             userData: userData.data,

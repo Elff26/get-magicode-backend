@@ -80,7 +80,7 @@ export default class UserService{
         const userExists = await this.userRepository.findUserByEmailOrPhone(email, "");
 
         const code = this.codeAndDataGenerator.codeGenerator(1, 9999);
-        const expirationDate = this.codeAndDataGenerator.datePlusHours(24);
+        const expirationDate = this.codeAndDataGenerator.datePlusHours(48);
         let expirationDateConverted = new DateUtils().dateConvertToEUA(expirationDate);
 
         if(!userExists) {
@@ -108,7 +108,7 @@ export default class UserService{
             throw new HttpError(Messages.INVALID_CODE, 404);
         }
 
-        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '1h'}); 
+        var token = jwt.sign({user: userExists.userID}, process.env.TOKEN_SECRET ,{expiresIn: '24h'}); 
         
         return token;
     }
